@@ -1,0 +1,1 @@
+The Ashesi Catering Management System (ACMS) is a digital platform designed to optimize the catering services of Ashesi University's on-campus cafeterias: Munchies, Big Ben, and Akornor. This system addresses prevalent issues such as long waiting times, poor communication about available food items, and the lack of ingredient descriptions essential for dietary needs
