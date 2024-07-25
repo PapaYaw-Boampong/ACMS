@@ -18,12 +18,6 @@ class SpecialHeader extends HTMLElement {
                                         <span>Search</span>
                                     </div>
                                 </a>
-                                <a href="offers.html" class="widget-header me-4 text-white btn bg-primary m-none">
-                                    <div class="icon d-flex align-items-center">
-                                        <i class="feather-disc h6 me-2 mb-0"></i>
-                                        <span>Offers</span>
-                                    </div>
-                                </a>
                                 <a href="login.html" class="widget-header me-4 text-dark m-none">
                                     <div class="icon d-flex align-items-center">
                                         <i class="feather-user h6 me-2 mb-0"></i>
