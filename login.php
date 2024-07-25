@@ -61,7 +61,7 @@
                   class="form-control py-1"
                 />
               </div>
-              <button class="btn btn-primary btn-lg w-100">SIGN IN</button>
+              <button class="btn btn-danger btn-lg w-100">SIGN IN</button>
               <!-- <div class="py-2">
                 <button class="btn btn-lg btn-facebook w-100">
                   <i class="feather-facebook"></i> Connect with Facebook
