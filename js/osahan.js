@@ -137,7 +137,7 @@
     disableAt: false,
     customToggle: $toggle,
     levelSpacing: 40,
-    navTitle: "Askbootstrap",
+    navTitle: "Ashesi Eats",
     levelTitles: true,
     levelTitleAsBack: true,
     pushContent: "#container",
