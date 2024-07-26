@@ -1062,7 +1062,7 @@
                 <div>
                   <img
                     alt="#"
-                    src="img/logo_web.png"
+                    src="img/logo.png"
                     class="logo-footer me-3"
                   />
                 </div>
@@ -1256,6 +1256,7 @@
       </div>
     </footer>
     <nav id="main-nav">
+     
     </nav>
     
     <div
@@ -1391,9 +1392,19 @@
       </div>
     </div>
 
+
+
     <script type="module">
-      import { insertNavMenu } from 'ComponentManager.js';
-      insertNavMenu('#main-nav');
+      import { insertNavMenu } from './js/ComponentManager.js';
+      $(document).ready(function() {
+        insertNavMenu('#main-nav');
+
+        // Listen for the custom event to know when the nav menu is loaded
+        $('#main-navr').on('navMenuLoaded', function() {
+          console.log('Navigation menu is fully loaded');
+          // Your code to interact with the navigation menu goes here
+        });
+      });
     </script>
 
 
@@ -1401,6 +1412,8 @@
       type="7e678b0dbcbf2a926c40af51-text/javascript"
       src="vendor/jquery/jquery.min.js"
     ></script>
+
+    
     <script
       type="7e678b0dbcbf2a926c40af51-text/javascript"
       src="vendor/bootstrap/js/bootstrap.bundle.min.js"
