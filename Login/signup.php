@@ -56,7 +56,6 @@
                 <option value="">Select Meal Plan Status</option>
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
-               
               </select>
             </div>
             <button class="btn btn-primary btn-lg w-100 custom-btn">SIGN UP</button>
