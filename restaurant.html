@@ -8,7 +8,7 @@
     />
     <meta name="description" content="Askbootstrap" />
     <meta name="author" content="Askbootstrap" />
-    <link rel="icon" type="image/png" href="img/fav.png" />
+    <link rel="icon" type="image/png"  src="img/logo.png"/>
     <title>Ashesi Eats</title>
 
     <link
@@ -1056,9 +1056,7 @@
     <!-- Footer -->
     <special-footer></special-footer>
     
-    <nav id="main-nav">
-     
-    </nav>
+    <nav id="main-nav"></nav>
     
     <div
       class="modal fade"
@@ -1192,21 +1190,6 @@
         </div>
       </div>
     </div>
-
-
-
-    <script type="module">
-      import { insertNavMenu } from './js/ComponentManager.js';
-      $(document).ready(function() {
-        insertNavMenu('#main-nav');
-
-        // Listen for the custom event to know when the nav menu is loaded
-        $('#main-navr').on('navMenuLoaded', function() {
-          console.log('Navigation menu is fully loaded');
-          // Your code to interact with the navigation menu goes here
-        });
-      });
-    </script>
 
 
     <script

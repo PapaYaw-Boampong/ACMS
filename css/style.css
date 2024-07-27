@@ -518,6 +518,8 @@ p {
 }
 .login-page {
   background: #fff;
+  display: flex;
+  flex-direction: column;
 }
 .login-page .form-control {
   background: no-repeat;
