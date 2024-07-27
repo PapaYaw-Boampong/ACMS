@@ -80,8 +80,10 @@ include  "../settings/core.php";
       </div>
 
       <!-- Our Cafeterias -->
-
-      <div class="bg-white">
+      <?php 
+              include_once "../functions/displayCafeterias.php";
+              ?>
+      <!-- <div class="bg-white">
         <div class="container">
           <div class="py-3 title d-flex align-items-center">
             <h5 class="m-0">Cafeterias</h5>
@@ -124,7 +126,7 @@ include  "../settings/core.php";
           ></a>
         </div>
 
-        <div class="trending-slider">
+        <div class="trending-slider"> -->
 
           <!-- <div class="osahan-slider-item">
             <div
@@ -152,9 +154,7 @@ include  "../settings/core.php";
                   />
                 </a>
               </div> -->
-              <?php 
-              include_once "../functions/displayCafeterias.php";
-              ?>
+            
               <!-- <div class="p-3 position-relative">
                 <div class="list-card-body">
                   <h6 class="mb-1">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 27, 2024 at 02:36 AM
+-- Generation Time: Jul 27, 2024 at 06:10 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -24,13 +24,35 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `CafeteriaReviews`
+--
+
+CREATE TABLE `CafeteriaReviews` (
+  `cafeteriaID` int(11) NOT NULL,
+  `reviewID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Cafeterias`
 --
 
 CREATE TABLE `Cafeterias` (
   `cafeteriaID` int(11) NOT NULL,
-  `cafeteriaName` varchar(255) DEFAULT NULL
+  `cafeteriaName` varchar(255) DEFAULT NULL,
+  `description` varchar(255) NOT NULL,
+  `cafeteriaImage` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `Cafeterias`
+--
+
+INSERT INTO `Cafeterias` (`cafeteriaID`, `cafeteriaName`, `description`, `cafeteriaImage`) VALUES
+(1, 'Main Cafeteria', 'The main dining hall offering a variety of meals.', ''),
+(2, 'East Wing Cafeteria', 'Located in the east wing, known for its healthy options.', ''),
+(3, 'West Wing Cafeteria', 'Located in the west wing, famous for its fast food.', '');
 
 -- --------------------------------------------------------
 
@@ -43,6 +65,15 @@ CREATE TABLE `Ingredients` (
   `name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `Ingredients`
+--
+
+INSERT INTO `Ingredients` (`ingredID`, `name`) VALUES
+(1, 'Tomato'),
+(2, 'Lettuce'),
+(3, 'Cheese');
+
 -- --------------------------------------------------------
 
 --
@@ -54,6 +85,16 @@ CREATE TABLE `MealIngredients` (
   `ingredID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `MealIngredients`
+--
+
+INSERT INTO `MealIngredients` (`mealID`, `ingredID`) VALUES
+(1, 1),
+(1, 2),
+(2, 1),
+(3, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -64,6 +105,15 @@ CREATE TABLE `MealOrder` (
   `mealID` int(11) NOT NULL,
   `orderID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `MealOrder`
+--
+
+INSERT INTO `MealOrder` (`mealID`, `orderID`) VALUES
+(1, 1),
+(2, 2),
+(3, 3);
 
 -- --------------------------------------------------------
 
@@ -78,6 +128,22 @@ CREATE TABLE `Meals` (
   `cafeteriaID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `Meals`
+--
+
+INSERT INTO `Meals` (`mealID`, `mealStatus`, `timeframe`, `cafeteriaID`) VALUES
+(1, 'AVAILABLE', 'BREAKFAST', 1),
+(2, 'UNAVAILABLE', 'LUNCH', 1),
+(3, 'AVAILABLE', 'DINNER', 1),
+(4, 'AVAILABLE', 'BREAKFAST', 2),
+(5, 'UNAVAILABLE', 'LUNCH', 2),
+(6, 'AVAILABLE', 'DINNER', 2),
+(7, 'UNAVAILABLE', 'BREAKFAST', 3),
+(8, 'AVAILABLE', 'LUNCH', 3),
+(9, 'UNAVAILABLE', 'DINNER', 3),
+(10, 'AVAILABLE', 'BREAKFAST', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -91,6 +157,15 @@ CREATE TABLE `Notification` (
   `status` enum('READY','CANCELLED') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `Notification`
+--
+
+INSERT INTO `Notification` (`notificationID`, `userID`, `message`, `status`) VALUES
+(1, 1, 'Your order is ready', 'READY'),
+(2, 2, 'Your order is cooking', 'READY'),
+(3, 3, 'Your order was cancelled', 'CANCELLED');
+
 -- --------------------------------------------------------
 
 --
@@ -103,6 +178,15 @@ CREATE TABLE `OrderDetails` (
   `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `OrderDetails`
+--
+
+INSERT INTO `OrderDetails` (`mealID`, `orderID`, `quantity`) VALUES
+(1, 1, 2),
+(2, 2, 1),
+(3, 3, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -113,6 +197,15 @@ CREATE TABLE `OrderPayment` (
   `orderID` int(11) NOT NULL,
   `paymentID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `OrderPayment`
+--
+
+INSERT INTO `OrderPayment` (`orderID`, `paymentID`) VALUES
+(1, 1),
+(2, 2),
+(3, 3);
 
 -- --------------------------------------------------------
 
@@ -127,6 +220,15 @@ CREATE TABLE `Orders` (
   `status` enum('READY','COOKING','CANCELLED') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `Orders`
+--
+
+INSERT INTO `Orders` (`orderID`, `userID`, `message`, `status`) VALUES
+(1, 1, 'Please deliver to room 101', 'READY'),
+(2, 2, 'Extra napkins please', 'COOKING'),
+(3, 3, 'No onions in the salad', 'CANCELLED');
+
 -- --------------------------------------------------------
 
 --
@@ -140,6 +242,29 @@ CREATE TABLE `Payment` (
   `method` enum('CASH','MOMO/BANK TRANSFER','MEAL PLAN') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `Payment`
+--
+
+INSERT INTO `Payment` (`paymentID`, `userID`, `amount`, `method`) VALUES
+(1, 1, 10, 'CASH'),
+(2, 2, 20, 'MOMO/BANK TRANSFER'),
+(3, 3, 15, 'MEAL PLAN');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Preferences`
+--
+
+CREATE TABLE `Preferences` (
+  `preferencesID` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `dietaryRestrictions` int(11) NOT NULL,
+  `diet` int(11) NOT NULL,
+  `cultralRestrictions` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -150,8 +275,18 @@ CREATE TABLE `Reviews` (
   `reviewID` int(11) NOT NULL,
   `userID` int(11) DEFAULT NULL,
   `comments` varchar(255) DEFAULT NULL,
-  `rating` int(11) DEFAULT NULL
+  `rating` int(11) DEFAULT NULL,
+  `cafeteriaID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `Reviews`
+--
+
+INSERT INTO `Reviews` (`reviewID`, `userID`, `comments`, `rating`, `cafeteriaID`) VALUES
+(1, 1, 'Great meal!', 5, 1),
+(2, 2, 'Good service', 4, 2),
+(3, 3, 'Could be better', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -164,6 +299,15 @@ CREATE TABLE `Roles` (
   `name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `Roles`
+--
+
+INSERT INTO `Roles` (`roleID`, `name`) VALUES
+(1, 'Admin'),
+(2, 'User'),
+(3, 'Manager');
+
 -- --------------------------------------------------------
 
 --
@@ -175,6 +319,15 @@ CREATE TABLE `UserNotification` (
   `notificationID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `UserNotification`
+--
+
+INSERT INTO `UserNotification` (`userID`, `notificationID`) VALUES
+(1, 1),
+(2, 2),
+(3, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -185,6 +338,15 @@ CREATE TABLE `UserReviews` (
   `userID` int(11) NOT NULL,
   `reviewID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `UserReviews`
+--
+
+INSERT INTO `UserReviews` (`userID`, `reviewID`) VALUES
+(1, 1),
+(2, 2),
+(3, 3);
 
 -- --------------------------------------------------------
 
@@ -203,8 +365,24 @@ CREATE TABLE `Users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `Users`
+--
+
+INSERT INTO `Users` (`userID`, `email`, `phoneNo`, `name`, `preferences`, `password`, `roleID`) VALUES
+(1, 'user1@example.com', '123-456-7890', 'User One', 'Vegetarian', 'password1', NULL),
+(2, 'user2@example.com', '234-567-8901', 'User Two', 'Vegan', 'password2', NULL),
+(3, 'user3@example.com', '345-678-9012', 'User Three', 'Gluten-Free', 'password3', NULL);
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `CafeteriaReviews`
+--
+ALTER TABLE `CafeteriaReviews`
+  ADD KEY `cafeteriaID` (`cafeteriaID`),
+  ADD KEY `reviewID` (`reviewID`);
 
 --
 -- Indexes for table `Cafeterias`
@@ -275,10 +453,19 @@ ALTER TABLE `Payment`
   ADD KEY `userID` (`userID`);
 
 --
+-- Indexes for table `Preferences`
+--
+ALTER TABLE `Preferences`
+  ADD PRIMARY KEY (`preferencesID`),
+  ADD KEY `preferencesID` (`preferencesID`),
+  ADD KEY `userID` (`userID`);
+
+--
 -- Indexes for table `Reviews`
 --
 ALTER TABLE `Reviews`
   ADD PRIMARY KEY (`reviewID`),
+  ADD KEY `cafeteriaID` (`cafeteriaID`),
   ADD KEY `userID` (`userID`);
 
 --
@@ -316,11 +503,24 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT for table `Cafeterias`
 --
 ALTER TABLE `Cafeterias`
-  MODIFY `cafeteriaID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cafeteriaID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `Preferences`
+--
+ALTER TABLE `Preferences`
+  MODIFY `preferencesID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `CafeteriaReviews`
+--
+ALTER TABLE `CafeteriaReviews`
+  ADD CONSTRAINT `cafeteriareviews_ibfk_1` FOREIGN KEY (`cafeteriaID`) REFERENCES `Cafeterias` (`cafeteriaID`),
+  ADD CONSTRAINT `cafeteriareviews_ibfk_2` FOREIGN KEY (`reviewID`) REFERENCES `Reviews` (`reviewID`);
 
 --
 -- Constraints for table `MealIngredients`
@@ -340,7 +540,7 @@ ALTER TABLE `MealOrder`
 -- Constraints for table `Meals`
 --
 ALTER TABLE `Meals`
-  ADD CONSTRAINT `meals_ibfk_1` FOREIGN KEY (`cafeteriaID`) REFERENCES `Cafeterias` (`cafeteriaID`);
+  ADD CONSTRAINT `meals_ibfk_1` FOREIGN KEY (`cafeteriaID`) REFERENCES `Cafeterias` (`cafeteriaID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `Notification`
@@ -375,10 +575,17 @@ ALTER TABLE `Payment`
   ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`);
 
 --
+-- Constraints for table `Preferences`
+--
+ALTER TABLE `Preferences`
+  ADD CONSTRAINT `preferences_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`);
+
+--
 -- Constraints for table `Reviews`
 --
 ALTER TABLE `Reviews`
-  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`);
+  ADD CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`),
+  ADD CONSTRAINT `reviews_ibfk_2` FOREIGN KEY (`cafeteriaID`) REFERENCES `Cafeterias` (`cafeteriaID`);
 
 --
 -- Constraints for table `UserNotification`
