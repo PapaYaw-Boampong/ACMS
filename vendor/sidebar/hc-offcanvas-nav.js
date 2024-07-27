@@ -98,6 +98,7 @@ function _typeof(n) {
     },
     dn = 0;
   J.fn.extend({
+    
     hcOffcanvasNav: function () {
       var n =
         0 < arguments.length && void 0 !== arguments[0] ? arguments[0] : {};
