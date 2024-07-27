@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 22, 2024 at 07:25 AM
+-- Generation Time: Jul 27, 2024 at 02:36 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -307,6 +307,16 @@ ALTER TABLE `UserReviews`
 ALTER TABLE `Users`
   ADD PRIMARY KEY (`userID`),
   ADD KEY `roleID` (`roleID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `Cafeterias`
+--
+ALTER TABLE `Cafeterias`
+  MODIFY `cafeteriaID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

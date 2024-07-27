@@ -180,9 +180,9 @@
         </li>
       </ul>
     `;
-    const container = document.querySelector(selector);
-    if (container) {
-      container.innerHTML = navHtml;
+    const nav_container = document.querySelector(selector);
+    if (nav_container) {
+      nav_container.innerHTML = navHtml;
     } else {
       console.error(`Selector ${selector} not found.`);
     }
@@ -206,4 +206,148 @@
   };
   var Nav = $main_nav.hcOffcanvasNav(defaultOptions);
   // $('[data-bs-toggle="tooltip"]').tooltip();
+
+
+  // Function to insert profile menu into #profile-nav
+  function insertProfileMenu(selector) {
+    const profileNavHtml = `
+
+              <a href="profile.html" class>
+                <div class="d-flex align-items-center p-3">
+                  <div class="left me-3">
+                    <img alt="#" src="img/user1.jpg" class="profile-pic" />
+                  </div>
+                  <div class="right">
+                    <h6 class="mb-1 fw-bold">
+                      Ako Oku
+                      <i class="feather-check-circle text-success"></i>
+                    </h6>
+                    <p class="text-muted m-0 small">
+                      <!-- <span
+                        class="__cf_email__"
+                        data-cfemail="c6afa7aba9b5a7aea7a886a1aba7afaae8a5a9ab"
+                        >[email&#160;protected]</span
+                      > -->
+                      <span>82022025</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </a>
+              <div
+                class="osahan-credits d-flex align-items-center p-3 bg-light"
+              >
+                <p class="m-0">Meal Plan Balance</p>
+                <h5 class="m-0 ms-auto text-primary">GHS 52.25</h5>
+              </div>
+           
+              <div class="bg-white profile-details">
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#paycard"
+                  class="d-flex w-100 align-items-center border-bottom p-3"
+                >
+                  <div class="left me-3">
+                    <h6 class="fw-bold mb-1 text-dark">Payment Cards</h6>
+                    <p class="small text-muted m-0">
+                      Add a credit or debit card
+                    </p>
+                  </div>
+                  <div class="right ms-auto">
+                    <span class="fw-bold m-0"
+                      ><i class="feather-chevron-right h6 m-0"></i
+                    ></span>
+                  </div>
+                </a>
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  class="d-flex w-100 align-items-center border-bottom p-3"
+                >
+                  <div class="left me-3">
+                    <h6 class="fw-bold mb-1 text-dark">Address</h6>
+                    <p class="small text-muted m-0">
+                      Add or remove a delivery address
+                    </p>
+                  </div>
+                  <div class="right ms-auto">
+                    <span class="fw-bold m-0"
+                      ><i class="feather-chevron-right h6 m-0"></i
+                    ></span>
+                  </div>
+                </a>
+
+                <a
+                  href="preferences.html"
+                  class="d-flex w-100 align-items-center border-bottom px-3 py-4"
+                >
+                  <div class="left me-3">
+                    <h6 class="fw-bold m-0 text-dark">
+                      <i
+                        class="feather-info bg-success text-white p-2 rounded-circle me-2"
+                      ></i>
+                      Preferences
+                    </h6>
+                  </div>
+
+                  <div class="right ms-auto">
+                    <span class="fw-bold m-0"
+                      ><i class="feather-chevron-right h6 m-0"></i
+                    ></span>
+                  </div>
+                </a>
+               
+              
+                <a
+                  href="contact-us.html"
+                  class="d-flex w-100 align-items-center border-bottom px-3 py-4"
+                >
+                  <div class="left me-3">
+                    <h6 class="fw-bold m-0 text-dark">
+                      <i
+                        class="feather-phone bg-primary text-white p-2 rounded-circle me-2"
+                      ></i>
+                      Contact Us
+                    </h6>
+                  </div>
+
+                  <div class="right ms-auto">
+                    <span class="fw-bold m-0"
+                      ><i class="feather-chevron-right h6 m-0"></i
+                    ></span>
+                  </div>
+                </a>
+                <a
+                  href="privacy.html"
+                  class="d-flex w-100 align-items-center px-3 py-4"
+                >
+                  <div class="left me-3">
+                    <h6 class="fw-bold m-0 text-dark">
+                      <i
+                        class="feather-lock bg-warning text-white p-2 rounded-circle me-2"
+                      ></i>
+                      Privacy policy
+                    </h6>
+                  </div>
+                  <div class="right ms-auto">
+                    <span class="fw-bold m-0"
+                      ><i class="feather-chevron-right h6 m-0"></i
+                    ></span>
+                  </div>
+                </a>
+               
+              </div>
+            </div>
+          </div>
+    `;
+    const profile_container = document.querySelector(selector);
+    if (profile_container) {
+      profile_container.innerHTML = profileNavHtml;
+    } else {
+      console.error(`Selector ${selector} not found.`);
+    }
+  }
+
+  // Insert the navigation menu HTML into #main-nav
+  insertProfileMenu("#profile-nav");
 })(jQuery);

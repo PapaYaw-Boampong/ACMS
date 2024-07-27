@@ -1,3 +1,9 @@
+<?php
+include  "../settings/core.php";
+// include "../functions/displayCafeterias.php";
+// $userID = userIdExist();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,32 +18,32 @@
     <title>Ashesi Eats</title>
 
     <link
-      href="vendor/slick/slick/slick.css"
+      href="../vendor/slick/slick/slick.css"
       rel="stylesheet"
       type="text/css"
     />
     <link
-      href="vendor/slick/slick/slick-theme.css"
+      href="../vendor/slick/slick/slick-theme.css"
       rel="stylesheet"
       type="text/css"
     />
 
-    <link href="vendor/icons/feather.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/icons/feather.css" rel="stylesheet" type="text/css" />
 
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-    <link href="css/style.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet" />
 
-    <link href="vendor/sidebar/demo.css" rel="stylesheet" />
+    <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
 
 
     <script
       type="7cd9e49886f583b445a907f9-text/javascript"
-      src="vendor/jquery/jquery.min.js"
+      src="../vendor/jquery/jquery.min.js"
     ></script>
     <script
       type="7cd9e49886f583b445a907f9-text/javascript"
-      src="vendor/bootstrap/js/bootstrap.bundle.min.js"
+      src="../vendor/bootstrap/js/bootstrap.bundle.min.js"
     ></script>
 
   </head>
@@ -120,7 +126,7 @@
 
         <div class="trending-slider">
 
-          <div class="osahan-slider-item">
+          <!-- <div class="osahan-slider-item">
             <div
               class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm"
             >
@@ -129,9 +135,7 @@
                   <span class="badge text-bg-success"
                     ><i class="feather-star"></i> 3.1 (300+)</span
                   >
-                </div>
-                <div
-                  class="favourite-heart text-danger position-absolute rounded-circle"
+                </div>d-circle"
                 >
                   <a href="#"><i class="feather-heart"></i></a>
                 </div>
@@ -140,13 +144,18 @@
                 </div>
                 <a href="restaurant.html">
                   <img
+                <div
+                  class="favourite-heart text-danger position-absolute rounde
                     alt="#"
                     src="img/trending1.png"
                     class="img-fluid item-img w-100"
                   />
                 </a>
-              </div>
-              <div class="p-3 position-relative">
+              </div> -->
+              <?php 
+              include_once "../functions/displayCafeterias.php";
+              ?>
+              <!-- <div class="p-3 position-relative">
                 <div class="list-card-body">
                   <h6 class="mb-1">
                     <a href="restaurant.html" class="text-black"
@@ -165,10 +174,10 @@
                   <span class="badge text-bg-danger">OFFER</span>
                   <small> Use Coupon OSAHAN50</small>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="osahan-slider-item">
+              </div> -->
+            <!-- </div>
+          </div> -->
+          <!-- <div class="osahan-slider-item">
             <div
               class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm"
             >
@@ -193,8 +202,8 @@
                     class="img-fluid item-img w-100"
                   />
                 </a>
-              </div>
-              <div class="p-3 position-relative">
+              </div> -->
+              <!-- <div class="p-3 position-relative">
                 <div class="list-card-body">
                   <h6 class="mb-1">
                     <a href="restaurant.html" class="text-black"
@@ -311,9 +320,9 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
           
-        </div>
+        <!-- </div> -->
 
         <div class="py-3 title d-flex align-items-center">
           <h5 class="m-0">Most popular</h5>
