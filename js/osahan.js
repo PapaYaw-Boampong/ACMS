@@ -138,7 +138,7 @@
     const navHtml = `
       <ul class="second-nav">
         <li>
-          <a href="home.html"><i class="feather-home me-2"></i> Homepage</a>
+          <a href="home.php"><i class="feather-home me-2"></i> Homepage</a>
         </li>
         <li>
           <a href="my_order.html"><i class="feather-list me-2"></i> My Orders</a>
