@@ -6,7 +6,7 @@ class SpecialHeader extends HTMLElement {
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-1">
-                            <a href="home.html" class="brand-wrap mb-0">
+                            <a href="home.php" class="brand-wrap mb-0">
                                 <img alt="#" class="img-fluid" src="img/logo.png" />
                             </a>
                         </div>
@@ -18,7 +18,7 @@ class SpecialHeader extends HTMLElement {
                                         <span>Search</span>
                                     </div>
                                 </a>
-                                <a href="login.html" class="widget-header me-4 text-dark m-none">
+                                <a href="login.php" class="widget-header me-4 text-dark m-none">
                                     <div class="icon d-flex align-items-center">
                                         <i class="feather-user h6 me-2 mb-0"></i>
                                         <span>Sign in</span>
