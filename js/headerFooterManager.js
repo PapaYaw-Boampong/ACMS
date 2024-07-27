@@ -7,7 +7,7 @@ class SpecialHeader extends HTMLElement {
                     <div class="row align-items-center">
                         <div class="col-1">
                             <a href="home.php" class="brand-wrap mb-0">
-                                <img alt="#" class="img-fluid" src="img/logo.png" />
+                                <img alt="#" class="img-fluid" src="../img/logo.png" />
                             </a>
                         </div>
                         <div class="col-8">
@@ -26,7 +26,7 @@ class SpecialHeader extends HTMLElement {
                                 </a>
                                 <div class="dropdown me-4 m-none">
                                     <a href="#" class="dropdown-toggle text-dark py-3 d-block" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img alt="#" src="img/user/1.jpg" class="img-fluid rounded-circle header-user me-2 header-user" />
+                                        <img alt="#" src="../img/user/1.jpg" class="img-fluid rounded-circle header-user me-2 header-user" />
                                         Hi Osahan
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
@@ -67,7 +67,7 @@ class SpecialFooter extends HTMLElement {
                         <div>
                         <img
                             alt="#"
-                            src="img/logo.png"
+                            src="../img/logo.png"
                             class="logo-footer me-3"
                         />
                         </div>

@@ -355,8 +355,10 @@ a {
   background: hsla(0, 0%, 53.3%, 0.4);
 }
 
+
+
 .bg-primary {
-  background: var(--c3);
+  background: var(--c3) !important;
   /* background: -moz-linear-gradient(45deg, var(--c3)0%, var(--c5)100%);
   background: -webkit-linear-gradient(45deg, var(--c3)0%, var(--c5)100%);
   background: linear-gradient(45deg, var(--c3)0%, var(--c5)100%);

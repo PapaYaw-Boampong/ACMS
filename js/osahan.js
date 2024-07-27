@@ -215,7 +215,7 @@
               <a href="profile.html" class>
                 <div class="d-flex align-items-center p-3">
                   <div class="left me-3">
-                    <img alt="#" src="img/user1.jpg" class="profile-pic" />
+                    <img alt="#" src="../img/user1.jpg" class="profile-pic" />
                   </div>
                   <div class="right">
                     <h6 class="mb-1 fw-bold">

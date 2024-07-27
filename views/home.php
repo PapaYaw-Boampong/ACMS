@@ -14,7 +14,7 @@ include  "../settings/core.php";
     />
     <meta name="description" content="Askbootstrap" />
     <meta name="author" content="Askbootstrap" />
-    <link rel="icon" type="image/png"  src="img/logo.png"/>
+    <link rel="icon" type="image/png"  src="img/fav.png"/>
     <title>Ashesi Eats</title>
 
     <link
