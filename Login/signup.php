@@ -17,14 +17,7 @@
 </head>
 
 <body>
-  <div class="osahan-signup login-page">
-    
-    <!-- <video loop autoplay muted id="vid">
-      <source src="img/bg.mp4" type="video/mp4" />
-      <source src="img/bg.mp4" type="video/ogg" />
-      Your browser does not support the video tag.
-    </video> -->
-
+  <div class="acms-signup login-page">
     <div class="d-flex align-items-center justify-content-center flex-column vh-100">
       <div class="px-5 col-md-6 ms-auto">
         <div class="px-5 col-10 mx-auto">
@@ -33,20 +26,38 @@
           <form class="mt-5 mb-4" action='./actions/signup_action.php' method="POST">
             <div class="form-group">
               <label class="text-dark pb-1">Name</label>
-              <input type="text" placeholder="Enter Name" class="form-control py-1" name= name />
+              <input type="text" placeholder="Enter Name" class="form-control py-1" name=name />
             </div>
             <div class="form-group">
               <label class="text-dark pb-1">Email</label>
-              <input type="email" placeholder="Enter Email" class="form-control py-1" name =  email />
+              <input type="email" placeholder="Enter Email" class="form-control py-1" name=email />
 
             </div>
             <div class="form-group">
               <label class="text-dark pb-1">Phone Number</label>
-              <input type="tel" placeholder="Enter Phone Number" class="form-control py-1" name = phoneNo />
+              <input type="tel" placeholder="Enter Phone Number" class="form-control py-1" name=phoneNo />
             </div>
             <div class="form-group">
               <label class="text-dark pb-1">Password</label>
-              <input type="password" placeholder="Enter Password" class="form-control py-1" name = password />
+              <input type="password" placeholder="Enter Password" class="form-control py-1" name=password />
+            </div>
+            <div class="form-group">
+              <label class="text-dark pb-1">Role</label>
+              <select class="form-control py-1" name="role"  style=" border-color: #ced4da; padding: 5%;">
+                <option value="" >Select Role</option>
+                <option value="admin py-1">Admin</option>
+                <option value="user">User</option>
+                <option value="guest">Guest</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="text-dark pb-1">Meal Plan Status</label>
+              <select class="form-control py-1" name="mealPlan" style=" border-color: #ced4da; padding: 5%;">
+                <option value="">Select Meal Plan Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+               
+              </select>
             </div>
             <button class="btn btn-primary btn-lg w-100 custom-btn">SIGN UP</button>
           </form>
