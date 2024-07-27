@@ -8,12 +8,12 @@
   <link rel="icon" type="image/png" href="img/fav.png" />
   <title>Ashesi Eats</title>
 
-  <link href="vendor/slick/slick/slick.css" rel="stylesheet" type="text/css" />
-  <link href="vendor/slick/slick/slick-theme.css" rel="stylesheet" type="text/css" />
-  <link href="vendor/icons/feather.css" rel="stylesheet" type="text/css" />
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="css/style.css" rel="stylesheet" />
-  <link href="vendor/sidebar/demo.css" rel="stylesheet" />
+  <link href="../vendor/slick/slick/slick.css" rel="stylesheet" type="text/css" />
+  <link href="../vendor/slick/slick/slick-theme.css" rel="stylesheet" type="text/css" />
+  <link href="../vendor/icons/feather.css" rel="stylesheet" type="text/css" />
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../css/style.css" rel="stylesheet" />
+  <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -63,7 +63,7 @@
           </form>
         </div>
         <div class="new-acc d-flex align-items-center justify-content-center">
-          <a href="login.html">
+          <a href="./login.php">
             <p class="text-center m-0">Already have an account? Sign in</p>
           </a>
         </div>

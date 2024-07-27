@@ -21,13 +21,13 @@
       type="text/css"
     />
 
-    <link href="vendor/icons/feather.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/icons/feather.css" rel="stylesheet" type="text/css" />
 
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
-    <link href="css/style.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet" />
 
-    <link href="vendor/sidebar/demo.css" rel="stylesheet" />
+    <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
   </head>
   <body>
     <div class="login-page vh-100">    
@@ -62,7 +62,7 @@
               <p class="text-center">Forgot your password?</p>
             </a>
             <div class="d-flex align-items-center justify-content-center">
-              <a href="signup.php">
+              <a href="./signup.php">
                 <p class="text-center m-0">Don't have an account? Sign up</p>
               </a>
             </div>
