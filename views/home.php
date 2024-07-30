@@ -961,25 +961,25 @@ include  "../settings/core.php";
     
     <script
       type="7cd9e49886f583b445a907f9-text/javascript"
-      src="vendor/slick/slick/slick.min.js"
+      src="../vendor/slick/slick/slick.min.js"
     ></script>
 
     <script
       type="7cd9e49886f583b445a907f9-text/javascript"
-      src="vendor/sidebar/hc-offcanvas-nav.js"
+      src="../vendor/sidebar/hc-offcanvas-nav.js"
     ></script>
 
     <script
       type="7cd9e49886f583b445a907f9-text/javascript"
-      src="./js/osahan.js"
+      src="../js/osahan.js"
     ></script>
 
     <script
-      src="cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
+      src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
       data-cf-settings="7cd9e49886f583b445a907f9-|49"
       defer
     ></script>
 
-    <script src="js/headerFooterManager.js"></script>
+    <script src="../js/headerFooterManager.js"></script>
   </body>
 </html>
