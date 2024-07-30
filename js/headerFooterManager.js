@@ -6,8 +6,8 @@ class SpecialHeader extends HTMLElement {
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-1">
-                            <a href="home.html" class="brand-wrap mb-0">
-                                <img alt="#" class="img-fluid" src="img/logo.png" />
+                            <a href="home.php" class="brand-wrap mb-0">
+                                <img alt="#" class="img-fluid" src="../img/logo.png" />
                             </a>
                         </div>
                         <div class="col-8">
@@ -18,7 +18,7 @@ class SpecialHeader extends HTMLElement {
                                         <span>Search</span>
                                     </div>
                                 </a>
-                                <a href="login.html" class="widget-header me-4 text-dark m-none">
+                                <a href="login.php" class="widget-header me-4 text-dark m-none">
                                     <div class="icon d-flex align-items-center">
                                         <i class="feather-user h6 me-2 mb-0"></i>
                                         <span>Sign in</span>
@@ -26,7 +26,7 @@ class SpecialHeader extends HTMLElement {
                                 </a>
                                 <div class="dropdown me-4 m-none">
                                     <a href="#" class="dropdown-toggle text-dark py-3 d-block" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img alt="#" src="img/user/1.jpg" class="img-fluid rounded-circle header-user me-2 header-user" />
+                                        <img alt="#" src="../img/user/1.jpg" class="img-fluid rounded-circle header-user me-2 header-user" />
                                         Hi Osahan
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
@@ -67,7 +67,7 @@ class SpecialFooter extends HTMLElement {
                         <div>
                         <img
                             alt="#"
-                            src="img/logo.png"
+                            src="../img/logo.png"
                             class="logo-footer me-3"
                         />
                         </div>
