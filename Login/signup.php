@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="ACMS" />
-    <link rel="icon" type="image/png" href="img/fav.png" />
+    <link rel="icon" type="image/png" href="../img/fav.png" />
     <title>Ashesi Eats</title>
 
     <link href="../vendor/slick/slick/slick.css" rel="stylesheet" type="text/css" />
@@ -13,7 +13,7 @@
     <link href="../vendor/icons/feather.css" rel="stylesheet" type="text/css" />
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/style.css" rel="stylesheet" />
-    <link href="vendor/sidebar/demo.css" rel="stylesheet" />
+    <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function checkEmail() {
@@ -104,13 +104,13 @@
     </div>
   </div>
 
-    <script type="6f2da711c007ffaa282dd9e2-text/javascript" src="vendor/jquery/jquery.min.js"></script>
-    <script type="6f2da711c007ffaa282dd9e2-text/javascript" src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script type="6f2da711c007ffaa282dd9e2-text/javascript" src="vendor/slick/slick/slick.min.js"></script>
-    <script type="6f2da711c007ffaa282dd9e2-text/javascript" src="vendor/sidebar/hc-offcanvas-nav.js"></script>
-    <script type="6f2da711c007ffaa282dd9e2-text/javascript" src="js/osahan.js"></script>
-    <script src="cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="6f2da711c007ffaa282dd9e2-|49" defer></script>
-    <script src="js/headerFooterManager.js"></script>
+    <script type="6f2da711c007ffaa282dd9e2-text/javascript" src="../vendor/jquery/jquery.min.js"></script>
+    <script type="6f2da711c007ffaa282dd9e2-text/javascript" src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="6f2da711c007ffaa282dd9e2-text/javascript" src="../vendor/slick/slick/slick.min.js"></script>
+    <script type="6f2da711c007ffaa282dd9e2-text/javascript" src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
+    <script type="6f2da711c007ffaa282dd9e2-text/javascript" src="../js/osahan.js"></script>
+    <script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="6f2da711c007ffaa282dd9e2-|49" defer></script>
+    <script src="../js/headerFooterManager.js"></script>
 </body>
 
 </html>
