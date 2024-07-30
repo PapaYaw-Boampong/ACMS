@@ -45,8 +45,8 @@
               <label class="text-dark pb-1">Role</label>
               <select class="form-control py-1" name="role"  style=" border-color: #ced4da; padding: 5%;">
                 <option value="" >Select Role</option>
-                <option value="admin py-1">Admin</option>
-                <option value="user">User</option>
+                <option value="admin py-1">Faculty</option>
+                <option value="user">Student</option>
                 <option value="guest">Guest</option>
               </select>
             </div>
