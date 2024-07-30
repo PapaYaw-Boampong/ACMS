@@ -26,7 +26,8 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `CafeteriaRatings`
 --
-
+CREATE Database ACMS;
+USE ACMS;
 CREATE TABLE `CafeteriaRatings` (
   `ratingID` int(11) NOT NULL,
   `ratingValue` int(11) NOT NULL,
@@ -691,7 +692,22 @@ ALTER TABLE `MealIngredients`
 ALTER TABLE `MealOrder`
   ADD CONSTRAINT `mealorder_ibfk_1` FOREIGN KEY (`mealID`) REFERENCES `Meals` (`mealID`),
   ADD CONSTRAINT `mealorder_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `Orders` (`orderID`);
+--
+-- Table structure for table `mealplanstatus`
+--
 
+CREATE TABLE `mealplanstatus` (
+  `status_id` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `mealplanstatus`
+--
+
+INSERT INTO `mealplanstatus` (`status_id`, `status`) VALUES
+(1, 'Active'),
+(2, 'Inactive');
 --
 -- Constraints for table `MealRatings`
 --
