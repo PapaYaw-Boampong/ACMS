@@ -83,9 +83,13 @@ include  "../settings/core.php";
       <?php 
               include_once "../functions/displayCafeterias.php";
               ?>
-      <!-- <div class="bg-white">
+              
+      <!-- 
+              
+      <div class="bg-white">
         <div class="container">
           <div class="py-3 title d-flex align-items-center">
+            <div class="bg-white p-3 py-3 border-bottom clearfix">
             <h5 class="m-0">Cafeterias</h5>
             
           </div>
