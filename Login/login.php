@@ -9,12 +9,12 @@
     <link rel="icon" type="image/png" href="img/fav.png" />
     <title>Ashesi Eats</title>
 
-    <link href="vendor/slick/slick/slick.css" rel="stylesheet" type="text/css" />
-    <link href="vendor/slick/slick-theme.css" rel="stylesheet" type="text/css" />
-    <link href="vendor/icons/feather.css" rel="stylesheet" type="text/css" />
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
-    <link href="vendor/sidebar/demo.css" rel="stylesheet" />
+    <link href="../vendor/slick/slick/slick.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/slick/slick-theme.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/icons/feather.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet" />
+    <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function checkEmail() {
