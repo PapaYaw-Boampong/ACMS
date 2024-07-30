@@ -3,7 +3,7 @@
 session_start();
 
 // Include the connection file
-include_once '../settings/connection.php';
+include_once '../../../settings/connection.php';
 
 // Function to check email availability
 function checkEmail($conn, $email) {

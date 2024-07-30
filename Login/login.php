@@ -19,7 +19,7 @@
     <script>
         function checkEmail() {
             jQuery.ajax({
-                url: "../UserManagementService/post/login_action.php",
+                url: "../actions/UserManagementService/post/login_action.php",
                 data: 'action=check_email&email=' + $("#email").val(),
                 type: "POST",
                 success: function(data) {
@@ -31,7 +31,7 @@
 
         function checkPassword() {
             jQuery.ajax({
-                url: "../UserManagementService/post/login_action.php",
+                url: "../actions/UserManagementService/post/login_action.php",
                 data: 'action=check_password&email=' + $("#email").val() + '&password=' + $("#password").val(),
                 type: "POST",
                 success: function(data) {
@@ -50,7 +50,7 @@
                 <div class="px-5 col-10 mx-auto">
                     <h2 class="text-dark my-0">Welcome Back</h2>
                     <p class="text-50">Sign in to continue</p>
-                    <form class="mt-5 mb-4" action="../UserManagementService/post/login_action.php" method="POST">
+                    <form class="mt-5 mb-4" action="../actions/UserManagementService/post/login_action.php" method="POST">
                         <div class="form-group">
                             <label class="text-dark pb-1">Email</label>
                             <input type="email" id="email" name="email" placeholder="Enter Email" class="form-control py-1" onkeyup="checkEmail()" required />

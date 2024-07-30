@@ -18,7 +18,7 @@
     <script>
         function checkEmail() {
             jQuery.ajax({
-                url: "../UserManagementService/post/signup_action.php",
+                url: "../actions/UserManagementService/post/signup_action.php",
                 data: 'action=check_email&email=' + $("#email").val(),
                 type: "POST",
                 success: function(data) {
@@ -30,7 +30,7 @@
 
         function checkPhoneNumber() {
             jQuery.ajax({
-                url: "../UserManagementService/post/signup_action.php",
+                url: "../actions/UserManagementService/post/signup_action.php",
                 data: 'action=check_phoneNo&phoneNo=' + $("#phoneNo").val(),
                 type: "POST",
                 success: function(data) {
@@ -49,7 +49,7 @@
         <div class="px-5 col-10 mx-auto">
           <h2 class="text-dark my-0">Hello There.</h2>
           <p class="text-50">Sign up to continue</p>
-          <form class="mt-5 mb-4" action="../UserManagementService/post/signup_action.php" method="POST">
+          <form class="mt-5 mb-4" action="../actions/UserManagementService/post/signup_action.php" method="POST">
             <div class="form-group">
               <label class="text-dark pb-1">Name</label>
               <input type="text" placeholder="Enter Name" class="form-control py-1" name=name />
@@ -70,20 +70,27 @@
             </div>
             <div class="form-group">
               <label class="text-dark pb-1">Role</label>
-              <select class="form-control py-1" name="role"  style=" border-color: #ced4da; padding: 5%;">
-                <option value="" >Select Role</option>
-                <option value="admin py-1">Admin</option>
-                <option value="user">User</option>
-                <option value="guest">Guest</option>
               </select>
+              <?php include_once "../actions/UserManagementService/put/select_plan.php";?>
+              <?php include_once "../settings/connection.php";?>
+              <?php $role = getRoles($conn);?>
+                <select class="form-control py-1" name="role"  style=" border-color: #ced4da; padding: 5%;">
+                    <?php foreach ($role as $roles): ?>
+                        <option value="<?php echo $roles['roleID']; ?>"><?php echo $roles['name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
+            
             <div class="form-group">
               <label class="text-dark pb-1">Meal Plan Status</label>
-              <select class="form-control py-1" name="mealPlan" style=" border-color: #ced4da; padding: 5%;">
-                <option value="">Select Meal Plan Status</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
-              </select>
+              <?php include_once "../actions/UserManagementService/put/select_meal.php";?>
+              <?php include_once "../settings/connection.php";?>
+              <?php $status = getMealstatus($conn);?>
+                <select class="form-control py-1" name="mealPlan"  style=" border-color: #ced4da; padding: 5%;">
+                    <?php foreach ($status as $Status): ?>
+                        <option value="<?php echo $Status['status_id']; ?>"><?php echo $Status['status']; ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
             <button class="btn btn-primary btn-lg w-100 custom-btn">SIGN UP</button>
           </form>
