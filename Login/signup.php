@@ -12,7 +12,7 @@
     <link href="../vendor/slick/slick-theme.css" rel="stylesheet" type="text/css" />
     <link href="../vendor/icons/feather.css" rel="stylesheet" type="text/css" />
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet" />
     <link href="vendor/sidebar/demo.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -43,42 +43,59 @@
 </head>
 
 <body>
-    <div class="osahan-signup login-page">
-        <div class="d-flex align-items-center justify-content-center flex-column vh-100">
-            <div class="px-5 col-md-6 ms-auto">
-                <div class="px-5 col-10 mx-auto">
-                    <h2 class="text-dark my-0">Hello There.</h2>
-                    <p class="text-50">Sign up to continue</p>
-                    <form class="mt-5 mb-4" action="../UserManagementService/post/signup_action.php" method="POST">
-                        <div class="form-group">
-                            <label class="text-dark pb-1">Name</label>
-                            <input type="text" placeholder="Enter Name" class="form-control py-1" name="name" required />
-                        </div>
-                        <div class="form-group">
-                            <label class="text-dark pb-1">Email</label>
-                            <input type="email" id="email" name="email" placeholder="Enter Email" class="form-control py-1" onkeyup="checkEmail()" required />
-                            <span id="check-email"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-dark pb-1">Phone Number</label>
-                            <input type="tel" id="phoneNo" name="phoneNo" placeholder="Enter Phone Number" class="form-control py-1" onkeyup="checkPhoneNumber()" required />
-                            <span id="check-phoneNo"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="text-dark pb-1">Password</label>
-                            <input type="password" placeholder="Enter Password" class="form-control py-1" name="password" required />
-                        </div>
-                        <button class="btn btn-primary btn-lg w-100 custom-btn" name="signup">SIGN UP</button>
-                    </form>
-                </div>
-                <div class="new-acc d-flex align-items-center justify-content-center">
-                    <a href="login.html">
-                        <p class="text-center m-0">Already have an account? Sign in</p>
-                    </a>
-                </div>
+  <div class="acms-signup login-page">
+    <div class="d-flex align-items-center justify-content-center flex-column vh-100">
+      <div class="px-5 col-md-6 ms-auto">
+        <div class="px-5 col-10 mx-auto">
+          <h2 class="text-dark my-0">Hello There.</h2>
+          <p class="text-50">Sign up to continue</p>
+          <form class="mt-5 mb-4" action="../UserManagementService/post/signup_action.php" method="POST">
+            <div class="form-group">
+              <label class="text-dark pb-1">Name</label>
+              <input type="text" placeholder="Enter Name" class="form-control py-1" name=name />
             </div>
+             <div class="form-group">
+                <label class="text-dark pb-1">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter Email" class="form-control py-1" onkeyup="checkEmail()" required />
+                <span id="check-email"></span>
+              </div>
+              <div class="form-group">
+                  <label class="text-dark pb-1">Phone Number</label>
+                  <input type="tel" id="phoneNo" name="phoneNo" placeholder="Enter Phone Number" class="form-control py-1" onkeyup="checkPhoneNumber()" required />
+                  <span id="check-phoneNo"></span>
+              </div>
+            <div class="form-group">
+              <label class="text-dark pb-1">Password</label>
+              <input type="password" placeholder="Enter Password" class="form-control py-1" name=password />
+            </div>
+            <div class="form-group">
+              <label class="text-dark pb-1">Role</label>
+              <select class="form-control py-1" name="role"  style=" border-color: #ced4da; padding: 5%;">
+                <option value="" >Select Role</option>
+                <option value="admin py-1">Admin</option>
+                <option value="user">User</option>
+                <option value="guest">Guest</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="text-dark pb-1">Meal Plan Status</label>
+              <select class="form-control py-1" name="mealPlan" style=" border-color: #ced4da; padding: 5%;">
+                <option value="">Select Meal Plan Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+            <button class="btn btn-primary btn-lg w-100 custom-btn">SIGN UP</button>
+          </form>
         </div>
+        <div class="new-acc d-flex align-items-center justify-content-center">
+          <a href="./login.php">
+            <p class="text-center m-0">Already have an account? Sign in</p>
+          </a>
+        </div>
+      </div>
     </div>
+  </div>
 
     <script type="6f2da711c007ffaa282dd9e2-text/javascript" src="vendor/jquery/jquery.min.js"></script>
     <script type="6f2da711c007ffaa282dd9e2-text/javascript" src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
