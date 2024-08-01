@@ -492,27 +492,36 @@ include('../settings/connection.php');
               });
           };
 
-          // Remove meal
+          // Function to move a meal from current to archived
           window.removeMeal = (mealID) => {
-              fetch('../actions/removeMeal.php', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({ mealID })
-              })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.success) {
-                      fetchMeals(); // Refresh meals
-                  } else {
-                      alert('Failed to remove meal: ' + data.message);
-                  }
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-              });
+              // Find the meal item in the current list
+              const mealItem = document.getElementById(`meal-${mealID}`);
+              if (mealItem) {
+                  // Remove the meal item from the current list
+                  mealItem.remove();
+
+                  // Create a new list item for the archived list
+                  const archivedMealList = document.getElementById('archivedMealList');
+                  const archivedMealItem = document.createElement('li');
+                  archivedMealItem.className = 'list-group-item';
+                  archivedMealItem.id = `archived-meal-${mealID}`;
+
+                  // Copy the content from the current list item to the archived list item
+                  archivedMealItem.innerHTML = mealItem.innerHTML;
+
+                  // Append the meal item to the archived list
+                  archivedMealList.appendChild(archivedMealItem);
+              } else {
+                  console.error('Meal item not found in the current list');
+              }
           };
+
+          document.querySelectorAll('.remove-button').forEach(button => {
+          button.addEventListener('click', () => {
+              const mealID = button.dataset.mealId; // Or however you get the mealID
+              removeMeal(mealID);
+          });
+      });
 
           // Restore meal
           window.restoreMeal = (mealID) => {
