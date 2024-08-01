@@ -2,7 +2,17 @@
 include_once '../settings/connection.php';
 include_once '../settings/core.php';
 include_once '../actions/FeedBackService/get/getReview.php';
+include_once '../actions/CafeteriaManagementService/get/getResturantDetails.php';
+include_once '../actions/FeedBackService/get/getNumberCafReviews.php';
+include_once '../actions/CafeteriaManagementService/get/getMenu.php';
+// session_start();
 $result = getRecentReviews($conn);
+$resultsDetails = getAllCafeteriaDetails($conn);
+$menusBF = getCafeteriaMenus($conn, 'BREAKFAST');
+$menusL = getCafeteriaMenus($conn, 'LUNCH');
+$menusD = getCafeteriaMenus($conn, 'DINNER');
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +49,7 @@ $result = getRecentReviews($conn);
     <div class="container position-relative">
       <img alt="#" src="../img/trending1.png" class="restaurant-pic" />
       <div class="pt-3 text-white">
-        <h2 class="fw-bold">Munchies Extra</h2>
+        <h2 class="fw-bold"><?php echo $resultsDetails['cafeteriaName'] ?></h2>
         <p class="text-white m-0">Inside Ashesi University</p>
         <div class="rating-wrap d-flex align-items-center mt-2">
           <ul class="rating-stars list-unstyled">
@@ -51,7 +61,7 @@ $result = getRecentReviews($conn);
               <i class="feather-star"></i>
             </li>
           </ul>
-          <p class="label-rating text-white ms-2 small">(245 Reviews)</p>
+          <p class="label-rating text-white ms-2 small"><?php echo getReviewCount($conn) ?> Reviews</p>
         </div>
       </div>
       <div class="pb-4">
@@ -62,7 +72,7 @@ $result = getRecentReviews($conn);
           </div>
           <div class="col-6 col-md-2">
             <p class="text-white-50 fw-bold m-0 small">Open time</p>
-            <p class="text-white m-0">12:00 PM</p>
+            <p class="text-white m-0"><?php echo $resultsDetails['openingTime'] ?></p>
           </div>
         </div>
       </div>
@@ -182,6 +192,76 @@ $result = getRecentReviews($conn);
           </div>
           <div class="row m-0">
             <h6 class="p-3 m-0 bg-light w-100">
+              Breakfast <small class="text-black-50"><?php echo count($menusBF); ?> ITEMS</small>
+            </h6>
+            <div class="col-md-12 px-0 border-top">
+              <div class>
+                <?php
+                foreach ($menusBF as $menu): ?>
+                  <div class="d-flex gap-2 p-3 border-bottom gold-members">
+                    <div
+                      class="fw-bold <?php echo $menu['mealStatus'] == 'Non veg' ? 'text-danger non_veg' : 'text-success veg'; ?>">
+                      .</div>
+                    <div>
+                      <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
+                      <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
+                    </div>
+                    <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#extras">ADD</a></span>
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            </div>
+          </div>
+          <h6 class="p-3 m-0 bg-light w-100">
+            Lunch <small class="text-black-50"><?php echo count($menusL); ?> ITEMS</small>
+          </h6>
+          <div class="col-md-12 px-0 border-top">
+            <div class>
+              <?php
+              foreach ($menusL as $menu): ?>
+                <div class="d-flex gap-2 p-3 border-bottom gold-members">
+                  <div
+                    class="fw-bold <?php echo $menu['mealStatus'] == 'Non veg' ? 'text-danger non_veg' : 'text-success veg'; ?>">
+                    .</div>
+                  <div>
+                    <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
+                    <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
+                  </div>
+                  <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                      data-bs-target="#extras">ADD</a></span>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          </div>
+
+          <h6 class="p-3 m-0 bg-light w-100">
+            Dinner <small class="text-black-50"><?php echo count($menusD); ?> ITEMS</small>
+          </h6>
+          <div class="col-md-12 px-0 border-top">
+            <div class>
+              <?php
+              foreach ($menusD as $menu): ?>
+                <div class="d-flex gap-2 p-3 border-bottom gold-members">
+                  <div
+                    class="fw-bold <?php echo $menu['mealStatus'] == 'Non veg' ? 'text-danger non_veg' : 'text-success veg'; ?>">
+                    .</div>
+                  <div>
+                    <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
+                    <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
+                  </div>
+                  <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                      data-bs-target="#extras">ADD</a></span>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <p class="fw-bold h6 p-3 border-bottom mb-0 w-100">Menu</p>
+          </div>
+          <div class="row m-0">
+            <h6 class="p-3 m-0 bg-light w-100">
               Quick Bites <small class="text-black-50">3 ITEMS</small>
             </h6>
             <div class="col-md-12 px-0 border-top">
@@ -248,7 +328,7 @@ $result = getRecentReviews($conn);
                   </div>
                   <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
                       data-bs-target="#extras">ADD</a></span>
-                </div>
+                </div> dont set an
                 <div class="d-flex align-items-center gap-2 p-3 border-bottom menu-list">
                   <img alt="#" src="../img/starter3.jpg" class="rounded-pill" />
                   <div>
