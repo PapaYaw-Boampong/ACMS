@@ -419,142 +419,92 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
               </div>
             </div>
           </div>
-        </div> -->
-      <div class="mb-3">
-        <div id="ratings-and-reviews"
-          class="bg-white shadow-sm d-flex align-items-center rounded p-3 mb-3 clearfix restaurant-detailed-star-rating">
-          <h6 class="mb-0">Rate this Place</h6>
-          <div class="star-rating ms-auto">
-            <div class="d-inline-block h6 m-0">
-              <i class="feather-star text-warning"></i>
-              <i class="feather-star text-warning"></i>
-              <i class="feather-star text-warning"></i>
-              <i class="feather-star text-warning"></i>
-              <i class="feather-star"></i>
-            </div>
-            <b class="text-black ms-2">334</b>
-          </div>
         </div>
-        <div class="bg-white rounded p-3 mb-3 clearfix graph-star-rating rounded shadow-sm">
-          <h6 class="mb-0 mb-1">Ratings and Reviews</h6>
-          <p class="text-muted mb-4 mt-1 small">Rated 3.5 out of 5</p>
-          <div class="graph-star-rating-body">
-            <div class="rating-list">
-              <div class="rating-list-left fw-bold small">5 Star</div>
-              <div class="rating-list-center">
-                <div class="progress">
-                  <div role="progressbar" class="progress-bar bg-info" aria-valuenow="56" aria-valuemin="0"
-                    aria-valuemax="100" style="width: 56%"></div>
+        <div class="mb-3">
+        <div class="bg-white p-3 mb-3 rating-review-select-page rounded shadow-sm">
+            <h6 class="mb-3">Rate and Comment</h6>
+            <div class="d-flex align-items-center mb-3">
+              <p class="m-0 small">Rate the Place</p>
+              <div class="star-rating ms-auto">
+                <div class="d-inline-block">
+                  <i class="feather-star text-warning"></i>
+                  <i class="feather-star text-warning"></i>
+                  <i class="feather-star text-warning"></i>
+                  <i class="feather-star text-warning"></i>
+                  <i class="feather-star"></i>
                 </div>
               </div>
-              <div class="rating-list-right fw-bold small">56 %</div>
             </div>
-            <div class="rating-list">
-              <div class="rating-list-left fw-bold small">4 Star</div>
-              <div class="rating-list-center">
-                <div class="progress">
-                  <div role="progressbar" class="progress-bar bg-info" aria-valuenow="23" aria-valuemin="0"
-                    aria-valuemax="100" style="width: 23%"></div>
-                </div>
+            <form name = "cafeteriaFeedback">
+              <div class="form-group mb-3">
+                <label class="form-label small">Your Comment</label><textarea class="form-control"></textarea>
               </div>
-              <div class="rating-list-right fw-bold small">23 %</div>
-            </div>
-            <div class="rating-list">
-              <div class="rating-list-left fw-bold small">3 Star</div>
-              <div class="rating-list-center">
-                <div class="progress">
-                  <div role="progressbar" class="progress-bar bg-info" aria-valuenow="11" aria-valuemin="0"
-                    aria-valuemax="100" style="width: 11%"></div>
-                </div>
+              <div class="form-group mb-0">
+                <button type="button" class="btn btn-primary w-100">
+                  Submit
+                </button>
               </div>
-              <div class="rating-list-right fw-bold small">11 %</div>
-            </div>
-            <div class="rating-list">
-              <div class="rating-list-left fw-bold small">2 Star</div>
-              <div class="rating-list-center">
-                <div class="progress">
-                  <div role="progressbar" class="progress-bar bg-info" aria-valuenow="6" aria-valuemin="0"
-                    aria-valuemax="100" style="width: 6%"></div>
-                </div>
-              </div>
-              <div class="rating-list-right fw-bold small">6 %</div>
-            </div>
-            <div class="rating-list">
-              <div class="rating-list-left fw-bold small">1 Star</div>
-              <div class="rating-list-center">
-                <div class="progress">
-                  <div role="progressbar" class="progress-bar bg-info" aria-valuenow="4" aria-valuemin="0"
-                    aria-valuemax="100" style="width: 4%"></div>
-                </div>
-              </div>
-              <div class="rating-list-right fw-bold small">4 %</div>
-            </div>
+            </form>
           </div>
-          <div class="graph-star-rating-footer text-center mt-3">
-            <button type="button" class="btn btn-primary w-100 btn-sm">
-              Rate and Review
-            </button>
-          </div>
-        </div>
-        <div class="bg-white p-3 mb-3 restaurant-detailed-ratings-and-reviews shadow-sm rounded">
-          <a class="text-primary float-end" href="#">Top Rated</a>
-          <h6 class="mb-1">All Ratings and Reviews</h6>
-          <?php
-          if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-              $rating = $row["rating"];
-              ?>
-              <div class="reviews-members py-3">
-                <div class="d-flex align-items-start gap-3">
-                  <a href="#"><img alt="#" src="../img/reviewer<?php echo $row["user_id"]; ?>.png"
-                      class="rounded-pill" /></a>
-                  <div>
-                    <div class="reviews-members-header">
-                      <div class="star-rating float-end">
-                        <div class="d-inline-block" style="font-size: 14px">
-                          <?php
-                          for ($i = 1; $i <= 5; $i++) {
-                            if ($i <= $rating) {
-                              echo '<i class="feather-star text-warning"></i>';
-                            } else {
-                              echo '<i class="feather-star"></i>';
+          <div class="bg-white p-3 mb-3 restaurant-detailed-ratings-and-reviews shadow-sm rounded">
+            <a class="text-primary float-end" href="#">Top Rated</a>
+            <h6 class="mb-1">All Ratings and Reviews</h6>
+            <?php
+            if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {
+                $rating = $row["rating"];
+                ?>
+                <div class="reviews-members py-3">
+                  <div class="d-flex align-items-start gap-3">
+                    <a href="#"><img alt="#" src="../img/reviewer<?php echo $row["user_id"]; ?>.png"
+                        class="rounded-pill" /></a>
+                    <div>
+                      <div class="reviews-members-header">
+                        <div class="star-rating float-end">
+                          <div class="d-inline-block" style="font-size: 14px">
+                            <?php
+                            for ($i = 1; $i <= 5; $i++) {
+                              if ($i <= $rating) {
+                                echo '<i class="feather-star text-warning"></i>';
+                              } else {
+                                echo '<i class="feather-star"></i>';
+                              }
                             }
-                          }
-                          ?>
+                            ?>
+                          </div>
                         </div>
+                        <h6 class="mb-0">
+                          <a class="text-dark" href="#"><?php echo $row["name"]; ?></a>
+                        </h6>
+                        <p class="text-muted small"><?php echo date("D, d M Y", strtotime($row["dateTime"])); ?></p>
                       </div>
-                      <h6 class="mb-0">
-                        <a class="text-dark" href="#"><?php echo $row["name"]; ?></a>
-                      </h6>
-                      <p class="text-muted small"><?php echo date("D, d M Y", strtotime($row["dateTime"])); ?></p>
-                    </div>
-                    <div class="reviews-members-body">
-                      <p><?php echo htmlspecialchars($row["feedback"]); ?></p>
-                    </div>
-                    <div class="reviews-members-footer">
-                      <a class="total-like btn btn-sm btn-outline-primary" href="#">
-                        <i class="feather-thumbs-up"></i> 856M
-                      </a>
-                      <a class="total-like btn btn-sm btn-outline-primary" href="#">
-                        <i class="feather-thumbs-down"></i> 158K
-                      </a>
-                      <span class="total-like-user-main ms-2" dir="rtl">
-                        <a href="#"><img alt="#" src="../img/reviewer3.png" class="total-like-user rounded-pill" /></a>
-                        <a href="#"><img alt="#" src="../img/reviewer4.png" class="total-like-user rounded-pill" /></a>
-                        <a href="#"><img alt="#" src="../img/reviewer5.png" class="total-like-user rounded-pill" /></a>
-                        <a href="#"><img alt="#" src="../img/reviewer6.png" class="total-like-user rounded-pill" /></a>
-                      </span>
+                      <div class="reviews-members-body">
+                        <p><?php echo htmlspecialchars($row["feedback"]); ?></p>
+                      </div>
+                      <div class="reviews-members-footer">
+                        <a class="total-like btn btn-sm btn-outline-primary" href="#">
+                          <i class="feather-thumbs-up"></i> 856M
+                        </a>
+                        <a class="total-like btn btn-sm btn-outline-primary" href="#">
+                          <i class="feather-thumbs-down"></i> 158K
+                        </a>
+                        <span class="total-like-user-main ms-2" dir="rtl">
+                          <a href="#"><img alt="#" src="../img/reviewer3.png" class="total-like-user rounded-pill" /></a>
+                          <a href="#"><img alt="#" src="../img/reviewer4.png" class="total-like-user rounded-pill" /></a>
+                          <a href="#"><img alt="#" src="../img/reviewer5.png" class="total-like-user rounded-pill" /></a>
+                          <a href="#"><img alt="#" src="../img/reviewer6.png" class="total-like-user rounded-pill" /></a>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <hr />
-              <?php
-            }
-          } else {
-            echo "No reviews found.";
-          } ?>
-          <!-- <h6 class="mb-1">All Ratings and Reviews</h6>
+                <hr />
+                <?php
+              }
+            } else {
+              echo "No reviews found.";
+            } ?>
+            <!-- <h6 class="mb-1">All Ratings and Reviews</h6>
               <div class="reviews-members py-3">
                 <div class="d-flex align-items-start gap-3">
                   <a href="#"
@@ -691,133 +641,109 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                 </div>
               </div>
               <hr /> -->
-          <a class="text-center w-100 d-block mt-3 fw-bold" href="#">See All Reviews</a>
+            <a class="text-center w-100 d-block mt-3 fw-bold" href="#">See All Reviews</a>
+          </div>
+          
         </div>
-        <div class="bg-white p-3 rating-review-select-page rounded shadow-sm">
-          <h6 class="mb-3">Leave Comment</h6>
-          <div class="d-flex align-items-center mb-3">
-            <p class="m-0 small">Rate the Place</p>
-            <div class="star-rating ms-auto">
-              <div class="d-inline-block">
-                <i class="feather-star text-warning"></i>
-                <i class="feather-star text-warning"></i>
-                <i class="feather-star text-warning"></i>
-                <i class="feather-star text-warning"></i>
-                <i class="feather-star"></i>
+      </div>
+      <div class="col-md-4 pt-3">
+        <div class="osahan-cart-item rounded rounded shadow-sm overflow-hidden bg-white sticky_sidebar">
+          <div class="d-flex border-bottom osahan-cart-item-profile bg-white p-3">
+            <img alt="osahan" src="../img/starter1.jpg" class="me-3 rounded-circle img-fluid" />
+            <div class="d-flex flex-column">
+              <h6 class="mb-1 fw-bold">Munchies Extra</h6>
+              <p class="mb-0 small text-muted">
+                <i class="feather-map-pin"></i> Inside Ashesi University
+              </p>
+            </div>
+          </div>
+          <div class="bg-white border-bottom py-2">
+            <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+              <div class="d-flex align-items-center">
+                <div class="me-2 text-success">&middot;</div>
+                <div class="media-body">
+                  <p class="m-0">Fried rice</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <span class="count-number float-end"><button type="button"
+                    class="btn-sm left dec btn btn-outline-secondary">
+                    <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
+                    value="1" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
+                    <i class="feather-plus"></i></button></span>
+                <p class="text-gray mb-0 float-end ms-2 text-muted small">
+                  GHS 12
+                </p>
+              </div>
+            </div>
+            <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+              <div class="d-flex align-items-center">
+                <div class="me-2 text-success">&middot;</div>
+                <div class="media-body">
+                  <p class="m-0">Fried Chicken Thigh</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <span class="count-number float-end"><button type="button"
+                    class="btn-sm left dec btn btn-outline-secondary">
+                    <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
+                    value="1" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
+                    <i class="feather-plus"></i></button></span>
+                <p class="text-gray mb-0 float-end ms-2 text-muted small">
+                  GHS 13
+                </p>
+              </div>
+            </div>
+            <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+              <div class="d-flex align-items-center">
+                <div class="me-2 text-danger">&middot;</div>
+                <div class="media-body">
+                  <p class="m-0">Sausage Kebab</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <span class="count-number float-end"><button type="button"
+                    class="btn-sm left dec btn btn-outline-secondary">
+                    <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
+                    value="2" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
+                    <i class="feather-plus"></i></button></span>
+                <p class="text-gray mb-0 float-end ms-2 text-muted small">
+                  GHS 20
+                </p>
               </div>
             </div>
           </div>
-          <form name="cafeteriaFeedback">
-            <div class="form-group mb-3">
-              <label class="form-label small">Your Comment</label><textarea class="form-control"></textarea>
+          <div class="bg-white p-3 py-3 border-bottom clearfix">
+            <div class="input-group">
+              <span class="input-group-text" id="message"><i class="feather-message-square"></i></span>
+              <textarea placeholder="Any suggestions? We will pass it on..." aria-label="With textarea"
+                class="form-control"></textarea>
             </div>
-            <div class="form-group mb-0">
-              <button type="button" class="btn btn-primary w-100">
-                Submit Comment
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 pt-3">
-      <div class="osahan-cart-item rounded rounded shadow-sm overflow-hidden bg-white sticky_sidebar">
-        <div class="d-flex border-bottom osahan-cart-item-profile bg-white p-3">
-          <img alt="osahan" src="../img/starter1.jpg" class="me-3 rounded-circle img-fluid" />
-          <div class="d-flex flex-column">
-            <h6 class="mb-1 fw-bold">Munchies Extra</h6>
-            <p class="mb-0 small text-muted">
-              <i class="feather-map-pin"></i> Inside Ashesi University
+          </div>
+          <div class="bg-white p-3 clearfix border-bottom">
+            <p class="mb-1">
+              Item Total <span class="float-end text-dark">GHS 50</span>
             </p>
+            <p class="mb-1">
+              Restaurant Charges
+              <span class="float-end text-dark">GHS 5</span>
+            </p>
+            <p class="mb-1">
+              Delivery Fee<span class="text-info ms-1"><i class="feather-info"></i></span><span
+                class="float-end text-dark">GHS 5</span>
+            </p>
+            <hr />
+            <h6 class="fw-bold mb-0">
+              TO PAY <span class="float-end">GHS 60</span>
+            </h6>
           </div>
-        </div>
-        <div class="bg-white border-bottom py-2">
-          <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
-            <div class="d-flex align-items-center">
-              <div class="me-2 text-success">&middot;</div>
-              <div class="media-body">
-                <p class="m-0">Fried rice</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center">
-              <span class="count-number float-end"><button type="button"
-                  class="btn-sm left dec btn btn-outline-secondary">
-                  <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
-                  value="1" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
-                  <i class="feather-plus"></i></button></span>
-              <p class="text-gray mb-0 float-end ms-2 text-muted small">
-                GHS 12
-              </p>
-            </div>
+          <div class="p-3">
+            <a class="btn btn-success w-100 btn-lg" href="successful.html">PAY GHS 60<i
+                class="feather-arrow-right"></i></a>
           </div>
-          <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
-            <div class="d-flex align-items-center">
-              <div class="me-2 text-success">&middot;</div>
-              <div class="media-body">
-                <p class="m-0">Fried Chicken Thigh</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center">
-              <span class="count-number float-end"><button type="button"
-                  class="btn-sm left dec btn btn-outline-secondary">
-                  <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
-                  value="1" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
-                  <i class="feather-plus"></i></button></span>
-              <p class="text-gray mb-0 float-end ms-2 text-muted small">
-                GHS 13
-              </p>
-            </div>
-          </div>
-          <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
-            <div class="d-flex align-items-center">
-              <div class="me-2 text-danger">&middot;</div>
-              <div class="media-body">
-                <p class="m-0">Sausage Kebab</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center">
-              <span class="count-number float-end"><button type="button"
-                  class="btn-sm left dec btn btn-outline-secondary">
-                  <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
-                  value="2" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
-                  <i class="feather-plus"></i></button></span>
-              <p class="text-gray mb-0 float-end ms-2 text-muted small">
-                GHS 20
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="bg-white p-3 py-3 border-bottom clearfix">
-          <div class="input-group">
-            <span class="input-group-text" id="message"><i class="feather-message-square"></i></span>
-            <textarea placeholder="Any suggestions? We will pass it on..." aria-label="With textarea"
-              class="form-control"></textarea>
-          </div>
-        </div>
-        <div class="bg-white p-3 clearfix border-bottom">
-          <p class="mb-1">
-            Item Total <span class="float-end text-dark">GHS 50</span>
-          </p>
-          <p class="mb-1">
-            Restaurant Charges
-            <span class="float-end text-dark">GHS 5</span>
-          </p>
-          <p class="mb-1">
-            Delivery Fee<span class="text-info ms-1"><i class="feather-info"></i></span><span
-              class="float-end text-dark">GHS 5</span>
-          </p>
-          <hr />
-          <h6 class="fw-bold mb-0">
-            TO PAY <span class="float-end">GHS 60</span>
-          </h6>
-        </div>
-        <div class="p-3">
-          <a class="btn btn-success w-100 btn-lg" href="successful.html">PAY GHS 60<i
-              class="feather-arrow-right"></i></a>
         </div>
       </div>
     </div>
-  </div>
   </div>
 
   <div class="osahan-menu-fotter fixed-bottom bg-white px-3 py-2 text-center d-none">
