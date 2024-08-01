@@ -174,25 +174,25 @@ include('../settings/connection.php');
                 >
                   
                 <form id="addMealForm">
-                    
-                    <div class="form-group mb-3">
+                  <div class="form-group mb-3">
                       <label for="mealName">Meal Name</label>
-                      <input type="text" class="form-control" id="mealName" required>
-                    </div>
-                    <div class="form-group mb-3">
+                      <input type="text" class="form-control" id="mealName" name="mealName" required>
+                  </div>
+                  <div class="form-group mb-3">
                       <label for="mealPrice">Price</label>
-                      <input type="number" class="form-control" id="mealPrice" required>
-                    </div>
-                    <div class="form-group mb-3">
+                      <input type="number" class="form-control" id="mealPrice" name="mealPrice" required>
+                  </div>
+                  <div class="form-group mb-3">
                       <label for="mealQuantity">Quantity</label>
-                      <input type="number" class="form-control" id="mealQuantity" required>
-                    </div>
-                    <div class="col-md-12 px-0 border-top">
-                    <div class="py-3">
-                        <button type="submit" class="btn btn-lg w-100 btn-primary">Add Meal</button>
-                    </div>
-                </div>
-                  </form>
+                      <input type="number" class="form-control" id="mealQuantity" name="mealQuantity" required>
+                  </div>
+                  <div class="col-md-12 px-0 border-top">
+                      <div class="py-3">
+                          <button type="submit" class="btn btn-lg w-100 btn-primary">Add Meal</button>
+                      </div>
+                  </div>
+              </form>
+
                 
                 
                 </div>
@@ -398,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     addMealForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        const formData = new FormData(document.getElementById('addMealForm'));
+        var formData = new FormData(document.getElementById('addMealForm'));
         console.log('FormData:', Object.fromEntries(formData.entries()));
 
         const mealData = {
@@ -410,21 +410,29 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Form Data:', mealData);
 
         fetch('../actions/addMeal.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(mealData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                fetchMeals(); // Refresh meals
-                addMealForm.reset(); // Reset the form fields
-            } else {
-                alert('Failed to add meal: ' + data.message);
-            }
-        });
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(mealData)
+    })
+    .then(response => response.text())  // Change this to text to inspect the raw response
+    .then(text => {
+        console.log('Response Text:', text);  // Log the response text
+        return JSON.parse(text);  // Manually parse the JSON if needed
+    })
+    .then(data => {
+        if (data.success) {
+            fetchMeals(); // Refresh meals
+            addMealForm.reset(); // Reset the form fields
+        } else {
+            alert('Failed to add meal: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
     });
 
     // Show edit modal with current meal data
@@ -469,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="fw-bold text-success non_veg">.</div>
                     <div class="flex-grow-1">
                         <h6 class="mb-1">${meal.mealName}</h6>
-                        <p class="text-muted mb-0">${meal.mealDescription} - $${meal.mealPrice.toFixed(2)}</p>
+                       <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
                     </div>
                     <div>
                         <input type="number" class="form-control d-inline-block w-25 mr-2" value="${meal.mealQuantity}" data-index="${index}" onchange="updateMealQuantity(event)">
@@ -523,7 +531,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const mealItem = document.createElement('li');
             mealItem.className = 'list-group-item d-flex justify-content-between align-items-center';
             mealItem.innerHTML = `
-                <span><strong>${meal.mealName}</strong> - ${meal.mealDescription} ($${meal.mealPrice.toFixed(2)})</span>
+                <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
                 <button class="btn btn-success btn-sm" onclick="restoreMeal(${index})">Restore</button>
             `;
             archivedMealList.appendChild(mealItem);
