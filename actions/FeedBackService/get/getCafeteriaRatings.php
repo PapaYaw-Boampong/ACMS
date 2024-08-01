@@ -3,7 +3,7 @@
 include_once "../settings/connection.php";
 
 // Get the cafeteriaID from the request (e.g., from GET or POST method)
-$cafeteriaID = isset($_GET['cafeteriaID']) ? intval($_GET['cafeteriaID']) : 0;
+$cafeteriaID = isset($_GET['caID']) ? intval($_GET['cafID']) : 0;
 
 // Check if the cafeteriaID is valid
 if ($cafeteriaID <= 0) {
