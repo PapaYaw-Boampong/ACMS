@@ -332,221 +332,216 @@ include('../settings/connection.php');
     <script src="../js/headerFooterManager.js"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetchMeals();
+document.addEventListener('DOMContentLoaded', function() {
+    fetchMeals();
 
-        function fetchMeals() {
-            fetch('../actions/fetchMeals.php')
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Fetched data:', data);
+    function fetchMeals() {
+        fetch('../actions/fetchMeals.php')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched data:', data);
 
-                    const currentMealList = document.getElementById('mealList');
-                    const archivedMealList = document.getElementById('archivedMealList');
-                    currentMealList.innerHTML = '';
-                    archivedMealList.innerHTML = '';
+                const currentMealList = document.getElementById('mealList');
+                const archivedMealList = document.getElementById('archivedMealList');
+                currentMealList.innerHTML = '';
+                archivedMealList.innerHTML = '';
 
-                    data.currentMeals.forEach((meal, index) => {
-                        const li = document.createElement('li');
-                        li.className = 'list-group-item';
-                        li.innerHTML = 
-                            <div class="d-flex align-items-center">
-                                <img src="../img/starter1.jpg" class="img-fluid rounded" />
-                                <div class="ps-3">
-                                    <h6 class="mb-1 fw-bold">${meal.mealName}</h6>
-                                    <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
-                                </div>
-                                <div class="ms-auto">
+                data.currentMeals.forEach((meal, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <img src="../img/starter1.jpg" class="img-fluid rounded" />
+                            <div class="ps-3">
+                                <h6 class="mb-1 fw-bold">${meal.mealName}</h6>
+                                <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
+                            </div>
+                            <div class="ms-auto">
                                 <input type="number" class="form-control d-inline-block w-25 mr-2" value="${meal.mealQuantity}" data-index="${index}" onchange="updateMealQuantity(event)">
-                                    <button class="btn btn-warning btn-sm" onclick="editMeal(${index})">Edit</button>
-                                    <button class="btn btn-danger btn-sm" onclick="removeMeal(${index})">Remove</button>
-                                </div>
+                                <button class="btn btn-warning btn-sm" onclick="editMeal(${index})">Edit</button>
+                                <button class="btn btn-danger btn-sm" onclick="removeMeal(${index})">Remove</button>
                             </div>
-                        ;
-                        currentMealList.appendChild(li);
-                    });
-
-                    data.archivedMeals.forEach((meal, index) => {
-                        const li = document.createElement('li');
-                        li.className = 'list-group-item';
-                        li.innerHTML = 
-                            <div class="d-flex align-items-center">
-                                <img src="../img/starter1.jpg" class="img-fluid rounded" />
-                                <div class="ps-3">
-                                    <h6 class="mb-1 fw-bold">${meal.mealName}</h6>
-                                    <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
-                                </div>
-                                <div class="ms-auto">
-                                    <button class="btn btn-success btn-sm" onclick="restoreMeal(${index})">Restore</button>
-                                </div>
-                            </div>
-                        ;
-                        archivedMealList.appendChild(li);
-                    });
+                        </div>
+                    `;
+                    currentMealList.appendChild(li);
                 });
-        }
 
-        const addMealForm = document.getElementById('addMealForm');
-const editMealForm = document.getElementById('editMealForm');
-const mealList = document.getElementById('mealList');
-const archivedMealList = document.getElementById('archivedMealList');
-const editMealModal = new bootstrap.Modal(document.getElementById('editMealModal'));
+                data.archivedMeals.forEach((meal, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item';
+                    li.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <img src="../img/starter1.jpg" class="img-fluid rounded" />
+                            <div class="ps-3">
+                                <h6 class="mb-1 fw-bold">${meal.mealName}</h6>
+                                <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
+                            </div>
+                            <div class="ms-auto">
+                                <button class="btn btn-success btn-sm" onclick="restoreMeal(${index})">Restore</button>
+                            </div>
+                        </div>
+                    `;
+                    archivedMealList.appendChild(li);
+                });
+            });
+    }
 
-let meals = [];
-let archivedMeals = [];
-let currentEditIndex = -1;
+    const addMealForm = document.getElementById('addMealForm');
+    const editMealForm = document.getElementById('editMealForm');
+    const mealList = document.getElementById('mealList');
+    const archivedMealList = document.getElementById('archivedMealList');
+    const editMealModal = new bootstrap.Modal(document.getElementById('editMealModal'));
 
-addMealForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+    let meals = [];
+    let archivedMeals = [];
+    let currentEditIndex = -1;
 
-    // const formData = new FormData(addMealForm);
-    var formData = new FormData(document.getElementById('addMealForm'));
-console.log('FormData:', Object.fromEntries(formData.entries()));
+    addMealForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(document.getElementById('addMealForm'));
+        console.log('FormData:', Object.fromEntries(formData.entries()));
 
-    const mealData = {
-        mealName: formData.get('mealName'),
-        mealPrice: formData.get('mealPrice'),
-        mealQuantity: formData.get('mealQuantity')
-    };
-
-    console.log('Form Data:', mealData);
-
-    fetch('../actions/addMeal.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(mealData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            fetchMeals(); // Refresh meals
-            addMealForm.reset(); // Reset the form fields
-        } else {
-            alert('Failed to add meal: ' + data.message);
-        }
-    });
-});
-
-
-        // Show edit modal with current meal data
-        window.editMeal = (index) => {
-            currentEditIndex = index;
-            const meal = meals[index];
-            document.getElementById('editMealName').value = mealName;
-            document.getElementById('editMealPrice').value = meal.mealPrice;
-            document.getElementById('editMealQuantity').value = meal.mealQuantity;
-            document.getElementById('editMealIndex').value = index;
-            editMealModal.show();
+        const mealData = {
+            mealName: formData.get('mealName'),
+            mealPrice: formData.get('mealPrice'),
+            mealQuantity: formData.get('mealQuantity')
         };
 
-        // Save changes to the meal
-        editMealForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (currentEditIndex >= 0 && currentEditIndex < meals.length) {
-                const mealName = document.getElementById('editMealName').value.trim();
-                const mealPrice = parseFloat(document.getElementById('editMealPrice').value);
-                const mealQuantity = parseInt(document.getElementById('editMealQuantity').value, 10);
+        console.log('Form Data:', mealData);
 
-                // Update meal object
-                meals[currentEditIndex] = {
-                    name: mealName,
-                    description: mealDescription,
-                    price: mealPrice,
-                    quantity: mealQuantity
-                };
-
-                updateMealList();
-                editMealModal.hide();
+        fetch('../actions/addMeal.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(mealData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchMeals(); // Refresh meals
+                addMealForm.reset(); // Reset the form fields
+            } else {
+                alert('Failed to add meal: ' + data.message);
             }
         });
+    });
 
-        // Update meal list
-        function updateMealList() {
-            mealList.innerHTML = '';
-            meals.forEach((meal, index) => {
-                const mealItem = document.createElement('li');
-                mealItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-                mealItem.innerHTML = `
-                    <div class="d-flex gap-2 p-3 border-bottom gold-members w-100">
-                        <div class="fw-bold text-success non_veg">.</div>
-                        <div class="flex-grow-1">
-                            <h6 class="mb-1">${meal.mealName}</h6>
-                            <p class="text-muted mb-0">${meal.mealDescription} - $${meal.mealPrice.toFixed(2)}</p>
-                        </div>
-                        <div>
-                            <input type="number" class="form-control d-inline-block w-25 mr-2" value="${meal.mealQuantity}" data-index="${index}" onchange="updateMealQuantity(event)">
-                            <button class="btn btn-warning btn-sm" onclick="editMeal(${index})">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="removeMeal(${index})">Remove</button>
-                        </div>
-                    </div>
-                `;
-                mealList.appendChild(mealItem);
-            });
-            updateArchivedMealList();
+    // Show edit modal with current meal data
+    window.editMeal = (index) => {
+        currentEditIndex = index;
+        const meal = meals[index];
+        document.getElementById('editMealName').value = meal.mealName;
+        document.getElementById('editMealPrice').value = meal.mealPrice;
+        document.getElementById('editMealQuantity').value = meal.mealQuantity;
+        document.getElementById('editMealIndex').value = index;
+        editMealModal.show();
+    };
+
+    // Save changes to the meal
+    editMealForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (currentEditIndex >= 0 && currentEditIndex < meals.length) {
+            const mealName = document.getElementById('editMealName').value.trim();
+            const mealPrice = parseFloat(document.getElementById('editMealPrice').value);
+            const mealQuantity = parseInt(document.getElementById('editMealQuantity').value, 10);
+
+            // Update meal object
+            meals[currentEditIndex] = {
+                mealName: mealName,
+                mealPrice: mealPrice,
+                mealQuantity: mealQuantity
+            };
+
+            updateMealList();
+            editMealModal.hide();
         }
+    });
 
-        // Update meal quantity
-        window.updateMealQuantity = (e) => {
-            const index = parseInt(e.target.getAttribute('data-index'), 10);
-            const quantity = parseInt(e.target.value, 10);
+    // Update meal list
+    function updateMealList() {
+        mealList.innerHTML = '';
+        meals.forEach((meal, index) => {
+            const mealItem = document.createElement('li');
+            mealItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+            mealItem.innerHTML = `
+                <div class="d-flex gap-2 p-3 border-bottom gold-members w-100">
+                    <div class="fw-bold text-success non_veg">.</div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">${meal.mealName}</h6>
+                        <p class="text-muted mb-0">${meal.mealDescription} - $${meal.mealPrice.toFixed(2)}</p>
+                    </div>
+                    <div>
+                        <input type="number" class="form-control d-inline-block w-25 mr-2" value="${meal.mealQuantity}" data-index="${index}" onchange="updateMealQuantity(event)">
+                        <button class="btn btn-warning btn-sm" onclick="editMeal(${index})">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="removeMeal(${index})">Remove</button>
+                    </div>
+                </div>
+            `;
+            mealList.appendChild(mealItem);
+        });
+        updateArchivedMealList();
+    }
 
-            if (index >= 0 && index < meals.length) {
-                if (isNaN(quantity) || quantity < 0) {
-                    console.error("Invalid quantity value:", e.target.value);
-                    return;
-                }
+    // Update meal quantity
+    window.updateMealQuantity = (e) => {
+        const index = parseInt(e.target.getAttribute('data-index'), 10);
+        const quantity = parseInt(e.target.value, 10);
 
-                meals[index].mealQuantity = quantity;
-                if (quantity === 0) {
-                    archivedMeals.push(meals[index]);
-                    meals.splice(index, 1);
-                }
-                updateMealList();
-            } else {
-                console.error("Invalid index for meal quantity update:", index);
+        if (index >= 0 && index < meals.length) {
+            if (isNaN(quantity) || quantity < 0) {
+                console.error("Invalid quantity value:", e.target.value);
+                return;
             }
-        };
 
-        // Remove meal
-        window.removeMeal = (index) => {
-            if (index >= 0 && index < meals.length) {
+            meals[index].mealQuantity = quantity;
+            if (quantity === 0) {
                 archivedMeals.push(meals[index]);
                 meals.splice(index, 1);
-                updateMealList();
-            } else {
-                console.error("Invalid index for meal removal:", index);
             }
-        };
-
-        // Update archived meal list
-        function updateArchivedMealList() {
-            archivedMealList.innerHTML = '';
-            archivedMeals.forEach((meal, index) => {
-                const mealItem = document.createElement('li');
-                mealItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-                mealItem.innerHTML = `
-                    <span><strong>${mealmealName}</strong> - ${meal.mealDescription} ($${meal.mealPrice.toFixed(2)})</span>
-                    <button class="btn btn-success btn-sm" onclick="restoreMeal(${index})">Restore</button>
-                `;
-                archivedMealList.appendChild(mealItem);
-            });
+            updateMealList();
+        } else {
+            console.error("Invalid index for meal quantity update:", index);
         }
+    };
 
-        // Restore meal
-        window.restoreMeal = (index) => {
-            if (index >= 0 && index < archivedMeals.length) {
-                meals.push(archivedMeals[index]);
-                archivedMeals.splice(index, 1);
-                updateMealList();
-            } else {
-                console.error("Invalid index for meal restoration:", index);
-            }
-        };
-    });
+    // Remove meal
+    window.removeMeal = (index) => {
+        if (index >= 0 && index < meals.length) {
+            archivedMeals.push(meals[index]);
+            meals.splice(index, 1);
+            updateMealList();
+        } else {
+            console.error("Invalid index for meal removal:", index);
+        }
+    };
+
+    // Update archived meal list
+    function updateArchivedMealList() {
+        archivedMealList.innerHTML = '';
+        archivedMeals.forEach((meal, index) => {
+            const mealItem = document.createElement('li');
+            mealItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+            mealItem.innerHTML = `
+                <span><strong>${meal.mealName}</strong> - ${meal.mealDescription} ($${meal.mealPrice.toFixed(2)})</span>
+                <button class="btn btn-success btn-sm" onclick="restoreMeal(${index})">Restore</button>
+            `;
+            archivedMealList.appendChild(mealItem);
+        });
+    }
+
+    // Restore meal
+    window.restoreMeal = (index) => {
+        if (index >= 0 && index < archivedMeals.length) {
+            meals.push(archivedMeals[index]);
+            archivedMeals.splice(index, 1);
+            updateMealList();
+        } else {
+            console.error("Invalid index for meal restoration:", index);
+        }
+    };
+});
 </script>
-
 
   </body>
 

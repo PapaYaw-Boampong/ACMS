@@ -3,30 +3,28 @@ include('../settings/connection.php');
 
 // Fetch current meals
 $currentMeals = [];
-$currentMealsQuery = "SELECT meal_name, description, price, quantity FROM meals WHERE is_archived = 0";
+$currentMealsQuery = "SELECT mealName, mealPrice, mealQuantity FROM meals WHERE mealStatus = 'AVAILABLE'";
 $result = $conn->query($currentMealsQuery);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $currentMeals[] = [
-            'mealName' => $row['meal_name'],
-            'description' => $row['description'],
-            'price' => $row['price'],
-            'mealQuantity' => $row['quantity']
+            'mealName' => $row['mealName'],
+            'mealPrice' => $row['mealPrice'],
+            'mealQuantity' => $row['mealQuantity']
         ];
     }
 }
 
 // Fetch archived meals
 $archivedMeals = [];
-$archivedMealsQuery = "SELECT meal_name, description, price, quantity FROM meals WHERE is_archived = 1";
+$archivedMealsQuery = "SELECT mealName, mealPrice, mealQuantity FROM meals WHERE mealStatus = 'UNAVAILABLE'";
 $result = $conn->query($archivedMealsQuery);
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         $archivedMeals[] = [
-            'mealName' => $row['meal_name'],
-            'description' => $row['description'],
-            'price' => $row['price'],
-            'mealQuantity' => $row['quantity']
+            'mealName' => $row['mealName'],
+            'mealPrice' => $row['mealPrice'],
+            'mealQuantity' => $row['mealQuantity']
         ];
     }
 }
