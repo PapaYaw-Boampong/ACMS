@@ -2,7 +2,11 @@
 include_once '../settings/connection.php';
 include_once '../settings/core.php';
 include_once '../actions/FeedBackService/get/getReview.php';
+include_once '../actions/CafeteriaManagementService/get/getResturantDetails.php';
+include_once '../actions/FeedBackService/get/getNumberCafReviews.php';
+// session_start();
 $result = getRecentReviews($conn);
+$resultsDetails = getAllCafeteriaDetails($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +43,7 @@ $result = getRecentReviews($conn);
     <div class="container position-relative">
       <img alt="#" src="../img/trending1.png" class="restaurant-pic" />
       <div class="pt-3 text-white">
-        <h2 class="fw-bold">Munchies Extra</h2>
+        <h2 class="fw-bold"><?php echo $resultsDetails['cafeteriaName']?></h2>
         <p class="text-white m-0">Inside Ashesi University</p>
         <div class="rating-wrap d-flex align-items-center mt-2">
           <ul class="rating-stars list-unstyled">
@@ -51,7 +55,7 @@ $result = getRecentReviews($conn);
               <i class="feather-star"></i>
             </li>
           </ul>
-          <p class="label-rating text-white ms-2 small">(245 Reviews)</p>
+          <p class="label-rating text-white ms-2 small"><?php echo getReviewCount($conn)?> Reviews</p>
         </div>
       </div>
       <div class="pb-4">
@@ -62,7 +66,7 @@ $result = getRecentReviews($conn);
           </div>
           <div class="col-6 col-md-2">
             <p class="text-white-50 fw-bold m-0 small">Open time</p>
-            <p class="text-white m-0">12:00 PM</p>
+            <p class="text-white m-0"><?php echo $resultsDetails['openingTime']?></p>
           </div>
         </div>
       </div>
