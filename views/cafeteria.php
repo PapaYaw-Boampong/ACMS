@@ -262,7 +262,7 @@ include('../settings/connection.php');
     <nav id="main-nav"></nav>
 
     <!-- Edit Meal Modal -->
-<div class="modal fade" id="editMealModal" tabindex="-1" aria-labelledby="editMealModalLabel" aria-hidden="true">
+<div class="modal fade" id="editMealModal" tabmeal.mealID="-1" aria-labelledby="editMealModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -273,17 +273,13 @@ include('../settings/connection.php');
           <form id="editMealForm">
             <div class="form-group mb-3">
               <label for="editMealName">Meal Name</label>
-              <input type="text" class="form-control" id="editMealName" required>
+              <input type="text" class="form-control" id="editMealName" name="editMealName" required>
             </div>
             <div class="form-group mb-3">
               <label for="editMealPrice">Price</label>
-              <input type="number" class="form-control" id="editMealPrice" required>
+              <input type="number" class="form-control" id="editMealPrice" name="editMealPrice" required>
             </div>
-            <div class="form-group mb-3">
-              <label for="editMealQuantity">Quantity</label>
-              <input type="number" class="form-control" id="editMealQuantity" required>
-            </div>
-            <input type="hidden" id="editMealIndex">
+            <input type="hidden" id="editMealID">
             <button type="submit" class="btn btn-primary">Save Changes</button>
           </form>
         </div>
@@ -332,223 +328,215 @@ include('../settings/connection.php');
     <script src="../js/headerFooterManager.js"></script>
 
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    fetchMeals();
+      document.addEventListener('DOMContentLoaded', function() {
+          fetchMeals();
 
-    function fetchMeals() {
-        fetch('../actions/fetchMeals.php')
-            .then(response => response.json())
-            .then(data => {
-                console.log('Fetched data:', data);
+          function fetchMeals() {
+              fetch('../actions/fetchMeals.php')
+                  .then(response => response.json())
+                  .then(data => {
+                      console.log('Fetched data:', data);
 
-                const currentMealList = document.getElementById('mealList');
-                const archivedMealList = document.getElementById('archivedMealList');
-                currentMealList.innerHTML = '';
-                archivedMealList.innerHTML = '';
+                      const currentMealList = document.getElementById('mealList');
+                      const archivedMealList = document.getElementById('archivedMealList');
+                      currentMealList.innerHTML = '';
+                      archivedMealList.innerHTML = '';
 
-                data.currentMeals.forEach((meal, index) => {
-                    const li = document.createElement('li');
-                    li.className = 'list-group-item';
-                    li.innerHTML = `
-                        <div class="d-flex align-items-center">
-                            <img src="../img/starter1.jpg" class="img-fluid rounded" />
-                            <div class="ps-3">
-                                <h6 class="mb-1 fw-bold">${meal.mealName}</h6>
-                                <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
-                            </div>
-                            <div class="ms-auto">
-                                <input type="number" class="form-control d-inline-block w-25 mr-2" value="${meal.mealQuantity}" data-index="${index}" onchange="updateMealQuantity(event)">
-                                <button class="btn btn-warning btn-sm" onclick="editMeal(${index})">Edit</button>
-                                <button class="btn btn-danger btn-sm" onclick="removeMeal(${index})">Remove</button>
-                            </div>
-                        </div>
-                    `;
-                    currentMealList.appendChild(li);
-                });
+                      data.currentMeals.forEach((meal) => {
+                          const li = document.createElement('li');
+                          li.className = 'list-group-item';
+                          li.innerHTML = `
+                              <div class="d-flex align-items-center">
+                                  <img src="../img/starter1.jpg" class="img-fluid rounded" />
+                                  <div class="ps-3">
+                                      <h6 class="mb-1 fw-bold">${meal.mealName}</h6>
+                                      <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
+                                  </div>
+                                  <div class="ms-auto">
+                                      <input type="number" class="form-control d-inline-block w-25 mr-2" value="${meal.mealQuantity}" data-mealID="${meal.mealID}" onchange="updateMealQuantity(event)">
+                                      <button class="btn btn-warning btn-sm" onclick="editMeal(${meal.mealID})">Edit</button>
+                                      <button class="btn btn-danger btn-sm" onclick="removeMeal(${meal.mealID})">Remove</button>
+                                  </div>
+                              </div>
+                          `;
+                          currentMealList.appendChild(li);
+                      });
 
-                data.archivedMeals.forEach((meal, index) => {
-                    const li = document.createElement('li');
-                    li.className = 'list-group-item';
-                    li.innerHTML = `
-                        <div class="d-flex align-items-center">
-                            <img src="../img/starter1.jpg" class="img-fluid rounded" />
-                            <div class="ps-3">
-                                <h6 class="mb-1 fw-bold">${meal.mealName}</h6>
-                                <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
-                            </div>
-                            <div class="ms-auto">
-                                <button class="btn btn-success btn-sm" onclick="restoreMeal(${index})">Restore</button>
-                            </div>
-                        </div>
-                    `;
-                    archivedMealList.appendChild(li);
-                });
-            });
-    }
+                      data.archivedMeals.forEach((meal) => {
+                          const li = document.createElement('li');
+                          li.className = 'list-group-item';
+                          li.innerHTML = `
+                              <div class="d-flex align-items-center">
+                                  <img src="../img/starter1.jpg" class="img-fluid rounded" />
+                                  <div class="ps-3">
+                                      <h6 class="mb-1 fw-bold">${meal.mealName}</h6>
+                                      <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
+                                  </div>
+                                  <div class="ms-auto">
+                                      <button class="btn btn-success btn-sm" onclick="restoreMeal(${meal.mealID})">Restore</button>
+                                  </div>
+                              </div>
+                          `;
+                          archivedMealList.appendChild(li);
+                      });
+                  });
+          }
 
-    const addMealForm = document.getElementById('addMealForm');
-    const editMealForm = document.getElementById('editMealForm');
-    const mealList = document.getElementById('mealList');
-    const archivedMealList = document.getElementById('archivedMealList');
-    const editMealModal = new bootstrap.Modal(document.getElementById('editMealModal'));
+          // Add meal
+          document.getElementById('addMealForm').addEventListener('submit', function(e) {
+              e.preventDefault();
+              var formData = new FormData(this);
+              const mealData = {
+                  mealName: formData.get('mealName'),
+                  mealPrice: formData.get('mealPrice'),
+                  mealQuantity: formData.get('mealQuantity')
+              };
 
-    let meals = [];
-    let archivedMeals = [];
-    let currentEditIndex = -1;
+              fetch('../actions/addMeal.php', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(mealData)
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      fetchMeals(); // Refresh meals
+                      this.reset(); // Reset the form fields
+                  } else {
+                      alert('Failed to add meal: ' + data.message);
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+          });
 
-    addMealForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        var formData = new FormData(document.getElementById('addMealForm'));
-        console.log('FormData:', Object.fromEntries(formData.entries()));
-
-        const mealData = {
-            mealName: formData.get('mealName'),
-            mealPrice: formData.get('mealPrice'),
-            mealQuantity: formData.get('mealQuantity')
+          // Show edit modal with current meal data
+          window.editMeal = (mealID) => {
+            fetch(`../actions/editMeal.php?mealID=${mealID}`)
+                .then(response => response.json())
+                .then(meal => {
+                    if (meal.error) {
+                        console.error('Error fetching meal:', meal.error);
+                        return;
+                    }
+                    document.getElementById('editMealName').value = meal.mealName;
+                    document.getElementById('editMealPrice').value = meal.mealPrice;
+                    document.getElementById('editMealID').value = meal.mealID;
+                    new bootstrap.Modal(document.getElementById('editMealModal')).show();
+                })
+                .catch(error => console.error('Error fetching meal:', error));
         };
 
-        console.log('Form Data:', mealData);
 
-        fetch('../actions/addMeal.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(mealData)
-    })
-    .then(response => response.text())  // Change this to text to inspect the raw response
-    .then(text => {
-        console.log('Response Text:', text);  // Log the response text
-        return JSON.parse(text);  // Manually parse the JSON if needed
-    })
-    .then(data => {
-        if (data.success) {
-            fetchMeals(); // Refresh meals
-            addMealForm.reset(); // Reset the form fields
-        } else {
-            alert('Failed to add meal: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
 
-    });
+          // Save changes to the meal
+          document.getElementById('editMealForm').addEventListener('submit', function(e) {
+              e.preventDefault();
 
-    // Show edit modal with current meal data
-    window.editMeal = (index) => {
-        currentEditIndex = index;
-        const meal = meals[index];
-        document.getElementById('editMealName').value = meal.mealName;
-        document.getElementById('editMealPrice').value = meal.mealPrice;
-        document.getElementById('editMealQuantity').value = meal.mealQuantity;
-        document.getElementById('editMealIndex').value = index;
-        editMealModal.show();
-    };
+              const mealID = document.getElementById('editMealID').value;
+              const updatedMeal = {
+                  mealID: mealID,
+                  mealName: document.getElementById('editMealName').value,
+                  mealPrice: parseFloat(document.getElementById('editMealPrice').value),
+              };
 
-    // Save changes to the meal
-    editMealForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (currentEditIndex >= 0 && currentEditIndex < meals.length) {
-            const mealName = document.getElementById('editMealName').value.trim();
-            const mealPrice = parseFloat(document.getElementById('editMealPrice').value);
-            const mealQuantity = parseInt(document.getElementById('editMealQuantity').value, 10);
+              fetch('../actions/editMeal.php', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(updatedMeal)
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      fetchMeals(); // Refresh meals
+                      new bootstrap.Modal(document.getElementById('editMealModal')).hide(); // Hide modal
+                  } else {
+                      alert('Failed to update meal: ' + data.message);
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+          });
 
-            // Update meal object
-            meals[currentEditIndex] = {
-                mealName: mealName,
-                mealPrice: mealPrice,
-                mealQuantity: mealQuantity
-            };
 
-            updateMealList();
-            editMealModal.hide();
-        }
-    });
 
-    // Update meal list
-    function updateMealList() {
-        mealList.innerHTML = '';
-        meals.forEach((meal, index) => {
-            const mealItem = document.createElement('li');
-            mealItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-            mealItem.innerHTML = `
-                <div class="d-flex gap-2 p-3 border-bottom gold-members w-100">
-                    <div class="fw-bold text-success non_veg">.</div>
-                    <div class="flex-grow-1">
-                        <h6 class="mb-1">${meal.mealName}</h6>
-                       <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
-                    </div>
-                    <div>
-                        <input type="number" class="form-control d-inline-block w-25 mr-2" value="${meal.mealQuantity}" data-index="${index}" onchange="updateMealQuantity(event)">
-                        <button class="btn btn-warning btn-sm" onclick="editMeal(${index})">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="removeMeal(${index})">Remove</button>
-                    </div>
-                </div>
-            `;
-            mealList.appendChild(mealItem);
-        });
-        updateArchivedMealList();
-    }
 
-    // Update meal quantity
-    window.updateMealQuantity = (e) => {
-        const index = parseInt(e.target.getAttribute('data-index'), 10);
-        const quantity = parseInt(e.target.value, 10);
+          // Update meal quantity
+          window.updateMealQuantity = (e) => {
+              const mealID = parseInt(e.target.getAttribute('data-mealID'), 10);
+              const quantity = parseInt(e.target.value, 10);
 
-        if (index >= 0 && index < meals.length) {
-            if (isNaN(quantity) || quantity < 0) {
-                console.error("Invalid quantity value:", e.target.value);
-                return;
-            }
+              fetch('../actions/updateMealQuantity.php', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ mealID, quantity })
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      fetchMeals(); // Refresh meals
+                  } else {
+                      alert('Failed to update meal quantity: ' + data.message);
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+          };
 
-            meals[index].mealQuantity = quantity;
-            if (quantity === 0) {
-                archivedMeals.push(meals[index]);
-                meals.splice(index, 1);
-            }
-            updateMealList();
-        } else {
-            console.error("Invalid index for meal quantity update:", index);
-        }
-    };
+          // Remove meal
+          window.removeMeal = (mealID) => {
+              fetch('../actions/removeMeal.php', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ mealID })
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      fetchMeals(); // Refresh meals
+                  } else {
+                      alert('Failed to remove meal: ' + data.message);
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+          };
 
-    // Remove meal
-    window.removeMeal = (index) => {
-        if (index >= 0 && index < meals.length) {
-            archivedMeals.push(meals[index]);
-            meals.splice(index, 1);
-            updateMealList();
-        } else {
-            console.error("Invalid index for meal removal:", index);
-        }
-    };
+          // Restore meal
+          window.restoreMeal = (mealID) => {
+              fetch('../actions/restoreMeal.php', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ mealID })
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      fetchMeals(); // Refresh meals
+                  } else {
+                      alert('Failed to restore meal: ' + data.message);
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+          };
+      });
 
-    // Update archived meal list
-    function updateArchivedMealList() {
-        archivedMealList.innerHTML = '';
-        archivedMeals.forEach((meal, index) => {
-            const mealItem = document.createElement('li');
-            mealItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-            mealItem.innerHTML = `
-                <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
-                <button class="btn btn-success btn-sm" onclick="restoreMeal(${index})">Restore</button>
-            `;
-            archivedMealList.appendChild(mealItem);
-        });
-    }
-
-    // Restore meal
-    window.restoreMeal = (index) => {
-        if (index >= 0 && index < archivedMeals.length) {
-            meals.push(archivedMeals[index]);
-            archivedMeals.splice(index, 1);
-            updateMealList();
-        } else {
-            console.error("Invalid index for meal restoration:", index);
-        }
-    };
-});
 </script>
 
   </body>
