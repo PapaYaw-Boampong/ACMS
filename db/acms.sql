@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 31, 2024 at 12:48 AM
+-- Generation Time: Aug 01, 2024 at 06:20 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -26,8 +26,7 @@ SET time_zone = "+00:00";
 --
 -- Table structure for table `CafeteriaRatings`
 --
-CREATE Database ACMS;
-USE ACMS;
+
 CREATE TABLE `CafeteriaRatings` (
   `ratingID` int(11) NOT NULL,
   `ratingValue` int(11) NOT NULL,
@@ -175,6 +174,25 @@ INSERT INTO `MealOrder` (`mealID`, `orderID`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `mealplanstatus`
+--
+
+CREATE TABLE `mealplanstatus` (
+  `status_id` int(11) NOT NULL,
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `mealplanstatus`
+--
+
+INSERT INTO `mealplanstatus` (`status_id`, `status`) VALUES
+(1, 'Active'),
+(2, 'Inactive');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `MealRatings`
 --
 
@@ -249,24 +267,26 @@ CREATE TABLE `Meals` (
   `mealID` int(11) NOT NULL,
   `mealStatus` enum('AVAILABLE','UNAVAILABLE') DEFAULT NULL,
   `timeframe` enum('BREAKFAST','LUNCH','DINNER') DEFAULT NULL,
-  `cafeteriaID` int(11) DEFAULT NULL
+  `cafeteriaID` int(11) DEFAULT NULL,
+  `price` double NOT NULL,
+  `name` varchar(25) NOT NULL DEFAULT 'Food'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `Meals`
 --
 
-INSERT INTO `Meals` (`mealID`, `mealStatus`, `timeframe`, `cafeteriaID`) VALUES
-(1, 'AVAILABLE', 'BREAKFAST', 1),
-(2, 'UNAVAILABLE', 'LUNCH', 1),
-(3, 'AVAILABLE', 'DINNER', 1),
-(4, 'AVAILABLE', 'BREAKFAST', 2),
-(5, 'UNAVAILABLE', 'LUNCH', 2),
-(6, 'AVAILABLE', 'DINNER', 2),
-(7, 'UNAVAILABLE', 'BREAKFAST', 3),
-(8, 'AVAILABLE', 'LUNCH', 3),
-(9, 'UNAVAILABLE', 'DINNER', 3),
-(10, 'AVAILABLE', 'BREAKFAST', 1);
+INSERT INTO `Meals` (`mealID`, `mealStatus`, `timeframe`, `cafeteriaID`, `price`, `name`) VALUES
+(1, 'AVAILABLE', 'BREAKFAST', 1, 0, 'Food'),
+(2, 'AVAILABLE', 'LUNCH', 1, 0, 'Food'),
+(3, 'AVAILABLE', 'DINNER', 1, 0, 'Food'),
+(4, 'AVAILABLE', 'BREAKFAST', 2, 0, 'Food'),
+(5, 'UNAVAILABLE', 'LUNCH', 2, 0, 'Food'),
+(6, 'AVAILABLE', 'DINNER', 2, 0, 'Food'),
+(7, 'UNAVAILABLE', 'BREAKFAST', 3, 0, 'Food'),
+(8, 'AVAILABLE', 'LUNCH', 3, 0, 'Food'),
+(9, 'UNAVAILABLE', 'DINNER', 3, 0, 'Food'),
+(10, 'AVAILABLE', 'BREAKFAST', 1, 0, 'Food');
 
 -- --------------------------------------------------------
 
@@ -692,22 +712,7 @@ ALTER TABLE `MealIngredients`
 ALTER TABLE `MealOrder`
   ADD CONSTRAINT `mealorder_ibfk_1` FOREIGN KEY (`mealID`) REFERENCES `Meals` (`mealID`),
   ADD CONSTRAINT `mealorder_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `Orders` (`orderID`);
---
--- Table structure for table `mealplanstatus`
---
 
-CREATE TABLE `mealplanstatus` (
-  `status_id` int(11) NOT NULL,
-  `status` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `mealplanstatus`
---
-
-INSERT INTO `mealplanstatus` (`status_id`, `status`) VALUES
-(1, 'Active'),
-(2, 'Inactive');
 --
 -- Constraints for table `MealRatings`
 --
