@@ -15,9 +15,10 @@ $response = array();
 try {
     // Determine the number of recent meals to fetch
     $numberOfMeals = isset($_GET['number']) ? (int)$_GET['number'] : 10; // Default to 10 if not specified
-
+    $userID = isset($_GET['userID']) ? (int)$_GET['userID'] : -1; // Default to 10 if not specified
+    
     // Call the function to get recent meals
-    $recentMeals = getRecentMeals($numberOfMeals);
+    $recentMeals = getRecentMeals($userID,$numberOfMeals);
 
     if (!empty($recentMeals)) {
         $response['success'] = true;

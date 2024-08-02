@@ -43,26 +43,21 @@ function getCafeteriaInfo($cafID = -1) {
 
 
 
-// Function to retrieve trending meals
-function getTrendingMeals($limit = 10) {
+// Function to retrieve trending meals based on average ratings
+function trendingMeals($numMeals) {
     global $conn;
 
     $trendingMeals = array();
 
     // Prepare the SQL statement
-    $sql = "
-        SELECT Meals.mealID, Meals.mealStatus, Meals.timeframe, Meals.cafeteriaID, 
-               COALESCE(AVG(Reviews.rating), 0) as averageRating,
-               COUNT(Reviews.reviewID) as reviewCount
-        FROM Meals
-        LEFT JOIN Reviews ON Meals.mealID = Reviews.mealID
-        GROUP BY Meals.mealID
-        HAVING averageRating > 0
-        ORDER BY averageRating DESC, reviewCount DESC
-        LIMIT ?
-    ";
+    $sql = "SELECT Meals.mealID, Meals.name, Meals.price, Meals.timeframe, AVG(MealRatings.ratingValue) as avgRating
+            FROM Meals
+            INNER JOIN MealRatings ON Meals.mealID = MealRatings.mealID
+            GROUP BY Meals.mealID
+            ORDER BY avgRating DESC
+            LIMIT ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $limit);
+    $stmt->bind_param("i", $numMeals);
 
     // Execute the query
     $stmt->execute();
@@ -86,22 +81,23 @@ function getTrendingMeals($limit = 10) {
 }
 
 
-// Function to retrieve recent meals without ratings
-function getRecentMeals($number = 10) {
+
+// Function to retrieve recent meals purchased by a specific user
+function getRecentMeals($userID = -1, $numMeals=10) {
     global $conn;
 
-    $recentMeals = array();
+    $meals = array();
 
     // Prepare the SQL statement
-    $sql = "
-        SELECT Meals.mealID, Meals.mealStatus, Meals.timeframe, Meals.cafeteriaID, 
-               Meals.created_at
-        FROM Meals
-        ORDER BY Meals.created_at DESC
-        LIMIT ?
-    ";
+    $sql = "SELECT Meals.mealID, Meals.name, Meals.price, Meals.timeframe
+            FROM Meals
+            INNER JOIN OrderDetails ON Meals.mealID = OrderDetails.mealID
+            INNER JOIN Orders ON OrderDetails.orderID = Orders.orderID
+            WHERE Orders.userID = ?
+            ORDER BY Orders.orderID DESC
+            LIMIT ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $number);
+    $stmt->bind_param("ii", $userID, $numMeals);
 
     // Execute the query
     $stmt->execute();
@@ -112,7 +108,7 @@ function getRecentMeals($number = 10) {
     // Check if there are any results
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $recentMeals[] = $row;
+            $meals[] = $row;
         }
     } else {
         return null; // No results found
@@ -121,7 +117,7 @@ function getRecentMeals($number = 10) {
     // Close the statement
     $stmt->close();
 
-    return $recentMeals;
+    return $meals;
 }
 
 
