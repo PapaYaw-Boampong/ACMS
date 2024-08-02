@@ -83,7 +83,7 @@
     </div>
     <div class="container">
       <div class="pt-4 pb-2 title d-flex align-items-center">
-        <h5 class="m-0">Trending this week</h5>
+        <h5 class="m-0">Recents</h5>
         <a class="fw-bold ms-auto" href="trending.html">View all <i class="feather-chevrons-right"></i></a>
       </div>
 
