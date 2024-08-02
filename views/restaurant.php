@@ -2,7 +2,17 @@
 include_once '../settings/connection.php';
 include_once '../settings/core.php';
 include_once '../actions/FeedBackService/get/getReview.php';
+include_once '../actions/CafeteriaManagementService/get/getResturantDetails.php';
+include_once '../actions/FeedBackService/get/getNumberCafReviews.php';
+include_once '../actions/CafeteriaManagementService/get/getMenu.php';
+// session_start();
 $result = getRecentReviews($conn);
+$resultsDetails = getAllCafeteriaDetails($conn);
+$menusBF = getCafeteriaMenus($conn, 'BREAKFAST');
+$menusL = getCafeteriaMenus($conn, 'LUNCH');
+$menusD = getCafeteriaMenus($conn, 'DINNER');
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +49,7 @@ $result = getRecentReviews($conn);
     <div class="container position-relative">
       <img alt="#" src="../img/trending1.png" class="restaurant-pic" />
       <div class="pt-3 text-white">
-        <h2 class="fw-bold">Munchies Extra</h2>
+        <h2 class="fw-bold"><?php echo $resultsDetails['cafeteriaName'] ?></h2>
         <p class="text-white m-0">Inside Ashesi University</p>
         <div class="rating-wrap d-flex align-items-center mt-2">
           <ul class="rating-stars list-unstyled">
@@ -51,7 +61,7 @@ $result = getRecentReviews($conn);
               <i class="feather-star"></i>
             </li>
           </ul>
-          <p class="label-rating text-white ms-2 small">(245 Reviews)</p>
+          <p class="label-rating text-white ms-2 small"><?php echo getReviewCount($conn) ?> Reviews</p>
         </div>
       </div>
       <div class="pb-4">
@@ -62,7 +72,7 @@ $result = getRecentReviews($conn);
           </div>
           <div class="col-6 col-md-2">
             <p class="text-white-50 fw-bold m-0 small">Open time</p>
-            <p class="text-white m-0">12:00 PM</p>
+            <p class="text-white m-0"><?php echo $resultsDetails['openingTime'] ?></p>
           </div>
         </div>
       </div>
@@ -182,6 +192,76 @@ $result = getRecentReviews($conn);
           </div>
           <div class="row m-0">
             <h6 class="p-3 m-0 bg-light w-100">
+              Breakfast <small class="text-black-50"><?php echo count($menusBF); ?> ITEMS</small>
+            </h6>
+            <div class="col-md-12 px-0 border-top">
+              <div class>
+                <?php
+                foreach ($menusBF as $menu): ?>
+                  <div class="d-flex gap-2 p-3 border-bottom gold-members">
+                    <div
+                      class="fw-bold <?php echo $menu['mealStatus'] == 'Non veg' ? 'text-danger non_veg' : 'text-success veg'; ?>">
+                      .</div>
+                    <div>
+                      <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
+                      <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
+                    </div>
+                    <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#extras">ADD</a></span>
+                  </div>
+                <?php endforeach; ?>
+              </div>
+            </div>
+          </div>
+          <h6 class="p-3 m-0 bg-light w-100">
+            Lunch <small class="text-black-50"><?php echo count($menusL); ?> ITEMS</small>
+          </h6>
+          <div class="col-md-12 px-0 border-top">
+            <div class>
+              <?php
+              foreach ($menusL as $menu): ?>
+                <div class="d-flex gap-2 p-3 border-bottom gold-members">
+                  <div
+                    class="fw-bold <?php echo $menu['mealStatus'] == 'Non veg' ? 'text-danger non_veg' : 'text-success veg'; ?>">
+                    .</div>
+                  <div>
+                    <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
+                    <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
+                  </div>
+                  <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                      data-bs-target="#extras">ADD</a></span>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          </div>
+
+          <h6 class="p-3 m-0 bg-light w-100">
+            Dinner <small class="text-black-50"><?php echo count($menusD); ?> ITEMS</small>
+          </h6>
+          <div class="col-md-12 px-0 border-top">
+            <div class>
+              <?php
+              foreach ($menusD as $menu): ?>
+                <div class="d-flex gap-2 p-3 border-bottom gold-members">
+                  <div
+                    class="fw-bold <?php echo $menu['mealStatus'] == 'Non veg' ? 'text-danger non_veg' : 'text-success veg'; ?>">
+                    .</div>
+                  <div>
+                    <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
+                    <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
+                  </div>
+                  <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                      data-bs-target="#extras">ADD</a></span>
+                </div>
+              <?php endforeach; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <p class="fw-bold h6 p-3 border-bottom mb-0 w-100">Menu</p>
+          </div>
+          <div class="row m-0">
+            <h6 class="p-3 m-0 bg-light w-100">
               Quick Bites <small class="text-black-50">3 ITEMS</small>
             </h6>
             <div class="col-md-12 px-0 border-top">
@@ -248,7 +328,7 @@ $result = getRecentReviews($conn);
                   </div>
                   <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
                       data-bs-target="#extras">ADD</a></span>
-                </div>
+                </div> dont set an
                 <div class="d-flex align-items-center gap-2 p-3 border-bottom menu-list">
                   <img alt="#" src="../img/starter3.jpg" class="rounded-pill" />
                   <div>
@@ -341,80 +421,30 @@ $result = getRecentReviews($conn);
           </div>
         </div>
         <div class="mb-3">
-          <div id="ratings-and-reviews"
-            class="bg-white shadow-sm d-flex align-items-center rounded p-3 mb-3 clearfix restaurant-detailed-star-rating">
-            <h6 class="mb-0">Rate this Place</h6>
-            <div class="star-rating ms-auto">
-              <div class="d-inline-block h6 m-0">
-                <i class="feather-star text-warning"></i>
-                <i class="feather-star text-warning"></i>
-                <i class="feather-star text-warning"></i>
-                <i class="feather-star text-warning"></i>
-                <i class="feather-star"></i>
-              </div>
-              <b class="text-black ms-2">334</b>
-            </div>
-          </div>
-          <div class="bg-white rounded p-3 mb-3 clearfix graph-star-rating rounded shadow-sm">
-            <h6 class="mb-0 mb-1">Ratings and Reviews</h6>
-            <p class="text-muted mb-4 mt-1 small">Rated 3.5 out of 5</p>
-            <div class="graph-star-rating-body">
-              <div class="rating-list">
-                <div class="rating-list-left fw-bold small">5 Star</div>
-                <div class="rating-list-center">
-                  <div class="progress">
-                    <div role="progressbar" class="progress-bar bg-info" aria-valuenow="56" aria-valuemin="0"
-                      aria-valuemax="100" style="width: 56%"></div>
-                  </div>
+        <div class="bg-white p-3 mb-3 rating-review-select-page rounded shadow-sm">
+            <h6 class="mb-3">Rate and Comment</h6>
+            <div class="d-flex align-items-center mb-3">
+              <p class="m-0 small">Rate the Place</p>
+              <div class="star-rating ms-auto">
+                <div class="d-inline-block">
+                  <i class="feather-star text-warning"></i>
+                  <i class="feather-star text-warning"></i>
+                  <i class="feather-star text-warning"></i>
+                  <i class="feather-star text-warning"></i>
+                  <i class="feather-star"></i>
                 </div>
-                <div class="rating-list-right fw-bold small">56 %</div>
-              </div>
-              <div class="rating-list">
-                <div class="rating-list-left fw-bold small">4 Star</div>
-                <div class="rating-list-center">
-                  <div class="progress">
-                    <div role="progressbar" class="progress-bar bg-info" aria-valuenow="23" aria-valuemin="0"
-                      aria-valuemax="100" style="width: 23%"></div>
-                  </div>
-                </div>
-                <div class="rating-list-right fw-bold small">23 %</div>
-              </div>
-              <div class="rating-list">
-                <div class="rating-list-left fw-bold small">3 Star</div>
-                <div class="rating-list-center">
-                  <div class="progress">
-                    <div role="progressbar" class="progress-bar bg-info" aria-valuenow="11" aria-valuemin="0"
-                      aria-valuemax="100" style="width: 11%"></div>
-                  </div>
-                </div>
-                <div class="rating-list-right fw-bold small">11 %</div>
-              </div>
-              <div class="rating-list">
-                <div class="rating-list-left fw-bold small">2 Star</div>
-                <div class="rating-list-center">
-                  <div class="progress">
-                    <div role="progressbar" class="progress-bar bg-info" aria-valuenow="6" aria-valuemin="0"
-                      aria-valuemax="100" style="width: 6%"></div>
-                  </div>
-                </div>
-                <div class="rating-list-right fw-bold small">6 %</div>
-              </div>
-              <div class="rating-list">
-                <div class="rating-list-left fw-bold small">1 Star</div>
-                <div class="rating-list-center">
-                  <div class="progress">
-                    <div role="progressbar" class="progress-bar bg-info" aria-valuenow="4" aria-valuemin="0"
-                      aria-valuemax="100" style="width: 4%"></div>
-                  </div>
-                </div>
-                <div class="rating-list-right fw-bold small">4 %</div>
               </div>
             </div>
-            <div class="graph-star-rating-footer text-center mt-3">
-              <button type="button" class="btn btn-primary w-100 btn-sm">
-                Rate and Review
-              </button>
-            </div>
+            <form name = "cafeteriaFeedback">
+              <div class="form-group mb-3">
+                <label class="form-label small">Your Comment</label><textarea class="form-control"></textarea>
+              </div>
+              <div class="form-group mb-0">
+                <button type="button" class="btn btn-primary w-100">
+                  Submit
+                </button>
+              </div>
+            </form>
           </div>
           <div class="bg-white p-3 mb-3 restaurant-detailed-ratings-and-reviews shadow-sm rounded">
             <a class="text-primary float-end" href="#">Top Rated</a>
@@ -613,31 +643,7 @@ $result = getRecentReviews($conn);
               <hr /> -->
             <a class="text-center w-100 d-block mt-3 fw-bold" href="#">See All Reviews</a>
           </div>
-          <div class="bg-white p-3 rating-review-select-page rounded shadow-sm">
-            <h6 class="mb-3">Leave Comment</h6>
-            <div class="d-flex align-items-center mb-3">
-              <p class="m-0 small">Rate the Place</p>
-              <div class="star-rating ms-auto">
-                <div class="d-inline-block">
-                  <i class="feather-star text-warning"></i>
-                  <i class="feather-star text-warning"></i>
-                  <i class="feather-star text-warning"></i>
-                  <i class="feather-star text-warning"></i>
-                  <i class="feather-star"></i>
-                </div>
-              </div>
-            </div>
-            <form name = "cafeteriaFeedback">
-              <div class="form-group mb-3">
-                <label class="form-label small">Your Comment</label><textarea class="form-control"></textarea>
-              </div>
-              <div class="form-group mb-0">
-                <button type="button" class="btn btn-primary w-100">
-                  Submit Comment
-                </button>
-              </div>
-            </form>
-          </div>
+          
         </div>
       </div>
       <div class="col-md-4 pt-3">
