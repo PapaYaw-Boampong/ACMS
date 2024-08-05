@@ -8,7 +8,7 @@ function getRecentReviews($conn) {
     $sql = "
         SELECT 
             R.ratingID, R.userID, R.cafeteriaID, R.dateTime, R.rating, R.feedback,
-            U.name, C.cafeteriaName
+            U.name,U.userImage, C.cafeteriaName
         FROM 
             CafeteriaReviews R
         JOIN 
