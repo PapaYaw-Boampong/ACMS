@@ -420,7 +420,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
             </div>
           </div>
         </div>
-        <div class="mb-3">
+              --><div class="mb-3">
         <div class="bg-white p-3 mb-3 rating-review-select-page rounded shadow-sm">
             <h6 class="mb-3">Rate and Comment</h6>
             <div class="d-flex align-items-center mb-3">
