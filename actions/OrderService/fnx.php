@@ -1,15 +1,7 @@
 <?php
 
 
-// Meal Payload
-// $examplePayload = [
-//     'mealStatus' => 'AVAILABLE',
-//     'timeframe' => 'LUNCH',
-//     'cafeteriaID' => 1, // Main Cafeteria
-//     'description' => 'A delicious vegetarian lunch option with a variety of fresh vegetables.',
-//     'ingredients' => [1, 2, 3], // IDs for Tomato, Lettuce, Cheese
-//     'mealImage' => $_FILES['mealImage'] // Assuming the file input name is 'mealImage'
-// ];
+
 
 function createMeal($mealData, $conn) {
     // Start a transaction
@@ -53,4 +45,56 @@ function createMeal($mealData, $conn) {
 
 
 
-?>
+// Function to retrieve orders and related information for a specific user
+function getUserOrders($userID, $limit, $status = null) {
+    global $conn;
+
+    $orders = array();
+
+    // Prepare the base SQL statement
+    $sql = "SELECT Orders.orderID, Orders.message, Orders.status, OrderDetails.quantity, Meals.name, Meals.price
+            FROM Orders
+            JOIN OrderDetails ON Orders.orderID = OrderDetails.orderID
+            JOIN Meals ON OrderDetails.mealID = Meals.mealID
+            WHERE Orders.userID = ?";
+
+    // Append status filter if provided
+    if ($status !== null) {
+        $sql .= " AND Orders.status = ?";
+    }
+
+    // Append the limit
+    $sql .= " LIMIT ?";
+
+    // Prepare the statement
+    $stmt = $conn->prepare($sql);
+
+    // Bind parameters based on the presence of the status
+    if ($status !== null) {
+        $stmt->bind_param("isi", $userID, $status, $limit);
+    } else {
+        $stmt->bind_param("ii", $userID, $limit);
+    }
+
+    // Execute the query
+    $stmt->execute();
+
+    // Get the result
+    $result = $stmt->get_result();
+
+    // Check if there are any results
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $orders[] = $row;
+        }
+    } else {
+        return null; // No results found
+    }
+
+    // Close the statement
+    $stmt->close();
+
+    return $orders;
+}
+
+
