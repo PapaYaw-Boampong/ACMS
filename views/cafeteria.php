@@ -115,7 +115,7 @@ include('../settings/connection.php');
               <p class="fw-bold h6 p-3 border-bottom mb-0 w-100">Current Meals</p>
             </div>
             
-            
+            <!-- Current Meal List -->
             <div class="row m-0">
                 <h6 class="p-3 m-0 bg-light w-100">
                   Meals <small class="text-black-50">ITEMS</small>
@@ -128,6 +128,7 @@ include('../settings/connection.php');
               
           </div>
           
+          <!-- Archived Meal List -->
           <div class="shadow-sm rounded bg-white mb-3 overflow-hidden">
             <div class="d-flex item-aligns-center">
               <p class="fw-bold h6 p-3 border-bottom mb-0 w-100">Archived Meals</p>
@@ -382,6 +383,18 @@ include('../settings/connection.php');
                   });
           }
 
+          function clearFormFields(form) {
+            const fields = form.querySelectorAll('input, select, textarea');
+            fields.forEach(field => {
+                if (field.type === 'checkbox' || field.type === 'radio') {
+                    field.checked = false;
+                } else {
+                    field.value = '';
+                }
+            });
+        }
+
+
           // Add meal
           document.getElementById('addMealForm').addEventListener('submit', function(e) {
               e.preventDefault();
@@ -402,8 +415,9 @@ include('../settings/connection.php');
               .then(response => response.json())
               .then(data => {
                   if (data.success) {
+                    console.log("Meal added successfully");
                       fetchMeals(); // Refresh meals
-                      this.reset(); // Reset the form fields
+                      clearFormFields(this); // Reset the form fields
                   } else {
                       alert('Failed to add meal: ' + data.message);
                   }
@@ -472,56 +486,57 @@ include('../settings/connection.php');
               const mealID = parseInt(e.target.getAttribute('data-mealID'), 10);
               const quantity = parseInt(e.target.value, 10);
 
-              fetch('../actions/updateMealQuantity.php', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({ mealID, quantity })
-              })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.success) {
-                      fetchMeals(); // Refresh meals
-                  } else {
-                      alert('Failed to update meal quantity: ' + data.message);
-                  }
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-              });
+              if (quantity <= 0) {
+                removeMeal(mealID);
+                      } else {
+                        fetch('../actions/updateMealQuantity.php', {
+                          method: 'POST',
+                          headers: {
+                              'Content-Type': 'application/json'
+                          },
+                          body: JSON.stringify({ mealID, quantity })
+                      })
+                      .then(response => response.json())
+                      .then(data => {
+                          if (data.success) {
+                              fetchMeals(); // Refresh meals
+                          } else {
+                              alert('Failed to update meal quantity: ' + data.message);
+                          }
+                      })
+                      .catch(error => {
+                          console.error('Error:', error);
+                      });
+                      }
           };
 
           // Function to move a meal from current to archived
           window.removeMeal = (mealID) => {
-              // Find the meal item in the current list
-              const mealItem = document.getElementById(`meal-${mealID}`);
-              if (mealItem) {
-                  // Remove the meal item from the current list
-                  mealItem.remove();
+            // Send an AJAX request to update the meal status
+            fetch('../actions/removeMeal.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ mealID: mealID }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    fetchMeals(); // Refresh meals
+                } else {
+                    console.error('Failed to update meal status:', data.error);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        };
 
-                  // Create a new list item for the archived list
-                  const archivedMealList = document.getElementById('archivedMealList');
-                  const archivedMealItem = document.createElement('li');
-                  archivedMealItem.className = 'list-group-item';
-                  archivedMealItem.id = `archived-meal-${mealID}`;
-
-                  // Copy the content from the current list item to the archived list item
-                  archivedMealItem.innerHTML = mealItem.innerHTML;
-
-                  // Append the meal item to the archived list
-                  archivedMealList.appendChild(archivedMealItem);
-              } else {
-                  console.error('Meal item not found in the current list');
-              }
-          };
-
-          document.querySelectorAll('.remove-button').forEach(button => {
-          button.addEventListener('click', () => {
-              const mealID = button.dataset.mealId; // Or however you get the mealID
-              removeMeal(mealID);
-          });
-      });
+        document.querySelectorAll('.remove-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const mealID = button.dataset.mealId; // Or however you get the mealID
+                removeMeal(mealID);
+            });
+        });
 
           // Restore meal
           window.restoreMeal = (mealID) => {
