@@ -1,4 +1,10 @@
 <?php
+
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
 // Include the database connection file
 include '../../../settings/connection.php';
 
@@ -18,13 +24,24 @@ try {
     if ($userID === null) {
         throw new Exception("User ID is required.");
     }
-   
+
     // Call the function to get user orders
     $orders = getUserOrders($userID, $limit, $status);
-    
+
     if (!empty($orders)) {
         $response['success'] = true;
-        $response['data'] = $orders;
+        $groupedOrders = [];
+
+        // Group orders by status
+        foreach ($orders as $order) {
+            $status = $order['status'];
+            if (!isset($groupedOrders[$status])) {
+                $groupedOrders[$status] = [];
+            }
+            $groupedOrders[$status][] = $order;
+        }
+
+        $response['data'] = $groupedOrders;
     } else {
         $response['success'] = false;
         $response['message'] = "No orders found for the specified user.";

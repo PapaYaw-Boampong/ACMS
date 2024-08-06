@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 function createMeal($mealData, $conn) {
     // Start a transaction
     $conn->beginTransaction();
@@ -43,8 +40,6 @@ function createMeal($mealData, $conn) {
 }
 
 
-
-
 // Function to retrieve orders and related information for a specific user
 function getUserOrders($userID, $limit, $status = null) {
     global $conn;
@@ -52,10 +47,13 @@ function getUserOrders($userID, $limit, $status = null) {
     $orders = array();
 
     // Prepare the base SQL statement
-    $sql = "SELECT Orders.orderID, Orders.message, Orders.status, OrderDetails.quantity, Meals.name, Meals.price
+    // Prepare the base SQL statement
+    $sql = "SELECT Orders.orderID, Orders.status, OrderDetails.quantity, OrderDetails.orderDate, 
+            Meals.name AS mealName, Meals.price, Cafeterias.cafeteriaID, Cafeterias.cafeteriaName AS cafeteriaName
             FROM Orders
             JOIN OrderDetails ON Orders.orderID = OrderDetails.orderID
             JOIN Meals ON OrderDetails.mealID = Meals.mealID
+            JOIN Cafeterias ON Meals.cafeteriaID = Cafeterias.cafeteriaID
             WHERE Orders.userID = ?";
 
     // Append status filter if provided

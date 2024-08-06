@@ -319,7 +319,8 @@ INSERT INTO `Notification` (`notificationID`, `userID`, `message`, `status`) VAL
 CREATE TABLE `OrderDetails` (
   `mealID` int(11) NOT NULL,
   `orderID` int(11) NOT NULL,
-  `quantity` int(11) DEFAULT NULL
+  `quantity` int(11) DEFAULT NULL,
+  `orderDate` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
