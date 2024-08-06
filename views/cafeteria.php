@@ -35,6 +35,8 @@ include('../settings/connection.php');
     <link href="../css/style.css" rel="stylesheet" />
 
     <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   </head>
   <body class="fixed-bottom-bar">
     <special-header></special-header>
@@ -118,7 +120,7 @@ include('../settings/connection.php');
             <!-- Current Meal List -->
             <div class="row m-0">
                 <h6 class="p-3 m-0 bg-light w-100">
-                  Meals <small class="text-black-50">ITEMS</small>
+                  Meals <small class="text-black-50" id="currentMealCount">ITEMS</small>
                 </h6>
                 <div class="col-md-12 px-0 border-top">
                   <ul class="list-group" id="mealList"></ul>
@@ -137,7 +139,7 @@ include('../settings/connection.php');
             
             <div class="row m-0">
                 <h6 class="p-3 m-0 bg-light w-100">
-                  Meals <small class="text-black-50">ITEMS</small>
+                  Meals <small class="text-black-50" id="archivedMealCount">ITEMS</small>
                 </h6>
                 <div class="col-md-12 px-0 border-top">
                     <ul class="list-group" id="archivedMealList"></ul>
@@ -326,6 +328,9 @@ include('../settings/connection.php');
       data-cf-beacon='{"rayId":"8a5eb09f3977639d","version":"2024.7.0","r":1,"serverTiming":{"name":{"cfL4":true}},"token":"dd471ab1978346bbb991feaa79e6ce5c","b":1}'
       crossorigin="anonymous"
     ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script src="../js/headerFooterManager.js"></script>
 
     <script>
@@ -356,7 +361,7 @@ include('../settings/connection.php');
                                   <div class="ms-auto">
                                       <input type="number" class="form-control d-inline-block w-25 mr-2" value="${meal.mealQuantity}" data-mealID="${meal.mealID}" onchange="updateMealQuantity(event)">
                                       <button class="btn btn-warning btn-sm" onclick="editMeal(${meal.mealID})">Edit</button>
-                                      <button class="btn btn-danger btn-sm" onclick="removeMeal(${meal.mealID})">Remove</button>
+                                      <button class="btn btn-danger btn-sm" onclick="removeMeal(${meal.mealID})">Archive</button>
                                   </div>
                               </div>
                           `;
@@ -364,22 +369,27 @@ include('../settings/connection.php');
                       });
 
                       data.archivedMeals.forEach((meal) => {
-                          const li = document.createElement('li');
-                          li.className = 'list-group-item';
-                          li.innerHTML = `
-                              <div class="d-flex align-items-center">
-                                  <img src="../img/starter1.jpg" class="img-fluid rounded" />
-                                  <div class="ps-3">
-                                      <h6 class="mb-1 fw-bold">${meal.mealName}</h6>
-                                      <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
-                                  </div>
-                                  <div class="ms-auto">
-                                      <button class="btn btn-success btn-sm" onclick="restoreMeal(${meal.mealID})">Restore</button>
-                                  </div>
-                              </div>
-                          `;
-                          archivedMealList.appendChild(li);
-                      });
+                        const li = document.createElement('li');
+                        li.className = 'list-group-item';
+                        li.innerHTML = `
+                            <div class="d-flex align-items-center">
+                                <img src="../img/starter1.jpg" class="img-fluid rounded" />
+                                <div class="ps-3">
+                                    <h6 class="mb-1 fw-bold">${meal.mealName}</h6>
+                                    <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
+                                </div>
+                                <div class="ms-auto">
+                                    <button class="btn btn-success btn-sm" onclick="restoreMeal(${meal.mealID})">Restore</button>
+                                    <button class="btn btn-danger btn-sm ms-2" onclick="deleteMeal(${meal.mealID})">Delete</button>
+                                </div>
+                            </div>
+                        `;
+                        archivedMealList.appendChild(li);
+                    });
+
+                    // Update the count of meals
+                    currentMealCount.textContent = `${data.currentMeals.length} ITEMS`;
+                    archivedMealCount.textContent = `${data.archivedMeals.length} ITEMS`;
                   });
           }
 
@@ -559,6 +569,42 @@ include('../settings/connection.php');
                   console.error('Error:', error);
               });
           };
+
+          window.deleteMeal = (mealID) => {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('../actions/deleteMeal.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ mealID })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Deleted!', 'Your meal has been deleted.', 'success');
+                            fetchMeals(); // Refresh meals
+                        } else {
+                            Swal.fire('Error!', 'Failed to delete meal: ' + data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        Swal.fire('Error!', 'An error occurred: ' + error.message, 'error');
+                    });
+                }
+            });
+        };
+
+
       });
 
 </script>
