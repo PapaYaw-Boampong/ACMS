@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['mealID'])) {
         $mealID = intval($_GET['mealID']);
 
-        $query = "SELECT mealID, mealName, mealPrice FROM meals WHERE mealID = ?";
+        $query = "SELECT mealID, name, price FROM meals WHERE mealID = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param('i', $mealID);
         $stmt->execute();
