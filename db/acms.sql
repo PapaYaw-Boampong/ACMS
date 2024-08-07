@@ -271,14 +271,12 @@ CREATE TABLE `meals` (
   `cafeteriaID` int(11) DEFAULT NULL,
   `price` double NOT NULL,
   `name` varchar(50) NOT NULL DEFAULT 'Food',
-  `quantity` int(11) NOT NULL DEFAULT 0
+  `quantity` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`mealID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `meals`
---
-
-INSERT INTO `meals` (`mealID`, `mealStatus`, `timeframe`, `cafeteriaID`, `price`, `name`, `quantity`) VALUES
+-- Dumping data for table `Meals`
+INSERT INTO `Meals` (`mealID`, `mealStatus`, `timeframe`, `cafeteriaID`, `price`, `name`, `quantity`) VALUES
 (1, 'AVAILABLE', 'BREAKFAST', 1, 5.99, 'Pancakes', 10),
 (2, 'AVAILABLE', 'LUNCH', 1, 7.99, 'Chicken Salad', 20),
 (3, 'AVAILABLE', 'DINNER', 1, 8.99, 'Spaghetti Bolognese', 15),
@@ -320,17 +318,18 @@ INSERT INTO `notification` (`notificationID`, `userID`, `message`, `status`) VAL
 
 CREATE TABLE `orderdetails` (
   `orderID` int(11) NOT NULL,
-  `orderDate` datetime DEFAULT current_timestamp()
+  `quantity` int(11) DEFAULT NULL,
+  `deliveryStatus` ENUM('delivery', 'pickup') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orderdetails`
 --
 
-INSERT INTO `orderdetails` (`orderID`, `orderDate`) VALUES
-(1, '2024-08-07 22:01:13'),
-(2, '2024-08-07 22:01:13'),
-(3, '2024-08-07 22:01:13');
+INSERT INTO `orderdetails` (`orderID`, `orderDate`, `deliveryStatus`) VALUES
+(1, '2024-08-07 22:01:13', 'delivery'),
+(2, '2024-08-07 22:01:13', 'pickup'),
+(3, '2024-08-07 22:01:13', 'delivery');
 
 -- --------------------------------------------------------
 
@@ -507,6 +506,44 @@ INSERT INTO `users` (`userID`, `email`, `phoneNo`, `name`, `preferences`, `passw
 --
 -- Indexes for dumped tables
 --
+
+CREATE TABLE `address` (
+  `addressID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `deliveryInstruction` text DEFAULT NULL,
+  PRIMARY KEY (`addressID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `address` (`userID`, `address`, `deliveryInstruction`) VALUES
+(1, '123 Elm Street, Springfield, IL 62701', 'Leave at the front door'),
+(2, '456 Oak Avenue, Metropolis, NY 10001', 'Deliver between 9 AM and 5 PM'),
+(3, '789 Pine Road, Smalltown, TX 75001', 'Ring the doorbell'),
+(4, '101 Maple Lane, Big City, CA 90001', 'Leave package with doorman'),
+(5, '202 Birch Street, Townsville, FL 33101', 'No delivery on weekends'),
+(6, '303 Cedar Drive, Village, WA 98101', 'Deliver to the back porch'),
+(7, '404 Spruce Boulevard, Capital City, CO 80201', 'Call upon arrival'),
+(8, '505 Redwood Way, Resort, NV 89001', 'Leave with neighbor if not home');
+
+
+CREATE TABLE `address` (
+  `addressID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `deliveryInstruction` text DEFAULT NULL,
+  PRIMARY KEY (`addressID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `address` (`userID`, `address`, `deliveryInstruction`) VALUES
+(1, '123 Elm Street, Springfield, IL 62701', 'Leave at the front door'),
+(2, '456 Oak Avenue, Metropolis, NY 10001', 'Deliver between 9 AM and 5 PM'),
+(3, '789 Pine Road, Smalltown, TX 75001', 'Ring the doorbell'),
+(4, '101 Maple Lane, Big City, CA 90001', 'Leave package with doorman'),
+(5, '202 Birch Street, Townsville, FL 33101', 'No delivery on weekends'),
+(6, '303 Cedar Drive, Village, WA 98101', 'Deliver to the back porch'),
+(7, '404 Spruce Boulevard, Capital City, CO 80201', 'Call upon arrival'),
+(8, '505 Redwood Way, Resort, NV 89001', 'Leave with neighbor if not home');
+
 
 --
 -- Indexes for table `cafeteriaratings`

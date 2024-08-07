@@ -58,11 +58,11 @@
                     <label class="pb-1">Do you have any dietary restrictions or food allergies?</label>
                     <div>
                       <div class="form-check form-check-inline ps-5">
-                        <input class="form-check-input" type="radio" name="dietaryRestrictions" id="dietaryRestrictionsYes" value="yes">
+                        <input class="form-check-input" type="radio" name="dietaryRestrictions" id="dietaryRestrictionsYes" value="yes" >
                         <label class="form-check-label" for="dietaryRestrictionsYes">Yes</label>
                       </div>
                       <div class="form-check form-check-inline ps-5">
-                        <input class="form-check-input" type="radio" name="dietaryRestrictions" id="dietaryRestrictionsNo" value="no">
+                        <input class="form-check-input" type="radio" name="dietaryRestrictions" id="dietaryRestrictionsNo" value="no"checked>
                         <label class="form-check-label" for="dietaryRestrictionsNo">No</label>
                       </div>
                     </div>
@@ -118,7 +118,7 @@
                       <label class="form-check-label" for="pescatarian">Pescatarian</label>
                     </div>
                     <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="none" id="none">
+                      <input class="form-check-input" type="checkbox" value="none" id="none"checked>
                       <label class="form-check-label" for="none">None</label>
                     </div>
                   </div>
@@ -131,7 +131,7 @@
                         <label class="form-check-label" for="culturalRestrictionsYes">Yes</label>
                       </div>
                       <div class="form-check form-check-inline ps-5">
-                        <input class="form-check-input" type="radio" name="culturalRestrictions" id="culturalRestrictionsNo" value="no">
+                        <input class="form-check-input" type="radio" name="culturalRestrictions" id="culturalRestrictionsNo" value="no" checked>
                         <label class="form-check-label" for="culturalRestrictionsNo">No</label>
                       </div>
                     </div>
