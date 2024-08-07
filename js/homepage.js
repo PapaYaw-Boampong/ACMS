@@ -40,7 +40,7 @@ function createCafeteriaElement(cafeteria) {
 
   // Build the inner HTML using template literals for better readability and maintenance
   itemDiv.innerHTML = `
-         <h3 class="m-0">${cafeteria.cafeteriaName}</h5>
+         <h5 class="m-0">${cafeteria.cafeteriaName}</h5>
          <br>
         <a class="d-block text-center shadow-sm" href="cafeteriaDetails.html?cafID=${
           cafeteria.cafeteriaID
@@ -66,7 +66,7 @@ function renderNoCafeteriasMessage() {
 
 function initializeOfferSlider() {
   $(".offer-slider").slick({
-    slidesToShow: 2,
+    slidesToShow: 3,
     arrows: true,
     responsive: [
       {
@@ -127,7 +127,9 @@ function createMealElement(meal) {
                       meal.avgRating
                     )} </span>
                 </div>
-                
+                <div class="favourite-heart text-danger position-absolute rounded-circle">
+                  <a href="#"><i class="feather-heart"></i></a>
+                </div>
                 <div class="member-plan position-absolute">
                     <span class="badge text-bg-dark">Promoted</span>
                 </div>
@@ -149,7 +151,7 @@ function createMealElement(meal) {
                         ${generateStars(meal.avgRating)}
                     </ul>         
                 </div>
-              
+
             </div>
         </div>
     `;
@@ -170,7 +172,7 @@ function generateStars(avgRating) {
 
 function initializePopularSlider() {
   $(".trending-slider").slick({
-    slidesToShow: 1,
+    slidesToShow: 3,
     arrows: false,
     responsive: [
       {
