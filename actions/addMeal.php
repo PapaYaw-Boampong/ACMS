@@ -13,7 +13,7 @@ if (isset($data['mealName'], $data['mealPrice'], $data['mealQuantity'])) {
     $mealQuantity = $data['mealQuantity'];
 
     // Example query - replace with your actual table and columns
-    $query = "INSERT INTO meals (mealName, mealPrice, mealQuantity, mealStatus) VALUES (?, ?, ?, 'AVAILABLE')";
+    $query = "INSERT INTO meals (name, price, quantity, mealStatus) VALUES (?, ?, ?, 'AVAILABLE')";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('sii', $mealName, $mealPrice, $mealQuantity);
     

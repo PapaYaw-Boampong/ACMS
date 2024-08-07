@@ -178,16 +178,16 @@ include('../settings/connection.php');
                   
                 <form id="addMealForm">
                   <div class="form-group mb-3">
-                      <label for="mealName">Meal Name</label>
-                      <input type="text" class="form-control" id="mealName" name="mealName" required>
+                      <label for="name">Meal Name</label>
+                      <input type="text" class="form-control" id="name" name="name" required>
                   </div>
                   <div class="form-group mb-3">
-                      <label for="mealPrice">Price</label>
-                      <input type="number" class="form-control" id="mealPrice" name="mealPrice" required>
+                      <label for="price">Price</label>
+                      <input type="number" class="form-control" id="price" name="price" required>
                   </div>
                   <div class="form-group mb-3">
-                      <label for="mealQuantity">Quantity</label>
-                      <input type="number" class="form-control" id="mealQuantity" name="mealQuantity" required>
+                      <label for="quantity">Quantity</label>
+                      <input type="number" class="form-control" id="quantity" name="quantity" required>
                   </div>
                   <div class="col-md-12 px-0 border-top">
                       <div class="py-3">
@@ -275,12 +275,12 @@ include('../settings/connection.php');
         <div class="modal-body">
           <form id="editMealForm">
             <div class="form-group mb-3">
-              <label for="editMealName">Meal Name</label>
-              <input type="text" class="form-control" id="editMealName" name="editMealName" required>
+              <label for="editname">Meal Name</label>
+              <input type="text" class="form-control" id="editname" name="editname" required>
             </div>
             <div class="form-group mb-3">
-              <label for="editMealPrice">Price</label>
-              <input type="number" class="form-control" id="editMealPrice" name="editMealPrice" required>
+              <label for="editprice">Price</label>
+              <input type="number" class="form-control" id="editprice" name="editprice" required>
             </div>
             <input type="hidden" id="editMealID">
             <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -355,11 +355,11 @@ include('../settings/connection.php');
                               <div class="d-flex align-items-center">
                                   <img src="../img/starter1.jpg" class="img-fluid rounded" />
                                   <div class="ps-3">
-                                      <h6 class="mb-1 fw-bold">${meal.mealName}</h6>
-                                      <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
+                                      <h6 class="mb-1 fw-bold">${meal.name}</h6>
+                                      <p class="text-muted mb-0">GHS ${meal.price}</p>
                                   </div>
                                   <div class="ms-auto">
-                                      <input type="number" class="form-control d-inline-block w-25 mr-2" value="${meal.mealQuantity}" data-mealID="${meal.mealID}" onchange="updateMealQuantity(event)">
+                                      <input type="number" class="form-control d-inline-block w-25 mr-2" value="${meal.quantity}" data-mealID="${meal.mealID}" onchange="updatequantity(event)">
                                       <button class="btn btn-warning btn-sm" onclick="editMeal(${meal.mealID})">Edit</button>
                                       <button class="btn btn-danger btn-sm" onclick="removeMeal(${meal.mealID})">Archive</button>
                                   </div>
@@ -375,8 +375,8 @@ include('../settings/connection.php');
                             <div class="d-flex align-items-center">
                                 <img src="../img/starter1.jpg" class="img-fluid rounded" />
                                 <div class="ps-3">
-                                    <h6 class="mb-1 fw-bold">${meal.mealName}</h6>
-                                    <p class="text-muted mb-0">GHS ${meal.mealPrice}</p>
+                                    <h6 class="mb-1 fw-bold">${meal.name}</h6>
+                                    <p class="text-muted mb-0">GHS ${meal.price}</p>
                                 </div>
                                 <div class="ms-auto">
                                     <button class="btn btn-success btn-sm" onclick="restoreMeal(${meal.mealID})">Restore</button>
@@ -410,9 +410,9 @@ include('../settings/connection.php');
               e.preventDefault();
               var formData = new FormData(this);
               const mealData = {
-                  mealName: formData.get('mealName'),
-                  mealPrice: formData.get('mealPrice'),
-                  mealQuantity: formData.get('mealQuantity')
+                  name: formData.get('name'),
+                  price: formData.get('price'),
+                  quantity: formData.get('quantity')
               };
 
               fetch('../actions/addMeal.php', {
@@ -446,8 +446,8 @@ include('../settings/connection.php');
                         console.error('Error fetching meal:', meal.error);
                         return;
                     }
-                    document.getElementById('editMealName').value = meal.mealName;
-                    document.getElementById('editMealPrice').value = meal.mealPrice;
+                    document.getElementById('editname').value = meal.name;
+                    document.getElementById('editprice').value = meal.price;
                     document.getElementById('editMealID').value = meal.mealID;
                     new bootstrap.Modal(document.getElementById('editMealModal')).show();
                 })
@@ -463,8 +463,8 @@ include('../settings/connection.php');
               const mealID = document.getElementById('editMealID').value;
               const updatedMeal = {
                   mealID: mealID,
-                  mealName: document.getElementById('editMealName').value,
-                  mealPrice: parseFloat(document.getElementById('editMealPrice').value),
+                  name: document.getElementById('editname').value,
+                  price: parseFloat(document.getElementById('editprice').value),
               };
 
               fetch('../actions/editMeal.php', {
@@ -492,14 +492,14 @@ include('../settings/connection.php');
 
 
           // Update meal quantity
-          window.updateMealQuantity = (e) => {
+          window.updatequantity = (e) => {
               const mealID = parseInt(e.target.getAttribute('data-mealID'), 10);
               const quantity = parseInt(e.target.value, 10);
 
               if (quantity <= 0) {
                 removeMeal(mealID);
                       } else {
-                        fetch('../actions/updateMealQuantity.php', {
+                        fetch('../actions/updatequantity.php', {
                           method: 'POST',
                           headers: {
                               'Content-Type': 'application/json'
