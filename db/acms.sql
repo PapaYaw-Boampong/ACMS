@@ -4,6 +4,7 @@
 --
 -- Host: localhost
 -- Generation Time: Aug 01, 2024 at 06:20 AM
+-- Generation Time: Aug 01, 2024 at 06:20 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -263,30 +264,30 @@ DELIMITER ;
 -- Table structure for table `Meals`
 --
 
+-- Create table with quantity column
 CREATE TABLE `Meals` (
-  `mealID` int(11) NOT NULL,
+  `mealID` int(11) NOT NULL AUTO_INCREMENT,
   `mealStatus` enum('AVAILABLE','UNAVAILABLE') DEFAULT NULL,
   `timeframe` enum('BREAKFAST','LUNCH','DINNER') DEFAULT NULL,
   `cafeteriaID` int(11) DEFAULT NULL,
   `price` double NOT NULL,
-  `name` varchar(25) NOT NULL DEFAULT 'Food'
+  `name` varchar(50) NOT NULL DEFAULT 'Food',
+  `quantity` int(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`mealID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
 -- Dumping data for table `Meals`
---
-
-INSERT INTO `Meals` (`mealID`, `mealStatus`, `timeframe`, `cafeteriaID`, `price`, `name`) VALUES
-(1, 'AVAILABLE', 'BREAKFAST', 1, 0, 'Food'),
-(2, 'AVAILABLE', 'LUNCH', 1, 0, 'Food'),
-(3, 'AVAILABLE', 'DINNER', 1, 0, 'Food'),
-(4, 'AVAILABLE', 'BREAKFAST', 2, 0, 'Food'),
-(5, 'UNAVAILABLE', 'LUNCH', 2, 0, 'Food'),
-(6, 'AVAILABLE', 'DINNER', 2, 0, 'Food'),
-(7, 'UNAVAILABLE', 'BREAKFAST', 3, 0, 'Food'),
-(8, 'AVAILABLE', 'LUNCH', 3, 0, 'Food'),
-(9, 'UNAVAILABLE', 'DINNER', 3, 0, 'Food'),
-(10, 'AVAILABLE', 'BREAKFAST', 1, 0, 'Food');
+INSERT INTO `Meals` (`mealID`, `mealStatus`, `timeframe`, `cafeteriaID`, `price`, `name`, `quantity`) VALUES
+(1, 'AVAILABLE', 'BREAKFAST', 1, 5.99, 'Pancakes', 10),
+(2, 'AVAILABLE', 'LUNCH', 1, 7.99, 'Chicken Salad', 20),
+(3, 'AVAILABLE', 'DINNER', 1, 8.99, 'Spaghetti Bolognese', 15),
+(4, 'AVAILABLE', 'BREAKFAST', 2, 6.49, 'Omelette', 5),
+(5, 'UNAVAILABLE', 'LUNCH', 2, 7.49, 'Caesar Salad', 0),
+(6, 'AVAILABLE', 'DINNER', 2, 9.99, 'Grilled Salmon', 8),
+(7, 'UNAVAILABLE', 'BREAKFAST', 3, 6.99, 'French Toast', 0),
+(8, 'AVAILABLE', 'LUNCH', 3, 8.49, 'Beef Tacos', 12),
+(9, 'UNAVAILABLE', 'DINNER', 3, 10.99, 'Steak', 0),
+(10, 'AVAILABLE', 'BREAKFAST', 1, 5.49, 'Bagel with Cream Cheese', 25);
 
 -- --------------------------------------------------------
 
@@ -565,13 +566,6 @@ ALTER TABLE `MealReviews`
   ADD PRIMARY KEY (`reviewID`),
   ADD KEY `cafeteriaID` (`mealID`),
   ADD KEY `userID` (`userID`);
-
---
--- Indexes for table `Meals`
---
-ALTER TABLE `Meals`
-  ADD PRIMARY KEY (`mealID`),
-  ADD KEY `cafeteriaID` (`cafeteriaID`);
 
 --
 -- Indexes for table `Notification`
