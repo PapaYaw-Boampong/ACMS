@@ -1,117 +1,125 @@
+<?php
+session_start();
+// Include the connection file
+include_once '../settings/connection.php';
+
+// Assuming user is logged in and userID is stored in session
+$userID = $_SESSION['userID'];
+
+// Fetch user data from the database
+$query = "SELECT name, phoneNo, email FROM users WHERE userID = ?";
+$stmt = mysqli_stmt_init($conn);
+if (!mysqli_stmt_prepare($stmt, $query)) {
+    die("Error: " . mysqli_error($conn));
+}
+mysqli_stmt_bind_param($stmt, "i", $userID);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$user = mysqli_fetch_assoc($result);
+mysqli_stmt_close($stmt);
+mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="Ashesi Eats" />
-    <link rel="icon" type="image/png"  src="../img/fav.png"/>
+    <link rel="icon" type="image/png" href="../img/fav.png" />
     <title>Ashesi Eats</title>
 
-    <link
-      href="../vendor/slick/slick/slick.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="../vendor/slick/slick/slick-theme.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-
+    <link href="../vendor/slick/slick/slick.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/slick/slick-theme.css" rel="stylesheet" type="text/css" />
     <link href="../vendor/icons/feather.css" rel="stylesheet" type="text/css" />
-
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
     <link href="../css/style.css" rel="stylesheet" />
-
     <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
-  </head>
-  <body class="fixed-bottom-bar">
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                var formData = new FormData(this);
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '../actions/UserManagementService/put/update_account.php', true);
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        document.getElementById('success-message').innerHTML = xhr.responseText;
+                        document.getElementById('success-message').style.display = 'block';
+                        setTimeout(function() {
+                            document.getElementById('success-message').style.display = 'none';
+                        }, 3000);
+                    } else {
+                        document.getElementById('success-message').innerHTML = '<span style="color:red">An error occurred. Please try again.</span>';
+                        document.getElementById('success-message').style.display = 'block';
+                        setTimeout(function() {
+                            document.getElementById('success-message').style.display = 'none';
+                        }, 3000);
+                    }
+                };
+                xhr.send(formData);
+            });
+        });
+    </script>
+</head>
+<body class="fixed-bottom-bar">
     <special-header></special-header>
-
     <div class="osahan-profile">
-      <div class="d-none">
-        <div class="bg-primary border-bottom p-3 d-flex align-items-center">
-          <a class="toggle togglew toggle-2" href="#"><span></span></a>
-          <h4 class="fw-bold m-0 text-white">Profile</h4>
+        <div class="d-none">
+            <div class="bg-primary border-bottom p-3 d-flex align-items-center">
+                <a class="toggle togglew toggle-2" href="#"><span></span></a>
+                <h4 class="fw-bold m-0 text-white">Profile</h4>
+            </div>
         </div>
-      </div>
+        <div class="container position-relative">
+            <div class="py-5 osahan-profile row">
+                <div class="col-md-4 mb-3">
+                    <div class="bg-white rounded shadow-sm sticky_sidebar overflow-hidden" id="profile-nav"></div>
+                </div>
+                <div class="container col-md-8 mb-3">
+                    <div class="rounded shadow-sm p-4 bg-white">
+                        <h5 class="mb-4">My account</h5>
+                        <div id="edit_profile">
+                            <div id="success-message" style="display:none;"></div>
+                            <div>
+                                <form method="POST" action="../actions/UserManagementService/put/update_account.php">
+                                    <div class="form-group mb-3">
+                                        <label class="pb-1">Name</label>
+                                        <input type="text" name="name" class="form-control" value="<?php echo htmlspecialchars($user['name']); ?>" required />
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="pb-1">Mobile Number</label>
+                                        <input type="text" name="phoneNo" class="form-control" value="<?php echo htmlspecialchars($user['phoneNo']); ?>" required />
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="pb-1">Email</label>
+                                        <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['email']); ?>" required />
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="additional">
+                                <div class="change_password my-3">
+                                    <a href="forgot_password.html" class="p-3 border rounded bg-white btn d-flex align-items-center">Change Password<i class="feather-arrow-right ms-auto"></i></a>
+                                </div>
+                                <div class="deactivate_account">
+                                    <a href="forgot_password.html" class="p-3 border rounded bg-white btn d-flex align-items-center">Deactivate Account<i class="feather-arrow-right ms-auto"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      <div class="container position-relative">
-        <div class="py-5 osahan-profile row">
-          <div class="col-md-4 mb-3">
-            <div
-              class="bg-white rounded shadow-sm sticky_sidebar overflow-hidden" id="profile-nav"
-            >
-            </div>
-        </div>
-          <div class="container col-md-8 mb-3">
-            <div class="rounded shadow-sm p-4 bg-white">
-              <h5 class="mb-4">My account</h5>
-              <div id="edit_profile">
-                <div>
-                  <form
-                    action="https://askbootstrap.com/preview/swiggiweb-v1-1/my_account.html"
-                  >
-                    <div class="form-group mb-3">
-                      <label class="pb-1">First Name</label>
-                      <input type="text" class="form-control" value="Gurdeep" />
-                    </div>
-                    <div class="form-group mb-3">
-                      <label class="pb-1">Last Name</label>
-                      <input type="text" class="form-control" value="Singh" />
-                    </div>
-                    <div class="form-group mb-3">
-                      <label class="pb-1">Mobile Number</label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        value="1234567890"
-                      />
-                    </div>
-                    <div class="form-group mb-3">
-                      <label class="pb-1">Email</label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        value="iamosahan@gmail.com"
-                      />
-                    </div>
-                    
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary w-100">
-                        Save Changes
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                <div class="additional">
-                  <div class="change_password my-3">
-                    <a
-                      href="forgot_password.html"
-                      class="p-3 border rounded bg-white btn d-flex align-items-center"
-                      >Change Password
-                      <i class="feather-arrow-right ms-auto"></i
-                    ></a>
-                  </div>
-                  <div class="deactivate_account">
-                    <a
-                      href="forgot_password.html"
-                      class="p-3 border rounded bg-white btn d-flex align-items-center"
-                      >Deactivate Account
-                      <i class="feather-arrow-right ms-auto"></i
-                    ></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+
+
+
 
       <div
         class="osahan-menu-fotter fixed-bottom bg-white px-3 py-2 text-center d-none"
@@ -457,32 +465,22 @@
       src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
     ></script>
     <script
-      type="590e1acb28bf2fdc2e2d2a80-text/javascript"
       src="../vendor/jquery/jquery.min.js"
     ></script>
     <script
-      type="590e1acb28bf2fdc2e2d2a80-text/javascript"
       src="../vendor/bootstrap/js/bootstrap.bundle.min.js"
     ></script>
 
     <script
-      type="590e1acb28bf2fdc2e2d2a80-text/javascript"
       src="../vendor/slick/slick/slick.min.js"
     ></script>
 
     <script
-      type="590e1acb28bf2fdc2e2d2a80-text/javascript"
       src="../vendor/sidebar/hc-offcanvas-nav.js"
     ></script>
 
     <script
-      type="590e1acb28bf2fdc2e2d2a80-text/javascript"
       src="../js/osahan.js"
-    ></script>
-    <script
-      src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
-      data-cf-settings="590e1acb28bf2fdc2e2d2a80-|49"
-      defer
     ></script>
     <script src="../js/headerFooterManager.js"></script>
     <!-- <script

@@ -2,11 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Aug 01, 2024 at 06:20 AM
--- Generation Time: Aug 01, 2024 at 06:20 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Aug 08, 2024 at 12:36 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -19,35 +18,35 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ACMS`
+-- Database: `acms`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `CafeteriaRatings`
+-- Table structure for table `cafeteriaratings`
 --
 
-CREATE TABLE `CafeteriaRatings` (
+CREATE TABLE `cafeteriaratings` (
   `ratingID` int(11) NOT NULL,
   `ratingValue` int(11) NOT NULL,
   `cafeteriaID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `CafeteriaRatings`
+-- Dumping data for table `cafeteriaratings`
 --
 
-INSERT INTO `CafeteriaRatings` (`ratingID`, `ratingValue`, `cafeteriaID`) VALUES
+INSERT INTO `cafeteriaratings` (`ratingID`, `ratingValue`, `cafeteriaID`) VALUES
 (1, 4, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `CafeteriaReviews`
+-- Table structure for table `cafeteriareviews`
 --
 
-CREATE TABLE `CafeteriaReviews` (
+CREATE TABLE `cafeteriareviews` (
   `ratingID` int(11) NOT NULL,
   `rating` int(11) NOT NULL,
   `feedback` varchar(255) NOT NULL,
@@ -57,10 +56,10 @@ CREATE TABLE `CafeteriaReviews` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `CafeteriaReviews`
+-- Dumping data for table `cafeteriareviews`
 --
 
-INSERT INTO `CafeteriaReviews` (`ratingID`, `rating`, `feedback`, `cafeteriaID`, `userID`, `dateTime`) VALUES
+INSERT INTO `cafeteriareviews` (`ratingID`, `rating`, `feedback`, `cafeteriaID`, `userID`, `dateTime`) VALUES
 (10, 5, 'good', 1, 2, '2024-07-09 22:38:15'),
 (11, 5, 'good', 1, 2, '2024-07-02 22:38:27'),
 (12, 3, 'good', 1, 2, '0000-00-00 00:00:00'),
@@ -68,10 +67,10 @@ INSERT INTO `CafeteriaReviews` (`ratingID`, `rating`, `feedback`, `cafeteriaID`,
 (15, 3, 'good', 1, 2, '0000-00-00 00:00:00');
 
 --
--- Triggers `CafeteriaReviews`
+-- Triggers `cafeteriareviews`
 --
 DELIMITER $$
-CREATE TRIGGER `updateCafeteriaRatings` AFTER INSERT ON `CafeteriaReviews` FOR EACH ROW BEGIN
+CREATE TRIGGER `updateCafeteriaRatings` AFTER INSERT ON `cafeteriareviews` FOR EACH ROW BEGIN
     DECLARE avg_rating DECIMAL(3, 2);
 
     -- Calculate the average rating for the cafeteria
@@ -90,10 +89,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Cafeterias`
+-- Table structure for table `cafeterias`
 --
 
-CREATE TABLE `Cafeterias` (
+CREATE TABLE `cafeterias` (
   `cafeteriaID` int(11) NOT NULL,
   `cafeteriaName` varchar(255) DEFAULT NULL,
   `description` varchar(255) NOT NULL,
@@ -103,10 +102,10 @@ CREATE TABLE `Cafeterias` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Cafeterias`
+-- Dumping data for table `cafeterias`
 --
 
-INSERT INTO `Cafeterias` (`cafeteriaID`, `cafeteriaName`, `description`, `cafeteriaImage`, `openingTime`, `closingTime`) VALUES
+INSERT INTO `cafeterias` (`cafeteriaID`, `cafeteriaName`, `description`, `cafeteriaImage`, `openingTime`, `closingTime`) VALUES
 (1, 'Main Cafeteria', 'The main dining hall offering a variety of meals.', '', '00:00:00', '00:00:00'),
 (2, 'East Wing Cafeteria', 'Located in the east wing, known for its healthy options.', '', '00:00:00', '00:00:00'),
 (3, 'West Wing Cafeteria', 'Located in the west wing, famous for its fast food.', '', '00:00:00', '00:00:00');
@@ -114,19 +113,19 @@ INSERT INTO `Cafeterias` (`cafeteriaID`, `cafeteriaName`, `description`, `cafete
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Ingredients`
+-- Table structure for table `ingredients`
 --
 
-CREATE TABLE `Ingredients` (
+CREATE TABLE `ingredients` (
   `ingredID` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Ingredients`
+-- Dumping data for table `ingredients`
 --
 
-INSERT INTO `Ingredients` (`ingredID`, `name`) VALUES
+INSERT INTO `ingredients` (`ingredID`, `name`) VALUES
 (1, 'Tomato'),
 (2, 'Lettuce'),
 (3, 'Cheese');
@@ -134,19 +133,19 @@ INSERT INTO `Ingredients` (`ingredID`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `MealIngredients`
+-- Table structure for table `mealingredients`
 --
 
-CREATE TABLE `MealIngredients` (
+CREATE TABLE `mealingredients` (
   `mealID` int(11) NOT NULL,
   `ingredID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `MealIngredients`
+-- Dumping data for table `mealingredients`
 --
 
-INSERT INTO `MealIngredients` (`mealID`, `ingredID`) VALUES
+INSERT INTO `mealingredients` (`mealID`, `ingredID`) VALUES
 (1, 1),
 (1, 2),
 (2, 1),
@@ -155,22 +154,23 @@ INSERT INTO `MealIngredients` (`mealID`, `ingredID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `MealOrder`
+-- Table structure for table `mealorder`
 --
 
-CREATE TABLE `MealOrder` (
+CREATE TABLE `mealorder` (
   `mealID` int(11) NOT NULL,
-  `orderID` int(11) NOT NULL
+  `orderID` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `MealOrder`
+-- Dumping data for table `mealorder`
 --
 
-INSERT INTO `MealOrder` (`mealID`, `orderID`) VALUES
-(1, 1),
-(2, 2),
-(3, 3);
+INSERT INTO `mealorder` (`mealID`, `orderID`, `quantity`) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -194,29 +194,29 @@ INSERT INTO `mealplanstatus` (`status_id`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `MealRatings`
+-- Table structure for table `mealratings`
 --
 
-CREATE TABLE `MealRatings` (
+CREATE TABLE `mealratings` (
   `ratingID` int(11) NOT NULL,
   `ratingValue` int(11) NOT NULL,
   `mealID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `MealRatings`
+-- Dumping data for table `mealratings`
 --
 
-INSERT INTO `MealRatings` (`ratingID`, `ratingValue`, `mealID`) VALUES
+INSERT INTO `mealratings` (`ratingID`, `ratingValue`, `mealID`) VALUES
 (1, 3, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `MealReviews`
+-- Table structure for table `mealreviews`
 --
 
-CREATE TABLE `MealReviews` (
+CREATE TABLE `mealreviews` (
   `reviewID` int(11) NOT NULL,
   `userID` int(11) DEFAULT NULL,
   `comments` varchar(255) DEFAULT NULL,
@@ -225,10 +225,10 @@ CREATE TABLE `MealReviews` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `MealReviews`
+-- Dumping data for table `mealreviews`
 --
 
-INSERT INTO `MealReviews` (`reviewID`, `userID`, `comments`, `rating`, `mealID`) VALUES
+INSERT INTO `mealreviews` (`reviewID`, `userID`, `comments`, `rating`, `mealID`) VALUES
 (1, 1, 'Great meal!', 5, 1),
 (2, 2, 'Good service', 4, 2),
 (3, 3, 'Could be better', 3, 1),
@@ -239,10 +239,10 @@ INSERT INTO `MealReviews` (`reviewID`, `userID`, `comments`, `rating`, `mealID`)
 (8, 1, 'good', 2, 1);
 
 --
--- Triggers `MealReviews`
+-- Triggers `mealreviews`
 --
 DELIMITER $$
-CREATE TRIGGER `updateMealRatings` AFTER INSERT ON `MealReviews` FOR EACH ROW BEGIN
+CREATE TRIGGER `updateMealRatings` AFTER INSERT ON `mealreviews` FOR EACH ROW BEGIN
     DECLARE avg_rating DECIMAL(3, 2);
 
     -- Calculate the average rating for the meal
@@ -261,12 +261,11 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Meals`
+-- Table structure for table `meals`
 --
 
--- Create table with quantity column
-CREATE TABLE `Meals` (
-  `mealID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `meals` (
+  `mealID` int(11) NOT NULL,
   `mealStatus` enum('AVAILABLE','UNAVAILABLE') DEFAULT NULL,
   `timeframe` enum('BREAKFAST','LUNCH','DINNER') DEFAULT NULL,
   `cafeteriaID` int(11) DEFAULT NULL,
@@ -292,10 +291,10 @@ INSERT INTO `Meals` (`mealID`, `mealStatus`, `timeframe`, `cafeteriaID`, `price`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Notification`
+-- Table structure for table `notification`
 --
 
-CREATE TABLE `Notification` (
+CREATE TABLE `notification` (
   `notificationID` int(11) NOT NULL,
   `userID` int(11) DEFAULT NULL,
   `message` varchar(255) DEFAULT NULL,
@@ -303,10 +302,10 @@ CREATE TABLE `Notification` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Notification`
+-- Dumping data for table `notification`
 --
 
-INSERT INTO `Notification` (`notificationID`, `userID`, `message`, `status`) VALUES
+INSERT INTO `notification` (`notificationID`, `userID`, `message`, `status`) VALUES
 (1, 1, 'Your order is ready', 'COMPLETED'),
 (2, 2, 'Your order is cooking', 'COMPLETED'),
 (3, 3, 'Your order was cancelled', 'CANCELLED');
@@ -314,41 +313,40 @@ INSERT INTO `Notification` (`notificationID`, `userID`, `message`, `status`) VAL
 -- --------------------------------------------------------
 
 --
--- Table structure for table `OrderDetails`
+-- Table structure for table `orderdetails`
 --
 
-CREATE TABLE `OrderDetails` (
-  `mealID` int(11) NOT NULL,
+CREATE TABLE `orderdetails` (
   `orderID` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
-  `orderDate` datetime DEFAULT CURRENT_TIMESTAMP
+  `deliveryStatus` ENUM('delivery', 'pickup') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `OrderDetails`
+-- Dumping data for table `orderdetails`
 --
 
-INSERT INTO `OrderDetails` (`mealID`, `orderID`, `quantity`) VALUES
-(1, 1, 2),
-(2, 2, 1),
-(3, 3, 3);
+INSERT INTO `orderdetails` (`orderID`, `orderDate`, `deliveryStatus`) VALUES
+(1, '2024-08-07 22:01:13', 'delivery'),
+(2, '2024-08-07 22:01:13', 'pickup'),
+(3, '2024-08-07 22:01:13', 'delivery');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `OrderPayment`
+-- Table structure for table `orderpayment`
 --
 
-CREATE TABLE `OrderPayment` (
+CREATE TABLE `orderpayment` (
   `orderID` int(11) NOT NULL,
   `paymentID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `OrderPayment`
+-- Dumping data for table `orderpayment`
 --
 
-INSERT INTO `OrderPayment` (`orderID`, `paymentID`) VALUES
+INSERT INTO `orderpayment` (`orderID`, `paymentID`) VALUES
 (1, 1),
 (2, 2),
 (3, 3);
@@ -356,10 +354,10 @@ INSERT INTO `OrderPayment` (`orderID`, `paymentID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Orders`
+-- Table structure for table `orders`
 --
 
-CREATE TABLE `Orders` (
+CREATE TABLE `orders` (
   `orderID` int(11) NOT NULL,
   `userID` int(11) DEFAULT NULL,
   `message` varchar(255) DEFAULT NULL,
@@ -367,10 +365,10 @@ CREATE TABLE `Orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Orders`
+-- Dumping data for table `orders`
 --
 
-INSERT INTO `Orders` (`orderID`, `userID`, `message`, `status`) VALUES
+INSERT INTO `orders` (`orderID`, `userID`, `message`, `status`) VALUES
 (1, 1, 'Please deliver to room 101', 'COMPLETE'),
 (2, 2, 'Extra napkins please', 'IN_PROGRESS'),
 (3, 3, 'No onions in the salad', 'CANCELLED');
@@ -378,10 +376,10 @@ INSERT INTO `Orders` (`orderID`, `userID`, `message`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Payment`
+-- Table structure for table `payment`
 --
 
-CREATE TABLE `Payment` (
+CREATE TABLE `payment` (
   `paymentID` int(11) NOT NULL,
   `userID` int(11) DEFAULT NULL,
   `amount` double DEFAULT NULL,
@@ -389,10 +387,10 @@ CREATE TABLE `Payment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Payment`
+-- Dumping data for table `payment`
 --
 
-INSERT INTO `Payment` (`paymentID`, `userID`, `amount`, `method`) VALUES
+INSERT INTO `payment` (`paymentID`, `userID`, `amount`, `method`) VALUES
 (1, 1, 10, 'CASH'),
 (2, 2, 20, 'MOMO/BANK TRANSFER'),
 (3, 3, 15, 'MEAL PLAN');
@@ -400,10 +398,10 @@ INSERT INTO `Payment` (`paymentID`, `userID`, `amount`, `method`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Preferences`
+-- Table structure for table `preferences`
 --
 
-CREATE TABLE `Preferences` (
+CREATE TABLE `preferences` (
   `preferencesID` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
   `dietaryRestrictions` varchar(11) NOT NULL,
@@ -412,28 +410,28 @@ CREATE TABLE `Preferences` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Preferences`
+-- Dumping data for table `preferences`
 --
 
-INSERT INTO `Preferences` (`preferencesID`, `userID`, `dietaryRestrictions`, `diet`, `culturalRestrictions`) VALUES
+INSERT INTO `preferences` (`preferencesID`, `userID`, `dietaryRestrictions`, `diet`, `culturalRestrictions`) VALUES
 (1, 1, '', '', '');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Roles`
+-- Table structure for table `roles`
 --
 
-CREATE TABLE `Roles` (
+CREATE TABLE `roles` (
   `roleID` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Roles`
+-- Dumping data for table `roles`
 --
 
-INSERT INTO `Roles` (`roleID`, `name`) VALUES
+INSERT INTO `roles` (`roleID`, `name`) VALUES
 (1, 'Admin'),
 (2, 'User'),
 (3, 'Manager');
@@ -441,19 +439,19 @@ INSERT INTO `Roles` (`roleID`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `UserNotification`
+-- Table structure for table `usernotification`
 --
 
-CREATE TABLE `UserNotification` (
+CREATE TABLE `usernotification` (
   `userID` int(11) NOT NULL,
   `notificationID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `UserNotification`
+-- Dumping data for table `usernotification`
 --
 
-INSERT INTO `UserNotification` (`userID`, `notificationID`) VALUES
+INSERT INTO `usernotification` (`userID`, `notificationID`) VALUES
 (1, 1),
 (2, 2),
 (3, 3);
@@ -461,20 +459,20 @@ INSERT INTO `UserNotification` (`userID`, `notificationID`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `UserReviews`
+-- Table structure for table `userreviews`
 --
 
-CREATE TABLE `UserReviews` (
+CREATE TABLE `userreviews` (
   `userID` int(11) NOT NULL,
   `reviewID` int(11) NOT NULL,
   `dateTime` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `UserReviews`
+-- Dumping data for table `userreviews`
 --
 
-INSERT INTO `UserReviews` (`userID`, `reviewID`, `dateTime`) VALUES
+INSERT INTO `userreviews` (`userID`, `reviewID`, `dateTime`) VALUES
 (1, 1, '0000-00-00 00:00:00'),
 (2, 2, '0000-00-00 00:00:00'),
 (3, 3, '0000-00-00 00:00:00');
@@ -482,10 +480,10 @@ INSERT INTO `UserReviews` (`userID`, `reviewID`, `dateTime`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Users`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `Users` (
+CREATE TABLE `users` (
   `userID` int(11) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `phoneNo` varchar(20) DEFAULT NULL,
@@ -497,10 +495,10 @@ CREATE TABLE `Users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `Users`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `Users` (`userID`, `email`, `phoneNo`, `name`, `preferences`, `password`, `roleID`, `userImage`) VALUES
+INSERT INTO `users` (`userID`, `email`, `phoneNo`, `name`, `preferences`, `password`, `roleID`, `userImage`) VALUES
 (1, 'user1@example.com', '123-456-7890', 'User One', 'Vegetarian', 'password1', NULL, ''),
 (2, 'user2@example.com', '234-567-8901', 'User Two', 'Vegan', 'password2', NULL, ''),
 (3, 'user3@example.com', '345-678-9012', 'User Three', 'Gluten-Free', 'password3', NULL, '');
@@ -509,131 +507,175 @@ INSERT INTO `Users` (`userID`, `email`, `phoneNo`, `name`, `preferences`, `passw
 -- Indexes for dumped tables
 --
 
+CREATE TABLE `address` (
+  `addressID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `deliveryInstruction` text DEFAULT NULL,
+  PRIMARY KEY (`addressID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `address` (`userID`, `address`, `deliveryInstruction`) VALUES
+(1, '123 Elm Street, Springfield, IL 62701', 'Leave at the front door'),
+(2, '456 Oak Avenue, Metropolis, NY 10001', 'Deliver between 9 AM and 5 PM'),
+(3, '789 Pine Road, Smalltown, TX 75001', 'Ring the doorbell'),
+(4, '101 Maple Lane, Big City, CA 90001', 'Leave package with doorman'),
+(5, '202 Birch Street, Townsville, FL 33101', 'No delivery on weekends'),
+(6, '303 Cedar Drive, Village, WA 98101', 'Deliver to the back porch'),
+(7, '404 Spruce Boulevard, Capital City, CO 80201', 'Call upon arrival'),
+(8, '505 Redwood Way, Resort, NV 89001', 'Leave with neighbor if not home');
+
+
+CREATE TABLE `address` (
+  `addressID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `deliveryInstruction` text DEFAULT NULL,
+  PRIMARY KEY (`addressID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `address` (`userID`, `address`, `deliveryInstruction`) VALUES
+(1, '123 Elm Street, Springfield, IL 62701', 'Leave at the front door'),
+(2, '456 Oak Avenue, Metropolis, NY 10001', 'Deliver between 9 AM and 5 PM'),
+(3, '789 Pine Road, Smalltown, TX 75001', 'Ring the doorbell'),
+(4, '101 Maple Lane, Big City, CA 90001', 'Leave package with doorman'),
+(5, '202 Birch Street, Townsville, FL 33101', 'No delivery on weekends'),
+(6, '303 Cedar Drive, Village, WA 98101', 'Deliver to the back porch'),
+(7, '404 Spruce Boulevard, Capital City, CO 80201', 'Call upon arrival'),
+(8, '505 Redwood Way, Resort, NV 89001', 'Leave with neighbor if not home');
+
+
 --
--- Indexes for table `CafeteriaRatings`
+-- Indexes for table `cafeteriaratings`
 --
-ALTER TABLE `CafeteriaRatings`
+ALTER TABLE `cafeteriaratings`
   ADD PRIMARY KEY (`ratingID`),
   ADD UNIQUE KEY `cafeteriaID` (`cafeteriaID`),
   ADD KEY `cafetariaID` (`cafeteriaID`);
 
 --
--- Indexes for table `CafeteriaReviews`
+-- Indexes for table `cafeteriareviews`
 --
-ALTER TABLE `CafeteriaReviews`
+ALTER TABLE `cafeteriareviews`
   ADD PRIMARY KEY (`ratingID`),
   ADD KEY `caferiaID` (`cafeteriaID`),
   ADD KEY `userID` (`userID`);
 
 --
--- Indexes for table `Cafeterias`
+-- Indexes for table `cafeterias`
 --
-ALTER TABLE `Cafeterias`
+ALTER TABLE `cafeterias`
   ADD PRIMARY KEY (`cafeteriaID`);
 
 --
--- Indexes for table `Ingredients`
+-- Indexes for table `ingredients`
 --
-ALTER TABLE `Ingredients`
+ALTER TABLE `ingredients`
   ADD PRIMARY KEY (`ingredID`);
 
 --
--- Indexes for table `MealIngredients`
+-- Indexes for table `mealingredients`
 --
-ALTER TABLE `MealIngredients`
+ALTER TABLE `mealingredients`
   ADD PRIMARY KEY (`mealID`,`ingredID`),
   ADD KEY `ingredID` (`ingredID`);
 
 --
--- Indexes for table `MealOrder`
+-- Indexes for table `mealorder`
 --
-ALTER TABLE `MealOrder`
+ALTER TABLE `mealorder`
   ADD PRIMARY KEY (`mealID`,`orderID`),
   ADD KEY `orderID` (`orderID`);
 
 --
--- Indexes for table `MealRatings`
+-- Indexes for table `mealratings`
 --
-ALTER TABLE `MealRatings`
+ALTER TABLE `mealratings`
   ADD PRIMARY KEY (`ratingID`),
   ADD UNIQUE KEY `mealID_2` (`mealID`),
   ADD KEY `mealID` (`mealID`);
 
 --
--- Indexes for table `MealReviews`
+-- Indexes for table `mealreviews`
 --
-ALTER TABLE `MealReviews`
+ALTER TABLE `mealreviews`
   ADD PRIMARY KEY (`reviewID`),
   ADD KEY `cafeteriaID` (`mealID`),
   ADD KEY `userID` (`userID`);
 
 --
--- Indexes for table `Notification`
+-- Indexes for table `meals`
 --
-ALTER TABLE `Notification`
+ALTER TABLE `meals`
+  ADD PRIMARY KEY (`mealID`),
+  ADD KEY `meals_ibfk_1` (`cafeteriaID`);
+
+--
+-- Indexes for table `notification`
+--
+ALTER TABLE `notification`
   ADD PRIMARY KEY (`notificationID`),
   ADD KEY `userID` (`userID`);
 
 --
--- Indexes for table `OrderDetails`
+-- Indexes for table `orderdetails`
 --
-ALTER TABLE `OrderDetails`
-  ADD PRIMARY KEY (`mealID`,`orderID`),
-  ADD KEY `orderID` (`orderID`);
+ALTER TABLE `orderdetails`
+  ADD PRIMARY KEY (`orderID`);
 
 --
--- Indexes for table `OrderPayment`
+-- Indexes for table `orderpayment`
 --
-ALTER TABLE `OrderPayment`
+ALTER TABLE `orderpayment`
   ADD PRIMARY KEY (`orderID`,`paymentID`),
   ADD KEY `paymentID` (`paymentID`);
 
 --
--- Indexes for table `Orders`
+-- Indexes for table `orders`
 --
-ALTER TABLE `Orders`
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`orderID`),
   ADD KEY `userID` (`userID`);
 
 --
--- Indexes for table `Payment`
+-- Indexes for table `payment`
 --
-ALTER TABLE `Payment`
+ALTER TABLE `payment`
   ADD PRIMARY KEY (`paymentID`),
   ADD KEY `userID` (`userID`);
 
 --
--- Indexes for table `Preferences`
+-- Indexes for table `preferences`
 --
-ALTER TABLE `Preferences`
+ALTER TABLE `preferences`
   ADD PRIMARY KEY (`preferencesID`),
   ADD KEY `preferencesID` (`preferencesID`),
   ADD KEY `userID` (`userID`);
 
 --
--- Indexes for table `Roles`
+-- Indexes for table `roles`
 --
-ALTER TABLE `Roles`
+ALTER TABLE `roles`
   ADD PRIMARY KEY (`roleID`);
 
 --
--- Indexes for table `UserNotification`
+-- Indexes for table `usernotification`
 --
-ALTER TABLE `UserNotification`
+ALTER TABLE `usernotification`
   ADD PRIMARY KEY (`userID`,`notificationID`),
   ADD KEY `notificationID` (`notificationID`);
 
 --
--- Indexes for table `UserReviews`
+-- Indexes for table `userreviews`
 --
-ALTER TABLE `UserReviews`
+ALTER TABLE `userreviews`
   ADD PRIMARY KEY (`userID`,`reviewID`),
   ADD KEY `reviewID` (`reviewID`);
 
 --
--- Indexes for table `Users`
+-- Indexes for table `users`
 --
-ALTER TABLE `Users`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`userID`),
   ADD KEY `roleID` (`roleID`);
 
@@ -642,39 +684,45 @@ ALTER TABLE `Users`
 --
 
 --
--- AUTO_INCREMENT for table `CafeteriaRatings`
+-- AUTO_INCREMENT for table `cafeteriaratings`
 --
-ALTER TABLE `CafeteriaRatings`
+ALTER TABLE `cafeteriaratings`
   MODIFY `ratingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `CafeteriaReviews`
+-- AUTO_INCREMENT for table `cafeteriareviews`
 --
-ALTER TABLE `CafeteriaReviews`
+ALTER TABLE `cafeteriareviews`
   MODIFY `ratingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT for table `Cafeterias`
+-- AUTO_INCREMENT for table `cafeterias`
 --
-ALTER TABLE `Cafeterias`
+ALTER TABLE `cafeterias`
   MODIFY `cafeteriaID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `MealRatings`
+-- AUTO_INCREMENT for table `mealratings`
 --
-ALTER TABLE `MealRatings`
+ALTER TABLE `mealratings`
   MODIFY `ratingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `MealReviews`
+-- AUTO_INCREMENT for table `mealreviews`
 --
-ALTER TABLE `MealReviews`
+ALTER TABLE `mealreviews`
   MODIFY `reviewID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `Preferences`
+-- AUTO_INCREMENT for table `meals`
 --
-ALTER TABLE `Preferences`
+ALTER TABLE `meals`
+  MODIFY `mealID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `preferences`
+--
+ALTER TABLE `preferences`
   MODIFY `preferencesID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -682,108 +730,107 @@ ALTER TABLE `Preferences`
 --
 
 --
--- Constraints for table `CafeteriaRatings`
+-- Constraints for table `cafeteriaratings`
 --
-ALTER TABLE `CafeteriaRatings`
-  ADD CONSTRAINT `cafeteriaratings_ibfk_1` FOREIGN KEY (`cafeteriaID`) REFERENCES `Cafeterias` (`cafeteriaID`);
+ALTER TABLE `cafeteriaratings`
+  ADD CONSTRAINT `cafeteriaratings_ibfk_1` FOREIGN KEY (`cafeteriaID`) REFERENCES `cafeterias` (`cafeteriaID`);
 
 --
--- Constraints for table `CafeteriaReviews`
+-- Constraints for table `cafeteriareviews`
 --
-ALTER TABLE `CafeteriaReviews`
-  ADD CONSTRAINT `cafeteriareviews_ibfk_1` FOREIGN KEY (`cafeteriaID`) REFERENCES `Cafeterias` (`cafeteriaID`),
-  ADD CONSTRAINT `cafeteriareviews_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`);
+ALTER TABLE `cafeteriareviews`
+  ADD CONSTRAINT `cafeteriareviews_ibfk_1` FOREIGN KEY (`cafeteriaID`) REFERENCES `cafeterias` (`cafeteriaID`),
+  ADD CONSTRAINT `cafeteriareviews_ibfk_2` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
--- Constraints for table `MealIngredients`
+-- Constraints for table `mealingredients`
 --
-ALTER TABLE `MealIngredients`
-  ADD CONSTRAINT `mealingredients_ibfk_1` FOREIGN KEY (`mealID`) REFERENCES `Meals` (`mealID`),
-  ADD CONSTRAINT `mealingredients_ibfk_2` FOREIGN KEY (`ingredID`) REFERENCES `Ingredients` (`ingredID`);
+ALTER TABLE `mealingredients`
+  ADD CONSTRAINT `mealingredients_ibfk_1` FOREIGN KEY (`mealID`) REFERENCES `meals` (`mealID`),
+  ADD CONSTRAINT `mealingredients_ibfk_2` FOREIGN KEY (`ingredID`) REFERENCES `ingredients` (`ingredID`);
 
 --
--- Constraints for table `MealOrder`
+-- Constraints for table `mealorder`
 --
-ALTER TABLE `MealOrder`
-  ADD CONSTRAINT `mealorder_ibfk_1` FOREIGN KEY (`mealID`) REFERENCES `Meals` (`mealID`),
-  ADD CONSTRAINT `mealorder_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `Orders` (`orderID`);
+ALTER TABLE `mealorder`
+  ADD CONSTRAINT `mealorder_ibfk_1` FOREIGN KEY (`mealID`) REFERENCES `meals` (`mealID`),
+  ADD CONSTRAINT `mealorder_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `orders` (`orderID`);
 
 --
--- Constraints for table `MealRatings`
+-- Constraints for table `mealratings`
 --
-ALTER TABLE `MealRatings`
-  ADD CONSTRAINT `mealratings_ibfk_1` FOREIGN KEY (`mealID`) REFERENCES `Meals` (`mealID`);
+ALTER TABLE `mealratings`
+  ADD CONSTRAINT `mealratings_ibfk_1` FOREIGN KEY (`mealID`) REFERENCES `meals` (`mealID`);
 
 --
--- Constraints for table `MealReviews`
+-- Constraints for table `mealreviews`
 --
-ALTER TABLE `MealReviews`
-  ADD CONSTRAINT `mealreviews_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`),
-  ADD CONSTRAINT `mealreviews_ibfk_2` FOREIGN KEY (`mealID`) REFERENCES `Meals` (`mealID`);
+ALTER TABLE `mealreviews`
+  ADD CONSTRAINT `mealreviews_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
+  ADD CONSTRAINT `mealreviews_ibfk_2` FOREIGN KEY (`mealID`) REFERENCES `meals` (`mealID`);
 
 --
--- Constraints for table `Meals`
+-- Constraints for table `meals`
 --
-ALTER TABLE `Meals`
-  ADD CONSTRAINT `meals_ibfk_1` FOREIGN KEY (`cafeteriaID`) REFERENCES `Cafeterias` (`cafeteriaID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `meals`
+  ADD CONSTRAINT `meals_ibfk_1` FOREIGN KEY (`cafeteriaID`) REFERENCES `cafeterias` (`cafeteriaID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `Notification`
+-- Constraints for table `notification`
 --
-ALTER TABLE `Notification`
-  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`);
+ALTER TABLE `notification`
+  ADD CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
--- Constraints for table `OrderDetails`
+-- Constraints for table `orderdetails`
 --
-ALTER TABLE `OrderDetails`
-  ADD CONSTRAINT `orderdetails_ibfk_1` FOREIGN KEY (`mealID`) REFERENCES `Meals` (`mealID`),
-  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `Orders` (`orderID`);
+ALTER TABLE `orderdetails`
+  ADD CONSTRAINT `orderdetails_ibfk_2` FOREIGN KEY (`orderID`) REFERENCES `orders` (`orderID`);
 
 --
--- Constraints for table `OrderPayment`
+-- Constraints for table `orderpayment`
 --
-ALTER TABLE `OrderPayment`
-  ADD CONSTRAINT `orderpayment_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `Orders` (`orderID`),
-  ADD CONSTRAINT `orderpayment_ibfk_2` FOREIGN KEY (`paymentID`) REFERENCES `Payment` (`paymentID`);
+ALTER TABLE `orderpayment`
+  ADD CONSTRAINT `orderpayment_ibfk_1` FOREIGN KEY (`orderID`) REFERENCES `orders` (`orderID`),
+  ADD CONSTRAINT `orderpayment_ibfk_2` FOREIGN KEY (`paymentID`) REFERENCES `payment` (`paymentID`);
 
 --
--- Constraints for table `Orders`
+-- Constraints for table `orders`
 --
-ALTER TABLE `Orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`);
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
--- Constraints for table `Payment`
+-- Constraints for table `payment`
 --
-ALTER TABLE `Payment`
-  ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`);
+ALTER TABLE `payment`
+  ADD CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
--- Constraints for table `Preferences`
+-- Constraints for table `preferences`
 --
-ALTER TABLE `Preferences`
-  ADD CONSTRAINT `preferences_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`);
+ALTER TABLE `preferences`
+  ADD CONSTRAINT `preferences_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
 --
--- Constraints for table `UserNotification`
+-- Constraints for table `usernotification`
 --
-ALTER TABLE `UserNotification`
-  ADD CONSTRAINT `usernotification_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`),
-  ADD CONSTRAINT `usernotification_ibfk_2` FOREIGN KEY (`notificationID`) REFERENCES `Notification` (`notificationID`);
+ALTER TABLE `usernotification`
+  ADD CONSTRAINT `usernotification_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
+  ADD CONSTRAINT `usernotification_ibfk_2` FOREIGN KEY (`notificationID`) REFERENCES `notification` (`notificationID`);
 
 --
--- Constraints for table `UserReviews`
+-- Constraints for table `userreviews`
 --
-ALTER TABLE `UserReviews`
-  ADD CONSTRAINT `userreviews_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `Users` (`userID`),
+ALTER TABLE `userreviews`
+  ADD CONSTRAINT `userreviews_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
   ADD CONSTRAINT `userreviews_ibfk_2` FOREIGN KEY (`reviewID`) REFERENCES `mealreviews` (`reviewID`);
 
 --
--- Constraints for table `Users`
+-- Constraints for table `users`
 --
-ALTER TABLE `Users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `Roles` (`roleID`);
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`roleID`) REFERENCES `roles` (`roleID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
