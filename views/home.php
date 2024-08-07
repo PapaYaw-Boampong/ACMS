@@ -436,7 +436,7 @@
           </a>
         </div>
         <div class="col">
-          <a href="profile.html" class="text-dark small fw-bold text-decoration-none">
+          <a href="profile.php" class="text-dark small fw-bold text-decoration-none">
             <p class="h4 m-0"><i class="feather-user"></i></p>
             Profile
           </a>

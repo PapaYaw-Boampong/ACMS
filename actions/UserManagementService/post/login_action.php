@@ -117,7 +117,7 @@ if (isset($_POST['login'])) {
         $_SESSION['userID'] = $row['userID'];
 
         // Redirect to home/dashboard page
-        header("Location: ../home.html");
+        header("Location: ../../../views/home.php");
         exit();
     } else {
         // Passwords don't match, provide appropriate response
