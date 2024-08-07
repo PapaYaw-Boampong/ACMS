@@ -119,6 +119,7 @@ include_once "../settings/connection.php"; // Include your database connection f
                   <div class="row g-4 mb-3">
                     <div class="col-lg-3 col-md-6">
                       <div class="form-check position-relative border-custom-radio p-0">
+                      <input type="hidden" id="paymentIDField" value="1"> <!-- Replace with dynamic value if needed -->
                         <input
                           type="radio"
                           id="customRadioInline3"
@@ -505,7 +506,9 @@ include_once "../settings/connection.php"; // Include your database connection f
       const saveButton = document.querySelector('#savePreference');
       saveButton.addEventListener('click', function () {
         const selectedOption = document.querySelector('input[name="deliveryPickup"]:checked').value;
+        const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
         const orderID = 1; // Replace with dynamic orderID if needed
+        const paymentID = document.getElementById('paymentIDField').value; 
 
         fetch('../actions/updateOrderDetails.php', {
           method: 'POST',
@@ -515,6 +518,8 @@ include_once "../settings/connection.php"; // Include your database connection f
           body: JSON.stringify({
             orderID: orderID,
             deliveryPickup: selectedOption,
+            paymentMethod: selectedPaymentMethod,
+            paymentID: paymentID,
           }),
         })
         .then(response => response.json())
