@@ -1,6 +1,6 @@
 <?php
 // Include the connection file
-include_once "settings/connection.php";
+include_once "../settings/connection.php";
 
 function getMealstatus() {
     global $conn;

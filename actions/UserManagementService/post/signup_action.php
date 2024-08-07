@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Include the connection file
 include_once '../../../settings/connection.php';
 
@@ -73,12 +74,14 @@ if (isset($_POST['signup'])) {
     $phoneNo = $_POST['phoneNo'];
     $name = $_POST['name'];
     $password = $_POST['password'];
+    $role = $_POST['role'];
+    $mealPlan = $_POST['mealPlan'];
 
     // Encrypt the password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Write your INSERT query
-    $query = "INSERT INTO users (email, phoneNo, name, password) VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO users (email, phoneNo, name, password, roleID, mealPlanStatus) VALUES (?, ?, ?, ?, ?, ?)";
 
     // Prepare the statement
     $stmt = mysqli_stmt_init($conn);
@@ -88,11 +91,11 @@ if (isset($_POST['signup'])) {
     }
 
     // Bind parameters and execute the query
-    mysqli_stmt_bind_param($stmt, "ssss", $email, $phoneNo, $name, $hashedPassword);
+    mysqli_stmt_bind_param($stmt, "ssssii", $email, $phoneNo, $name, $hashedPassword, $role, $mealPlan);
 
     if (mysqli_stmt_execute($stmt)) {
         // Redirect to login page if execution is successful
-        header("Location: ../login.html");
+        header("Location: ../../../Login/login.php");
         exit();
     } else {
         // Redirect back to the registration page with an error message
