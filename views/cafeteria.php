@@ -241,7 +241,6 @@ include('../settings/connection.php');
 
   <script type="7e678b0dbcbf2a926c40af51-text/javascript" src="../vendor/jquery/jquery.min.js"></script>
 
-
   <script type="7e678b0dbcbf2a926c40af51-text/javascript" src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <script type="7e678b0dbcbf2a926c40af51-text/javascript" src="../vendor/slick/slick/slick.min.js"></script>
