@@ -319,17 +319,18 @@ INSERT INTO `Notification` (`notificationID`, `userID`, `message`, `status`) VAL
 CREATE TABLE `OrderDetails` (
   `mealID` int(11) NOT NULL,
   `orderID` int(11) NOT NULL,
-  `quantity` int(11) DEFAULT NULL
+  `quantity` int(11) DEFAULT NULL,
+  `deliveryStatus` ENUM('delivery', 'pickup') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `OrderDetails`
 --
 
-INSERT INTO `OrderDetails` (`mealID`, `orderID`, `quantity`) VALUES
-(1, 1, 2),
-(2, 2, 1),
-(3, 3, 3);
+INSERT INTO `OrderDetails` (`mealID`, `orderID`, `quantity`, `deliveryStatus`) VALUES
+(1, 1, 2, 'delivery'),
+(2, 2, 1, 'pickup'),
+(3, 3, 3, 'delivery');
 
 -- --------------------------------------------------------
 
@@ -506,6 +507,25 @@ INSERT INTO `Users` (`userID`, `email`, `phoneNo`, `name`, `preferences`, `passw
 --
 -- Indexes for dumped tables
 --
+
+CREATE TABLE `address` (
+  `addressID` int(11) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `deliveryInstruction` text DEFAULT NULL,
+  PRIMARY KEY (`addressID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `address` (`userID`, `address`, `deliveryInstruction`) VALUES
+(1, '123 Elm Street, Springfield, IL 62701', 'Leave at the front door'),
+(2, '456 Oak Avenue, Metropolis, NY 10001', 'Deliver between 9 AM and 5 PM'),
+(3, '789 Pine Road, Smalltown, TX 75001', 'Ring the doorbell'),
+(4, '101 Maple Lane, Big City, CA 90001', 'Leave package with doorman'),
+(5, '202 Birch Street, Townsville, FL 33101', 'No delivery on weekends'),
+(6, '303 Cedar Drive, Village, WA 98101', 'Deliver to the back porch'),
+(7, '404 Spruce Boulevard, Capital City, CO 80201', 'Call upon arrival'),
+(8, '505 Redwood Way, Resort, NV 89001', 'Leave with neighbor if not home');
+
 
 --
 -- Indexes for table `CafeteriaRatings`
