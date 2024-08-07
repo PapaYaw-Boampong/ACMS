@@ -299,7 +299,7 @@ CREATE TABLE `Notification` (
   `notificationID` int(11) NOT NULL,
   `userID` int(11) DEFAULT NULL,
   `message` varchar(255) DEFAULT NULL,
-  `status` enum('READY','CANCELLED') DEFAULT NULL
+  `status` enum('COMPLETED','CANCELLED') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -307,8 +307,8 @@ CREATE TABLE `Notification` (
 --
 
 INSERT INTO `Notification` (`notificationID`, `userID`, `message`, `status`) VALUES
-(1, 1, 'Your order is ready', 'READY'),
-(2, 2, 'Your order is cooking', 'READY'),
+(1, 1, 'Your order is ready', 'COMPLETED'),
+(2, 2, 'Your order is cooking', 'COMPLETED'),
 (3, 3, 'Your order was cancelled', 'CANCELLED');
 
 -- --------------------------------------------------------
@@ -363,7 +363,7 @@ CREATE TABLE `Orders` (
   `orderID` int(11) NOT NULL,
   `userID` int(11) DEFAULT NULL,
   `message` varchar(255) DEFAULT NULL,
-  `status` enum('READY','COOKING','CANCELLED') DEFAULT NULL
+  `status` enum('COMPLETE','IN_PROGRESS','CANCELLED') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -371,8 +371,8 @@ CREATE TABLE `Orders` (
 --
 
 INSERT INTO `Orders` (`orderID`, `userID`, `message`, `status`) VALUES
-(1, 1, 'Please deliver to room 101', 'READY'),
-(2, 2, 'Extra napkins please', 'COOKING'),
+(1, 1, 'Please deliver to room 101', 'COMPLETE'),
+(2, 2, 'Extra napkins please', 'IN_PROGRESS'),
 (3, 3, 'No onions in the salad', 'CANCELLED');
 
 -- --------------------------------------------------------

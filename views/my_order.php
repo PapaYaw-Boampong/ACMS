@@ -29,7 +29,7 @@
   <div class="">
     <div class="bg-primary border-bottom p-3 d-flex align-items-center">
       <a class="toggle togglew toggle-2" href="#"><span></span></a>
-      <h4 class="fw-bold m-0 text-white">My Orders</h4>
+      <h4 class="fw-bolder m-2 text-white">My Orders</h4>
     </div>
   </div>
   <div class="py-4 osahan-main-body">

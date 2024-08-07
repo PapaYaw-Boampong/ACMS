@@ -48,7 +48,7 @@ function getUserOrders($userID, $limit, $status = null) {
 
     // Prepare the base SQL statement
     // Prepare the base SQL statement
-    $sql = "SELECT Orders.orderID, Orders.status, OrderDetails.quantity, OrderDetails.orderDate, 
+    $sql = "SELECT Orders.orderID, Orders.status, OrderDetails.quantity, OrderDetails.orderDate, Meals.mealID As mealID,
             Meals.name AS mealName, Meals.price, Cafeterias.cafeteriaID, Cafeterias.cafeteriaName AS cafeteriaName
             FROM Orders
             JOIN OrderDetails ON Orders.orderID = OrderDetails.orderID
