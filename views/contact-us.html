@@ -59,61 +59,25 @@
                     Whether you have questions or you would just like to say
                     hello, contact us.
                   </p>
-                  <form>
+                  <form action="../actions/sendProblem.php" method="post">
                     <div class="form-group mb-3">
-                      <label
-                        for="exampleFormControlInput1"
-                        class="small fw-bold pb-1"
-                        >Your Name</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="exampleFormControlInput1"
-                        placeholder="Gurdeep Osahan"
-                      />
+                      <label for="exampleFormControlInput1" class="small fw-bold pb-1">Your Name</label>
+                      <input type="text" class="form-control" name="name" id="exampleFormControlInput1" placeholder="Gurdeep Osahan" required />
                     </div>
                     <div class="form-group mb-3">
-                      <label
-                        for="exampleFormControlInput2"
-                        class="small fw-bold pb-1"
-                        >Email Address</label
-                      >
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="exampleFormControlInput2"
-                        placeholder="iamosahan@gmail.com"
-                      />
+                      <label for="exampleFormControlInput2" class="small fw-bold pb-1">Email Address</label>
+                      <input type="email" class="form-control" name="email" id="exampleFormControlInput2" placeholder="iamosahan@gmail.com" required />
                     </div>
                     <div class="form-group mb-3">
-                      <label
-                        for="exampleFormControlInput3"
-                        class="small fw-bold pb-1"
-                        >Phone Number</label
-                      >
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="exampleFormControlInput3"
-                        placeholder="1-800-643-4500"
-                      />
+                      <label for="exampleFormControlInput3" class="small fw-bold pb-1">Phone Number</label>
+                      <input type="number" class="form-control" name="phone" id="exampleFormControlInput3" placeholder="1-800-643-4500" required />
                     </div>
                     <div class="form-group mb-3">
-                      <label
-                        for="exampleFormControlTextarea1"
-                        class="small fw-bold pb-1"
-                        >HOW CAN WE HELP YOU?</label
-                      >
-                      <textarea
-                        class="form-control"
-                        id="exampleFormControlTextarea1"
-                        placeholder="Hi there, I would like to ..."
-                        rows="3"
-                      ></textarea>
+                      <label for="exampleFormControlTextarea1" class="small fw-bold pb-1">HOW CAN WE HELP YOU?</label>
+                      <textarea class="form-control" name="message" id="exampleFormControlTextarea1" placeholder="Hi there, I would like to ..." rows="3" required></textarea>
                     </div>
-                    <a class="btn btn-primary w-100" href="#">SUBMIT</a>
-                  </form>
+                    <button type="submit" class="btn btn-primary w-100">SUBMIT</button>
+                  </form>                  
                 </div>
               </div>
             </div>
@@ -124,55 +88,7 @@
       <div
         class="osahan-menu-fotter fixed-bottom bg-white px-3 py-2 text-center d-none"
       >
-        <div class="row">
-          <div class="col">
-            <a
-              href="home.html"
-              class="text-dark small fw-bold text-decoration-none"
-            >
-              <p class="h4 m-0"><i class="feather-home text-dark"></i></p>
-              Home
-            </a>
-          </div>
-          <div class="col">
-            <a
-              href="most_popular.html"
-              class="text-dark small fw-bold text-decoration-none"
-            >
-              <p class="h4 m-0"><i class="feather-map-pin"></i></p>
-              Trending
-            </a>
-          </div>
-          <div class="col bg-white rounded-circle mt-n4 px-3 py-2">
-            <div class="bg-danger rounded-circle mt-n0 shadow">
-              <a
-                href="checkout.html"
-                class="text-white small fw-bold text-decoration-none"
-              >
-                <i class="feather-shopping-cart"></i>
-              </a>
-            </div>
-          </div>
-          <div class="col">
-            <a
-              href="favorites.html"
-              class="text-dark small fw-bold text-decoration-none"
-            >
-              <p class="h4 m-0"><i class="feather-heart"></i></p>
-              Favorites
-            </a>
-          </div>
-          <div class="col selected">
-            <a
-              href="profile.html"
-              class="text-danger small fw-bold text-decoration-none"
-            >
-              <p class="h4 m-0"><i class="feather-user"></i></p>
-              Profile
-            </a>
-          </div>
-        </div>
-      </div>
+        
     </div>
 
     <!-- Footer -->
