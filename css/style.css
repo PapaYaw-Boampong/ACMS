@@ -55,20 +55,16 @@ a {
   box-shadow: none !important;
 }
 .offer-slider.slick-initialized,
-.cat-slider.slick-initialized,
-.trending-slider.slick-initialized,
-.popular-slider.slick-initialized,
-.osahan-slider.slick-initialized,
-.osahan-slider-map.slick-initialized {
+.recents-slider.slick-initialized,
+.tending-slider.slick-initialized,
+.osahan-slider.slick-initialized {
   visibility: visible;
   opacity: 1;
 }
 .offer-slider,
-.cat-slider,
-.trending-slider,
-.popular-slider,
-.osahan-slider,
-.osahan-slider-map {
+.recents-slider,
+.tending-slider,
+.osahan-slider {
   opacity: 0;
   visibility: hidden;
   transition: opacity 1s ease;
@@ -110,12 +106,7 @@ a {
 .hc-nav-trigger.togglew span::after {
   background: #fff;
 }
-.cat-slider img {
-  width: 38px;
-  margin: auto;
-  -webkit-filter: saturate(200%);
-  filter: saturate(200%);
-}
+
 .grid-card span.float-end.text-black-50 {
   display: none;
 }
@@ -626,11 +617,14 @@ p {
   text-align: center;
   line-height: 0;
 }
+
+
 .most_popular .trending-slider img {
   border-radius: 10px;
   padding: 0 4px;
   margin: 8px 0 0;
 }
+
 .osahan-track-order-page {
   min-height: 676px;
 }
