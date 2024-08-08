@@ -145,7 +145,7 @@ if (isset($_POST['login'])) {
         exit();
     } else {
         // Passwords don't match, provide appropriate response
-        echo "Incorrect password.";
+        header("Location: ../../../Login/login.php");
         exit();
     }
 }
