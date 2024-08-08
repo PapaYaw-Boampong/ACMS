@@ -1,171 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta name="description" content="Askbootstrap" />
-    <meta name="author" content="Askbootstrap" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Ashesi Eats" />
     <link rel="icon" type="image/png" href="../img/fav.png" />
     <title>Ashesi Eats</title>
-
-    <link
-      href="../vendor/slick/slick/slick.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      href="../vendor/slick/slick/slick-theme.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-
+    <link href="../vendor/slick/slick/slick.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/slick/slick-theme.css" rel="stylesheet" type="text/css" />
     <link href="../vendor/icons/feather.css" rel="stylesheet" type="text/css" />
-
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
     <link href="../css/style.css" rel="stylesheet" />
-
     <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
-  </head>
-  <body class="fixed-bottom-bar">
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Load preferences
+            $.ajax({
+                url: 'load_preferences.php',
+                type: 'GET',
+                success: function(response) {
+                    const preferences = JSON.parse(response);
+                    // Set dietary restrictions
+                    preferences.dietaryRestrictions.split(',').forEach(function(item) {
+                        $(`input[name="dietaryRestrictions"][value="${item}"]`).prop('checked', true);
+                    });
+                    // Set diet
+                    preferences.diet.split(',').forEach(function(item) {
+                        $(`input[name="diet"][value="${item}"]`).prop('checked', true);
+                    });
+                    // Set cultural restrictions
+                    preferences.culturalRestrictions.split(',').forEach(function(item) {
+                        $(`input[name="culturalRestrictions"][value="${item}"]`).prop('checked', true);
+                    });
+                }
+            });
+
+            // Save preferences
+            $('#preferenceForm').on('submit', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: 'save_preferences.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        alert('Preferences updated successfully');
+                    },
+                    error: function() {
+                        alert('Failed to update preferences');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body class="fixed-bottom-bar">
     <special-header></special-header>
     <div class="osahan-profile">
-      <div class="d-none">
-        <div class="bg-primary border-bottom p-3 d-flex align-items-center">
-          <a class="toggle togglew toggle-2" href="#"><span></span></a>
-          <h4 class="fw-bold m-0 text-white">Profile</h4>
-        </div>
-      </div>
+        <div class="container position-relative">
+            <div class="py-5 osahan-profile row">
+                <div class="container col-md-8 mb-3">
+                    <div class="rounded shadow-sm">
+                        <div class="osahan-cart-item-profile bg-white rounded shadow-sm p-4">
+                            <div class="flex-column">
+                                <h5 class="mb-4">My preferences</h5>
+                                <form id="preferenceForm">
+                                    <div class="form-group mb-3">
+                                        <label class="pb-1">Dietary restrictions or food allergies:</label>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="dietaryRestrictions" value="gluten-free" id="glutenFree">
+                                            <label class="form-check-label" for="glutenFree">Gluten-free</label>
+                                        </div>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="dietaryRestrictions" value="dairy-free" id="dairyFree">
+                                            <label class="form-check-label" for="dairyFree">Dairy-free</label>
+                                        </div>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="dietaryRestrictions" value="nut-allergy" id="nutAllergy">
+                                            <label class="form-check-label" for="nutAllergy">Nut allergy</label>
+                                        </div>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="dietaryRestrictions" value="shellfish-allergy" id="shellfishAllergy">
+                                            <label class="form-check-label" for="shellfishAllergy">Shellfish allergy</label>
+                                        </div>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="dietaryRestrictions" value="soy-allergy" id="soyAllergy">
+                                            <label class="form-check-label" for="soyAllergy">Soy allergy</label>
+                                        </div>
+                                        <div class="form-group mt-2 ps-4">
+                                            <input type="text" class="form-control" name="dietaryRestrictionsOther" placeholder="Other (please specify)">
+                                        </div>
+                                    </div>
 
-      <div class="container position-relative">
-        <div class="py-5 osahan-profile row">
-          <div class="col-md-4 mb-3">
-            <div
-              class="bg-white rounded shadow-sm sticky_sidebar overflow-hidden" id="profile-nav"
-            >
+                                    <div class="form-group mb-3">
+                                        <label class="pb-1">Specific diet:</label>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="diet" value="vegetarian" id="vegetarian">
+                                            <label class="form-check-label" for="vegetarian">Vegetarian</label>
+                                        </div>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="diet" value="vegan" id="vegan">
+                                            <label class="form-check-label" for="vegan">Vegan</label>
+                                        </div>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="diet" value="keto" id="keto">
+                                            <label class="form-check-label" for="keto">Keto</label>
+                                        </div>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="diet" value="paleo" id="paleo">
+                                            <label class="form-check-label" for="paleo">Paleo</label>
+                                        </div>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="diet" value="pescatarian" id="pescatarian">
+                                            <label class="form-check-label" for="pescatarian">Pescatarian</label>
+                                        </div>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="diet" value="none" id="none">
+                                            <label class="form-check-label" for="none">None</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-3">
+                                        <label class="pb-1">Religious or cultural dietary restrictions:</label>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="culturalRestrictions" value="halal" id="halal">
+                                            <label class="form-check-label" for="halal">Halal</label>
+                                        </div>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="culturalRestrictions" value="kosher" id="kosher">
+                                            <label class="form-check-label" for="kosher">Kosher</label>
+                                        </div>
+                                        <div class="form-check ps-5">
+                                            <input class="form-check-input" type="checkbox" name="culturalRestrictions" value="hindu-dietary-laws" id="hinduDietaryLaws">
+                                            <label class="form-check-label" for="hinduDietaryLaws">Hindu dietary laws</label>
+                                        </div>
+                                        <div class="form-group mt-2 ps-4">
+                                            <input type="text" class="form-control" name="culturalRestrictionsOther" placeholder="Other (please specify)">
+                                        </div>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary w-100">SUBMIT</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="container col-md-8 mb-3">
-          <div class="rounded shadow-sm">
-            <div class="osahan-cart-item-profile bg-white rounded shadow-sm p-4">
-              <div class="flex-column">
-                <h5 class="mb-4">My preferences</h5>
-                <form>
-                  <div class="form-group mb-3">
-                    <label class="pb-1">Do you have any dietary restrictions or food allergies?</label>
-                    <div>
-                      <div class="form-check form-check-inline ps-5">
-                        <input class="form-check-input" type="radio" name="dietaryRestrictions" id="dietaryRestrictionsYes" value="yes" >
-                        <label class="form-check-label" for="dietaryRestrictionsYes">Yes</label>
-                      </div>
-                      <div class="form-check form-check-inline ps-5">
-                        <input class="form-check-input" type="radio" name="dietaryRestrictions" id="dietaryRestrictionsNo" value="no"checked>
-                        <label class="form-check-label" for="dietaryRestrictionsNo">No</label>
-                      </div>
-                    </div>
-                  </div>
-                
-                  <div class="form-group mb-3">
-                    <label class="pb-1">If yes, please specify your dietary restriction(s):</label>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="gluten-free" id="glutenFree">
-                      <label class="form-check-label" for="glutenFree">Gluten-free</label>
-                    </div>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="dairy-free" id="dairyFree">
-                      <label class="form-check-label" for="dairyFree">Dairy-free</label>
-                    </div>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="nut-allergy" id="nutAllergy">
-                      <label class="form-check-label" for="nutAllergy">Nut allergy</label>
-                    </div>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="shellfish-allergy" id="shellfishAllergy">
-                      <label class="form-check-label" for="shellfishAllergy">Shellfish allergy</label>
-                    </div>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="soy-allergy" id="soyAllergy">
-                      <label class="form-check-label" for="soyAllergy">Soy allergy</label>
-                    </div>
-                    <div class="form-group mt-2 ps-4">
-                      <input type="text" class="form-control" placeholder="Other (please specify)">
-                    </div>
-                  </div>
-                
-                  <div class="form-group mb-3">
-                    <label class="pb-1">Are you following any specific diet?</label>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="vegetarian" id="vegetarian">
-                      <label class="form-check-label" for="vegetarian">Vegetarian</label>
-                    </div>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="vegan" id="vegan">
-                      <label class="form-check-label" for="vegan">Vegan</label>
-                    </div>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="keto" id="keto">
-                      <label class="form-check-label" for="keto">Keto</label>
-                    </div>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="paleo" id="paleo">
-                      <label class="form-check-label" for="paleo">Paleo</label>
-                    </div>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="pescatarian" id="pescatarian">
-                      <label class="form-check-label" for="pescatarian">Pescatarian</label>
-                    </div>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="none" id="none"checked>
-                      <label class="form-check-label" for="none">None</label>
-                    </div>
-                  </div>
-                
-                  <div class="form-group mb-3">
-                    <label class="pb-1">Do you have any religious or cultural dietary restrictions?</label>
-                    <div>
-                      <div class="form-check form-check-inline ps-5">
-                        <input class="form-check-input" type="radio" name="culturalRestrictions" id="culturalRestrictionsYes" value="yes">
-                        <label class="form-check-label" for="culturalRestrictionsYes">Yes</label>
-                      </div>
-                      <div class="form-check form-check-inline ps-5">
-                        <input class="form-check-input" type="radio" name="culturalRestrictions" id="culturalRestrictionsNo" value="no" checked>
-                        <label class="form-check-label" for="culturalRestrictionsNo">No</label>
-                      </div>
-                    </div>
-                  </div>
-                
-                  <div class="form-group mb-3">
-                    <label class="pb-1">If yes, please specify:</label>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="halal" id="halal">
-                      <label class="form-check-label" for="halal">Halal</label>
-                    </div>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="kosher" id="kosher">
-                      <label class="form-check-label" for="kosher">Kosher</label>
-                    </div>
-                    <div class="form-check ps-5">
-                      <input class="form-check-input" type="checkbox" value="hindu-dietary-laws" id="hinduDietaryLaws">
-                      <label class="form-check-label" for="hinduDietaryLaws">Hindu dietary laws</label>
-                    </div>
-                    <div class="form-group mt-2 ps-4">
-                      <input type="text" class="form-control" placeholder="Other (please specify)">
-                    </div>
-                  </div>
-                
-                  <a class="btn btn-primary w-100" href="#">SUBMIT</a>
-                </form>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        </div>
-      </div>
+    </div>
 
       <div
         class="osahan-menu-fotter fixed-bottom bg-white px-3 py-2 text-center d-none"
