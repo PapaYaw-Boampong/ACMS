@@ -1,3 +1,12 @@
+
+<?php
+include_once '../settings/connection.php';
+include_once '../settings/core.php';
+$userID = userIdExist(); // Default to 0 if cafID is not provided
+$userName = $_SESSION['username'];
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 

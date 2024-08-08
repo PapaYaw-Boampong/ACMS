@@ -200,13 +200,16 @@ function initializePopularSlider() {
 // Recents fetch helper functions
 
 function fetchRecentMeals() {
-  const url = `../actions/CafeteriaManagementService/get/recentMeals.php?userID=${1}`; // Change this to your actual API endpoint
+  const sliderContainer = document.querySelector(".recents-slider");
+  const userID = sliderContainer.dataset.userId
+
+  const url = `../actions/CafeteriaManagementService/get/recentMeals.php?userID=${userID}`; // Change this to your actual API endpoint
 
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
       if (data.success && data.data.length > 0) {
-        const sliderContainer = document.querySelector(".recents-slider");
+        
         sliderContainer.innerHTML = ""; // Clear previous contents
         data.data.forEach((meal) => {
           const mealElement = createRecentMealElement(meal);

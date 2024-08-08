@@ -1,14 +1,19 @@
 <?php
+
 include_once '../settings/connection.php';
 include_once '../settings/core.php';
+
 include_once '../actions/FeedBackService/get/getReview.php';
 include_once '../actions/CafeteriaManagementService/get/getResturantDetails.php';
 include_once '../actions/FeedBackService/get/getNumberCafReviews.php';
 include_once '../actions/CafeteriaManagementService/get/getMenu.php';
-// session_start();
-$cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
+
+
+$cafID = cafIdExist() ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
+
 $result = getRecentReviews($conn, $cafID);
 $resultsDetails = getAllCafeteriaDetails($conn);
+
 $menusBF = getCafeteriaMenus($conn, 'BREAKFAST');
 $menusL = getCafeteriaMenus($conn, 'LUNCH');
 $menusD = getCafeteriaMenus($conn, 'DINNER');

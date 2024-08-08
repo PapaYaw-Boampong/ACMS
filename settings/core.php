@@ -22,6 +22,7 @@ if(!function_exists("userRoleIdExist")){
         return $_SESSION['roleID'];
     }
 }
+
 if (!function_exists('cafIdExist')) {
     function cafIdExist() {
         if(!isset($_SESSION['cafID'])){

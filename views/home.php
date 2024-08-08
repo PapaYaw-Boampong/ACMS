@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+
+<?php
+include_once '../settings/connection.php';
+include_once '../settings/core.php';
+$userID = userIdExist(); // Default to 0 if cafID is not provided
+$userName = $_SESSION['username'];
+?>
+
+
 <html lang="en">
 
 <head>
@@ -77,7 +86,7 @@
           <a class="fw-bold ms-auto" href="recents.php">More <i class="feather-chevrons-right"></i></a>
         </div>
 
-        <div class="recents-slider"></div>
+        <div class="recents-slider" data-user-id="<?php echo $userID; ?>"></div>
 
 
       </div>
@@ -86,7 +95,9 @@
       <!-- Footer -->
       <special-footer></special-footer>
 
-      <nav id="main-nav"></nav>
+      <nav id="main-nav" data-user-name="<?php echo $userName;?>"></nav>
+
+
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">

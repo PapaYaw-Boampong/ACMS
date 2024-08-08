@@ -14,21 +14,18 @@
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/style.css" rel="stylesheet" />
     <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../js/login.js"></script>
+   
 </head>
 
 <body>
 
-
- 
     <div class="login-page vh-100">
         <div class="d-flex align-items-center justify-content-center vh-100">
             <div class="px-5 col-md-6 ms-auto">
                 <div class="px-5 col-10 mx-auto">
                     <h2 class="text-dark my-0">Welcome Back</h2>
                     <p class="text-50">Sign in to continue</p>
-                    <form class="mt-5 mb-4" action="../actions/UserManagementService/post/login_action.php" method="POST">
+                    <form class="mt-5 mb-4" id="loginForm" action="#" method="POST">
                         <div class="form-group">
                             <label class="text-dark pb-1">Email</label>
                             <input type="email" id="email" name="email" placeholder="Enter Email" class="form-control py-1" onkeyup="checkEmail()" required />
@@ -59,6 +56,10 @@
     <script src="../vendor/slick/slick/slick.min.js"></script>
     <script src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
     <script src="../js/osahan.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script  src="../js/login.js"></script>
+
 </body>
 
 </html>

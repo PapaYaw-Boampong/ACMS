@@ -1,16 +1,40 @@
 <?php
-session_start();
-
+// session_start();
 // Include the connection file
 include_once '../../../settings/connection.php';
+global $conn;
+
+
+// Initialize response array
+$response = array();
+// Function to validate email format
+function isValidEmail($email) {
+    // Regex to check if the email has a structure like some.letters@ashesi.edu.gh
+    return preg_match('/^[a-zA-Z]+\.[a-zA-Z]+@ashesi\.edu\.gh$/', $email) && strlen($email) > 15;
+}
+// Function to validate password format
+function isValidPassword($password) {
+    // Regex: at least 11 characters, must include at least one letter, one number, and one special character
+    return preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{11,}$/', $password);
+}
+// Function to validate phone number format
+function isValidPhoneNumber($phoneNo) {
+    return preg_match('/^[0-9]{10,15}$/', $phoneNo); // Adjust regex according to your phone number format
+}
+
+
 
 // Function to check email availability
 function checkEmail($conn, $email) {
+    if (!isValidEmail($email)) {
+        return array('success' => false, 'message' => 'Invalid email format.');
+    }
+
     $query = "SELECT * FROM users WHERE email = ?";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $query)) {
-        die("Error: " . mysqli_error($conn));
+        return array('success' => false, 'message' => "Database error: " . mysqli_error($conn));
     }
 
     mysqli_stmt_bind_param($stmt, "s", $email);
@@ -19,23 +43,24 @@ function checkEmail($conn, $email) {
     $count = mysqli_num_rows($result);
 
     if ($count > 0) {
-        echo "<span style='color:red'> Email already registered.</span>";
-        echo "<script>$('#submit').prop('disabled', true);</script>";
+        return array('success' => false, 'message' => 'Email already registered.');
     } else {
-        echo "<span style='color:green'> Email available for registration.</span>";
-        echo "<script>$('#submit').prop('disabled', false);</script>";
+        return array('success' => true, 'message' => 'Email available for registration.');
     }
 
     mysqli_stmt_close($stmt);
 }
-
 // Function to check phone number availability
 function checkPhoneNumber($conn, $phoneNo) {
+    if (!isValidPhoneNumber($phoneNo)) {
+        return array('success' => false, 'message' => 'Invalid phone number format.');
+    }
+
     $query = "SELECT * FROM users WHERE phoneNo = ?";
     $stmt = mysqli_stmt_init($conn);
 
     if (!mysqli_stmt_prepare($stmt, $query)) {
-        die("Error: " . mysqli_error($conn));
+        return array('success' => false, 'message' => "Database error: " . mysqli_error($conn));
     }
 
     mysqli_stmt_bind_param($stmt, "s", $phoneNo);
@@ -44,32 +69,49 @@ function checkPhoneNumber($conn, $phoneNo) {
     $count = mysqli_num_rows($result);
 
     if ($count > 0) {
-        echo "<span style='color:red'> Phone number already registered.</span>";
-        echo "<script>$('#submit').prop('disabled', true);</script>";
+        return array('success' => false, 'message' => 'Phone number already registered.');
     } else {
-        echo "<span style='color:green'> Phone number available for registration.</span>";
-        echo "<script>$('#submit').prop('disabled', false);</script>";
+        return array('success' => true, 'message' => 'Phone number available for registration.');
     }
 
     mysqli_stmt_close($stmt);
+}
+// Function to check password correctness
+function checkPassword( $password) {
+    if (!isValidPassword($password)) {
+        return array('success' => false, 'message' => 'Invalid Password');
+    }else{
+        return array('success' => true, 'message' => 'Valid Password ');
+    }
+}
+
+
+
+
+// Check if the password correctness check was requested
+if (isset($_POST['action']) && $_POST['action'] == 'check_password') {
+    $password = $_POST['password'];
+    $response = checkPassword($password);
+    echo json_encode($response);
+    exit();
 }
 
 // Check if the email availability check was requested
 if (isset($_POST['action']) && $_POST['action'] == 'check_email') {
     $email = $_POST['email'];
-    checkEmail($conn, $email);
-    exit();
-}
+    $response = checkEmail($conn, $email);
+} 
 
 // Check if the phone number availability check was requested
-if (isset($_POST['action']) && $_POST['action'] == 'check_phoneNo') {
+elseif (isset($_POST['action']) && $_POST['action'] == 'check_phoneNo') {
     $phoneNo = $_POST['phoneNo'];
-    checkPhoneNumber($conn, $phoneNo);
-    exit();
-}
+    $response = checkPhoneNumber($conn, $phoneNo);
+} 
+
+
 
 // Check if the signup form was submitted
-if (isset($_POST['signup'])) {
+elseif (isset($_POST['signup'])) {
     // Collect form data
     $email = $_POST['email'];
     $phoneNo = $_POST['phoneNo'];
@@ -84,32 +126,40 @@ if (isset($_POST['signup'])) {
     // Read the default image file in binary mode
     $defaultImage = file_get_contents('../../../img/user/1.jpg');
 
-    // Write your INSERT query
-    $query = "INSERT INTO users (email, phoneNo, name, password, roleID, mealPlanStatus, userImage) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-    // Prepare the statement
-    $stmt = mysqli_stmt_init($conn);
-
-    if (!mysqli_stmt_prepare($stmt, $query)) {
-        die("Error: " . mysqli_error($conn));
-    }
-
-    // Bind parameters and execute the query
-    mysqli_stmt_bind_param($stmt, "ssssibs", $email, $phoneNo, $name, $hashedPassword, $role, $mealPlan, $defaultImage);
-
-    if (mysqli_stmt_execute($stmt)) {
-        // Redirect to login page if execution is successful
-        header("Location: ../../../Login/login.php");
-        exit();
+    // Check if email is already registered
+    $emailCheck = checkEmail($conn, $email);
+    if (!$emailCheck['success']) {
+        $response = $emailCheck;
     } else {
-        // Redirect back to the registration page with an error message
-        header("Location: ../register.html?error=registration_failed");
-        exit();
-    }
+        // Insert new user into the database
+        $query = "INSERT INTO users (email, phoneNo, name, password, roleID, mealPlanStatus, userImage) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = mysqli_stmt_init($conn);
 
-    // Close the statement
-    mysqli_stmt_close($stmt);
+        if (!mysqli_stmt_prepare($stmt, $query)) {
+            $response['success'] = false;
+            $response['message'] = "Database error: " . mysqli_error($conn);
+        } else {
+            mysqli_stmt_bind_param($stmt, "ssssibs", $email, $phoneNo, $name, $hashedPassword, $role, $mealPlan, $defaultImage);
+
+            if (mysqli_stmt_execute($stmt)) {
+                $response['success'] = true;
+                $response['message'] = "Signup successful.";
+            } else {
+                $response['success'] = false;
+                $response['message'] = "Registration failed. Please try again.";
+            }
+        }
+        mysqli_stmt_close($stmt);
+    }
+} else {
+    $response['success'] = false;
+    $response['message'] = "Invalid request method.";
 }
 
 // Close the connection
 mysqli_close($conn);
+
+// Encode the response array as JSON and echo it
+echo json_encode($response);
+?>
+

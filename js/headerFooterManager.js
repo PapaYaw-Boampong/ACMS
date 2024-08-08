@@ -1,3 +1,5 @@
+
+
 class SpecialHeader extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
@@ -30,10 +32,10 @@ class SpecialHeader extends HTMLElement {
                                         Hi Osahan
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="profile.html">My account</a>
+                                        <a class="dropdown-item" href="profile.php">My account</a>
                                         <a class="dropdown-item" href="contact-us.html">Contact us</a>
-                                        <a class="dropdown-item" href="terms.html">Term of use</a>
-                                        <a class="dropdown-item" href="login.html">Logout</a>
+                                        <a class="dropdown-item" href="privacy.php">Term of use</a>
+                                        <a class="dropdown-item" href="login.php">Logout</a>
                                     </div>
                                 </div>
                                 <a href="checkout.html" class="widget-header me-4 text-dark">
