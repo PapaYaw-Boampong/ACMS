@@ -18,7 +18,7 @@ class SpecialHeader extends HTMLElement {
                                         <span>Search</span>
                                     </div>
                                 </a>
-                                <a href="login.php" class="widget-header me-4 text-dark m-none">
+                                <a href="../login/login.php" class="widget-header me-4 text-dark m-none">
                                     <div class="icon d-flex align-items-center">
                                         <i class="feather-user h6 me-2 mb-0"></i>
                                         <span>Sign in</span>
