@@ -48,7 +48,7 @@ function createTrendingMealElement(meal) {
                 <div class="favourite-heart text-danger position-absolute rounded-circle">
                     <a href="#"><i class="feather-heart"></i></a>
                 </div>
-                <a href="restaurant.html">
+                <a href="restaurant.html" class = "order-trigger">
                     <img alt="#" src="../img/trending1.png" class="img-fluid item-img w-100" />
                 </a>
             </div>

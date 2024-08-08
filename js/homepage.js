@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+ 
+
   fetchCafeterias();
   fetchMealsAndRenderSlider();
   fetchRecentMeals();
@@ -42,7 +45,7 @@ function createCafeteriaElement(cafeteria) {
   itemDiv.innerHTML = `
          <h5 class="m-0">${cafeteria.cafeteriaName}</h5>
          <br>
-        <a class="d-block text-center shadow-sm" href="cafeteriaDetails.html?cafID=${
+        <a class="d-block text-center shadow-sm" href="restaurant.php?cafID=${
           cafeteria.cafeteriaID
         }">
             <img class="img-fluid rounded" src="${
@@ -133,7 +136,7 @@ function createMealElement(meal) {
                 <div class="member-plan position-absolute">
                     <span class="badge text-bg-dark">Promoted</span>
                 </div>
-                <a href="restaurant.html">
+                <a href="restaurant.php?cafID=${meal.cafeteriaID}"  class = "order-trigger">
                     <img alt="#" src="../img/trending1.png" class="img-fluid item-img w-100" />
                 </a>
             </div>
@@ -145,12 +148,16 @@ function createMealElement(meal) {
                         }
                         </a>
                     </h6>
-                    <p class="text-gray mb-1 small">• ${meal.timeframe} • ${meal.name}</p>
+                    <p class="text-gray mb-1 small">• ${meal.timeframe} • ${meal.name} </p>
                     <p class="text-gray mb-1 rating"></p>
                     <ul class="rating-stars list-unstyled">
                         ${generateStars(meal.avgRating)}
                     </ul>         
                 </div>
+                  <p class="text-gray mb-1 small">${meal.cafeteriaName} </p>
+  
+                
+                
 
             </div>
         </div>
@@ -173,7 +180,7 @@ function generateStars(avgRating) {
 function initializePopularSlider() {
   $(".trending-slider").slick({
     slidesToShow: 3,
-    arrows: false,
+    arrows: true,
     responsive: [
       {
         breakpoint: 768,
@@ -201,9 +208,7 @@ function initializePopularSlider() {
 
 function fetchRecentMeals() {
   const sliderContainer = document.querySelector(".recents-slider");
-  console.log('Slider container:', sliderContainer); // Check if container is found
   const userID = sliderContainer.dataset.userId;
-  console.log('User ID:', userID); // Check userID
 
   const url = `../actions/CafeteriaManagementService/get/recentMeals.php?userID=${userID}`;
 
@@ -244,7 +249,7 @@ function createRecentMealElement(meal) {
                 <div class="member-plan position-absolute">
                     <span class="badge text-bg-dark">Promoted</span>
                 </div>
-                <a href="restaurant.html">
+                <a href="restaurant.html"  class = "order-trigger">
                     <img alt="#" src="../img/trending1.png" class="img-fluid item-img w-100" />
                 </a>
             </div>
@@ -289,6 +294,3 @@ function initializeRecentsSlider() {
     ],
   });
 }
-
-
-

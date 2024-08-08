@@ -87,14 +87,19 @@ function handleFormSubmit(event) {
 
     // Get form data
     const formData = new FormData(event.target);
-    formData.append("signup", true); 
+    formData.append("signup", true);
 
     // Make AJAX request
-    fetch('../actions/UserManagementService/post/signup_action.php', {
+    fetch('../../ACMS/actions/UserManagementService/post/signup_action.php', {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Attempt to parse the JSON response
+    })
     .then(data => {
         if (data.success) {
             // Display success alert

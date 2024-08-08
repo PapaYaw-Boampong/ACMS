@@ -18,7 +18,7 @@ class SpecialHeader extends HTMLElement {
                         </div>
                         <div class="col-8">
                             <div class="d-flex align-items-center justify-content-end">
-                                <a href="search.html" class="widget-header me-4 text-dark">
+                                <a href="search.php" class="widget-header me-4 text-dark">
                                     <div class="icon d-flex align-items-center">
                                         <i class="feather-search h6 me-2 mb-0"></i>
                                         <span>Search</span>

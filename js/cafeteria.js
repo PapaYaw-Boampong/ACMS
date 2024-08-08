@@ -60,8 +60,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
-
-
   document.getElementById('addMealForm').addEventListener('submit', function (e) {
     e.preventDefault();
 

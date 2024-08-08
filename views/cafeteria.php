@@ -1,21 +1,4 @@
 <!-- Include Connection File -->
-<?php
-include_once '../settings/connection.php';
-include_once '../settings/core.php';
-include_once '../actions/FeedBackService/get/getReview.php';
-include_once '../actions/CafeteriaManagementService/get/getResturantDetails.php';
-include_once '../actions/FeedBackService/get/getNumberCafReviews.php';
-include_once '../actions/CafeteriaManagementService/get/getMenu.php';
-include_once '../actions/UserManagementService/get/getCafDetails.php';
-// session_start();
-$cafID = cafIdExist(); // Default to 0 if cafID is not provided
-$result = getRecentReviews($conn, $cafID);
-// $menusBF = getCafeteriaMenus($conn, 'BREAKFAST');
-// $menusL = getCafeteriaMenus($conn, 'LUNCH');
-// $menusD = getCafeteriaMenus($conn, 'DINNER');
-$cafeteriaDetails = getCafeteriaDetails($conn, $cafID);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 

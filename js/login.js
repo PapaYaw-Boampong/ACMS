@@ -72,6 +72,11 @@ function handleFormSubmit(event) {
                 // Redirect to another page if needed
                 if (data.redirect) {
                     window.location.href = data.redirect;
+                     
+                    
+                    // Initializing order state
+                    localStorage.setItem('currentOrderID', -1);
+
                 }
             });
         } else {

@@ -9,11 +9,9 @@ include_once '../actions/FeedBackService/get/getNumberCafReviews.php';
 include_once '../actions/CafeteriaManagementService/get/getMenu.php';
 
 
-$cafID = cafIdExist() ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
-
+$cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
 $result = getRecentReviews($conn, $cafID);
 $resultsDetails = getAllCafeteriaDetails($conn);
-
 $menusBF = getCafeteriaMenus($conn, 'BREAKFAST');
 $menusL = getCafeteriaMenus($conn, 'LUNCH');
 $menusD = getCafeteriaMenus($conn, 'DINNER');
@@ -105,16 +103,18 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
           <a href="#ratings-and-reviews" class="text-decoration-none text-dark"><i
               class="p-2 bg-light rounded-circle fw-bold feather-map-pin"></i></a>
         </div>
-        <a href="contact-us.html" class="btn btn-sm btn-outline-light ms-auto">Contact</a>
       </div>
     </div>
   </div>
+
+
   <div class="container">
     <div class>
       <p class="fw-bold pt-4 m-0">FEATURED ITEMS</p>
 
-      <div class="trending-slider rounded">
-        <div class="osahan-slider-item">
+      <div class="trending-slider  rounded" data-caf-id="<?php echo $cafID ?>">
+
+        <!-- <div class="osahan-slider-item">
           <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
             <div class="list-card-image">
               <a href="checkout.html">
@@ -193,7 +193,8 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
+
       </div>
     </div>
   </div>
@@ -365,100 +366,8 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
       </div>
 
       <div class="col-md-4 pt-3">
-        <div class="osahan-cart-item rounded rounded shadow-sm overflow-hidden bg-white sticky_sidebar">
-          <div class="d-flex border-bottom osahan-cart-item-profile bg-white p-3">
-            <img alt="osahan" src="../img/starter1.jpg" class="me-3 rounded-circle img-fluid" />
-            <div class="d-flex flex-column">
-              <h6 class="mb-1 fw-bold">Munchies Extra</h6>
-              <p class="mb-0 small text-muted">
-                <i class="feather-map-pin"></i> Inside Ashesi University
-              </p>
-            </div>
-          </div>
-          <div class="bg-white border-bottom py-2">
-            <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
-              <div class="d-flex align-items-center">
-                <div class="me-2 text-success">&middot;</div>
-                <div class="media-body">
-                  <p class="m-0">Fried rice</p>
-                </div>
-              </div>
-              <div class="d-flex align-items-center">
-                <span class="count-number float-end"><button type="button"
-                    class="btn-sm left dec btn btn-outline-secondary">
-                    <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
-                    value="1" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
-                    <i class="feather-plus"></i></button></span>
-                <p class="text-gray mb-0 float-end ms-2 text-muted small">
-                  GHS 12
-                </p>
-              </div>
-            </div>
-            <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
-              <div class="d-flex align-items-center">
-                <div class="me-2 text-success">&middot;</div>
-                <div class="media-body">
-                  <p class="m-0">Fried Chicken Thigh</p>
-                </div>
-              </div>
-              <div class="d-flex align-items-center">
-                <span class="count-number float-end"><button type="button"
-                    class="btn-sm left dec btn btn-outline-secondary">
-                    <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
-                    value="1" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
-                    <i class="feather-plus"></i></button></span>
-                <p class="text-gray mb-0 float-end ms-2 text-muted small">
-                  GHS 13
-                </p>
-              </div>
-            </div>
-            <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
-              <div class="d-flex align-items-center">
-                <div class="me-2 text-danger">&middot;</div>
-                <div class="media-body">
-                  <p class="m-0">Sausage Kebab</p>
-                </div>
-              </div>
-              <div class="d-flex align-items-center">
-                <span class="count-number float-end"><button type="button"
-                    class="btn-sm left dec btn btn-outline-secondary">
-                    <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
-                    value="2" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
-                    <i class="feather-plus"></i></button></span>
-                <p class="text-gray mb-0 float-end ms-2 text-muted small">
-                  GHS 20
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white p-3 py-3 border-bottom clearfix">
-            <div class="input-group">
-              <span class="input-group-text" id="message"><i class="feather-message-square"></i></span>
-              <textarea placeholder="Any suggestions? We will pass it on..." aria-label="With textarea"
-                class="form-control"></textarea>
-            </div>
-          </div>
-          <div class="bg-white p-3 clearfix border-bottom">
-            <p class="mb-1">
-              Item Total <span class="float-end text-dark">GHS 50</span>
-            </p>
-            <p class="mb-1">
-              Restaurant Charges
-              <span class="float-end text-dark">GHS 5</span>
-            </p>
-            <p class="mb-1">
-              Delivery Fee<span class="text-info ms-1"><i class="feather-info"></i></span><span
-                class="float-end text-dark">GHS 5</span>
-            </p>
-            <hr />
-            <h6 class="fw-bold mb-0">
-              TO PAY <span class="float-end">GHS 60</span>
-            </h6>
-          </div>
-          <div class="p-3">
-            <a class="btn btn-success w-100 btn-lg" href="successful.html">PAY GHS 60<i
-                class="feather-arrow-right"></i></a>
-          </div>
+        <div class="osahan-cart-item rounded rounded shadow-sm overflow-hidden bg-white sticky_sidebar" id="order-details">
+
         </div>
       </div>
     </div>
@@ -470,65 +379,25 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
   <nav id="main-nav"></nav>
 
 
-  <script  src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/jquery/jquery.min.js"></script>
 
 
-  <script  src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <script  src="../vendor/slick/slick/slick.min.js"></script>
+  <script src="../vendor/slick/slick/slick.min.js"></script>
 
-  <script  src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
+  <script src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
 
-  <script  src="../js/osahan.js"></script>
+  <script src="../js/osahan.js"></script>
 
   <script src="../js/headerFooterManager.js"></script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const stars = document.querySelectorAll(".star-rating .feather-star");
-      let rating = 0;
+  <script src="../js/restaurant.js"></script>
 
-      stars.forEach((star, index) => {
-        star.addEventListener("click", () => {
-          // Set the rating to the star's value
-          rating = index + 1;
+  <script src="../js/orderInfo.js"></script>
 
-          // Update the UI to show the selected rating
-          stars.forEach((s, i) => {
-            if (i < rating) {
-              s.classList.add("text-warning");
-            } else {
-              s.classList.remove("text-warning");
-            }
-          });
 
-          console.log("Rating selected:", rating);
-          // You can now send the rating to the server or handle it as needed
-        });
-      });
-    });
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const stars = document.querySelectorAll(".star-rating .feather-star");
-      const ratingInput = document.getElementById("rating");
 
-      stars.forEach((star, index) => {
-        star.addEventListener("click", () => {
-          const rating = index + 1;
-          ratingInput.value = rating;
-
-          stars.forEach((s, i) => {
-            if (i < rating) {
-              s.classList.add("text-warning");
-            } else {
-              s.classList.remove("text-warning");
-            }
-          });
-        });
-      });
-    });
-  </script>
 </body>
 
 </html>

@@ -16,7 +16,7 @@ $response = array();
 try {
     // Retrieve parameters from the request
     $orderID = isset($_GET['orderID']) ? (int)$_GET['orderID'] : null;
-
+    $userID = isset($_GET['userID']) ? (int)$_GET['userID'] : null;
     // Check if orderID is provided
     if ($orderID === null) {
         throw new Exception("Order ID is required.");
