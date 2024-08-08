@@ -43,7 +43,7 @@ function getCafeteriaInfo($cafID = -1) {
 
 
 // Function to retrieve recent meals purchased by a specific user
-function getRecentMeals($userID = -1, $numMeals = 10) {
+function getRecentMeals($userID, $numMeals) {
     global $conn;
 
     $meals = array();

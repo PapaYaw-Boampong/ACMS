@@ -210,11 +210,12 @@ function fetchRecentMeals() {
   const sliderContainer = document.querySelector(".recents-slider");
   const userID = sliderContainer.dataset.userId;
 
-  const url = `../actions/CafeteriaManagementService/get/recentMeals.php?userID=${userID}`; // Change this to your actual API endpoint
+  const url = `../actions/CafeteriaManagementService/get/recentMeals.php?userID=${userID}`;
 
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
+      console.log('Fetched data:', data); // Inspect the data
       if (data.success && data.data.length > 0) {
         sliderContainer.innerHTML = ""; // Clear previous contents
         data.data.forEach((meal) => {
@@ -224,7 +225,12 @@ function fetchRecentMeals() {
 
         initializeRecentsSlider();
       } else {
-        console.error("No recent meals found");
+        sliderContainer.outerHTML = `
+            <div class="p-3 no-recent-meals text-center">
+                <h5 class="fw-bold text-muted">${data.message || 'No recent meals found'}</h5>
+            </div>
+        `;
+        console.error(data.message || "No recent meals found");
       }
     })
     .catch((error) => {
