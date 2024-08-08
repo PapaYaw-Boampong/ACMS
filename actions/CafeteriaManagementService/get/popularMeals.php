@@ -9,7 +9,7 @@ $response = array();
 
 try {
     // Call the function to get trending meals
-    $trendingMeals = trendingMeals(10); // Fetch top 10 trending meals
+    $trendingMeals = trendingMeals(5); // Fetch top 10 trending meals
 
     if (!empty($trendingMeals)) {
         $response['success'] = true;

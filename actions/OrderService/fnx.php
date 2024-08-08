@@ -40,39 +40,27 @@ function createMeal($mealData, $conn) {
 }
 
 
-// Function to retrieve orders and related information for a specific user
-function getUserOrders($userID, $limit, $status = null) {
+
+
+// Function to retrieve orders of a specific user
+function getUserOrders($userID) {
     global $conn;
 
-    $orders = array();
+    $userOrders = array();
 
-    // Prepare the base SQL statement
-    // Prepare the base SQL statement
-    $sql = "SELECT Orders.orderID, Orders.status, OrderDetails.quantity, OrderDetails.orderDate, Meals.mealID As mealID,
-            Meals.name AS mealName, Meals.price, Cafeterias.cafeteriaID, Cafeterias.cafeteriaName AS cafeteriaName
-            FROM Orders
-            JOIN OrderDetails ON Orders.orderID = OrderDetails.orderID
-            JOIN Meals ON OrderDetails.mealID = Meals.mealID
-            JOIN Cafeterias ON Meals.cafeteriaID = Cafeterias.cafeteriaID
-            WHERE Orders.userID = ?";
-
-    // Append status filter if provided
-    if ($status !== null) {
-        $sql .= " AND Orders.status = ?";
-    }
-
-    // Append the limit
-    $sql .= " LIMIT ?";
-
-    // Prepare the statement
+    // Prepare the SQL statement
+    $sql = "SELECT o.orderID,o.orderDate, o.status, o.deliveryStatus, o.orderTotal, 
+                   GROUP_CONCAT(mo.mealID) as mealIDs, GROUP_CONCAT(m.name) as mealName, 
+                   MIN(m.name) as firstMealName, GROUP_CONCAT(mo.quantity) as quantity, 
+                   GROUP_CONCAT(m.price) as prices, c.cafeteriaName
+            FROM orders o
+            INNER JOIN mealorder mo ON o.orderID = mo.orderID
+            INNER JOIN meals m ON mo.mealID = m.mealID
+            INNER JOIN cafeterias c ON m.cafeteriaID = c.cafeteriaID
+            WHERE o.userID = ?
+            GROUP BY o.orderID";
     $stmt = $conn->prepare($sql);
-
-    // Bind parameters based on the presence of the status
-    if ($status !== null) {
-        $stmt->bind_param("isi", $userID, $status, $limit);
-    } else {
-        $stmt->bind_param("ii", $userID, $limit);
-    }
+    $stmt->bind_param("i", $userID);
 
     // Execute the query
     $stmt->execute();
@@ -83,7 +71,7 @@ function getUserOrders($userID, $limit, $status = null) {
     // Check if there are any results
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $orders[] = $row;
+            $userOrders[] = $row;
         }
     } else {
         return null; // No results found
@@ -92,7 +80,71 @@ function getUserOrders($userID, $limit, $status = null) {
     // Close the statement
     $stmt->close();
 
-    return $orders;
+    return $userOrders;
 }
 
 
+
+
+function getOrderInfo($orderID) {
+    global $conn;
+
+    $orderInfo = array();
+
+    // Prepare the SQL statement
+    $sql = "SELECT o.orderID, o.orderDate, o.status, o.deliveryStatus, o.orderTotal, 
+                   GROUP_CONCAT(mo.mealID) as mealIDs, GROUP_CONCAT(m.name) as mealNames, 
+                   MIN(m.name) as firstMealName, GROUP_CONCAT(mo.quantity) as quantities, 
+                   GROUP_CONCAT(m.price) as prices, c.cafeteriaName
+            FROM orders o
+            INNER JOIN mealorder mo ON o.orderID = mo.orderID
+            INNER JOIN meals m ON mo.mealID = m.mealID
+            INNER JOIN cafeterias c ON m.cafeteriaID = c.cafeteriaID
+            WHERE o.orderID = ?
+            GROUP BY o.orderID";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $orderID);
+
+    // Execute the query
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Check if there are any results
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $mealIDs = explode(',', $row['mealIDs']);
+            $mealNames = explode(',', $row['mealNames']);
+            $quantities = explode(',', $row['quantities']);
+            $prices = explode(',', $row['prices']);
+            
+            $meals = array();
+            for ($i = 0; $i < count($mealIDs); $i++) {
+                $meals[] = array(
+                    "mealID" => $mealIDs[$i],
+                    "mealName" => $mealNames[$i],
+                    "quantity" => $quantities[$i],
+                    "price" => $prices[$i]
+                );
+            }
+            
+            $orderInfo = array(
+                "orderID" => $row['orderID'],
+                "orderDate" => $row['orderDate'],
+                "status" => $row['status'],
+                "deliveryStatus" => $row['deliveryStatus'],
+                "orderTotal" => $row['orderTotal'],
+                "meals" => $meals,
+                "cafeteriaName" => $row['cafeteriaName'],
+                "firstMealName" => $row['firstMealName']
+            );
+        }
+    } else {
+        return null; // No results found
+    }
+
+    // Close the statement
+    $stmt->close();
+
+    return $orderInfo;
+    
+}

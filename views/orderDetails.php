@@ -39,9 +39,9 @@
             
             <div class="row">
 
-              <div class="col-lg-12">
+              <div class="col-lg-12" id="orderDetailsContainer">
 
-                <div class="osahan-status">
+                <!-- <div class="osahan-status">
                   <div class="p-3 status-order bg-white border-bottom d-flex align-items-center space-between">
                     <p class="m-0">
                       <i class="feather-calendar text-primary"></i> 16 June,
@@ -51,27 +51,7 @@
                   </div>
                   <div class="p-3 border-bottom">
                     <h6 class="fw-bold">Order Status</h6>
-                    <div class="tracking-wrap">
-                      <div class="my-1 step active">
-                        <span class="icon text-success"><i class="feather-check"></i></span>
-                        <span class="text small">Preparing order</span>
-                      </div>
-
-                      <div class="my-1 step active">
-                        <span class="icon text-success"><i class="feather-check"></i></span>
-                        <span class="text small"> Ready to collect</span>
-                      </div>
-
-                      <div class="my-1 step">
-                        <span class="icon text-success"><i class="feather-check"></i></span>
-                        <span class="text small"> On the way </span>
-                      </div>
-
-                      <div class="my-1 step">
-                        <span class="icon text-success"><i class="feather-check"></i></span>
-                        <span class="text small">Delivered Order</span>
-                      </div>
-                    </div>
+            
                   </div>
 
                   <div class="p-3 border-bottom bg-white">
@@ -96,7 +76,8 @@
                       This looks Yummy <br /> Good Choice :)
                     </p>
                   </div>
-                </div>
+                </div> -->
+
               </div>
             </div>
           </div>
@@ -266,16 +247,17 @@
     </div>
   </div>
 
-  <script type="8e0a516ce71bc8370ce6d775-text/javascript" src="../vendor/jquery/jquery.min.js"></script>
-  <script type="8e0a516ce71bc8370ce6d775-text/javascript" src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script  src="../vendor/jquery/jquery.min.js"></script>
+  <script  src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <script type="8e0a516ce71bc8370ce6d775-text/javascript" src="../vendor/slick/slick/slick.min.js"></script>
+  <script  src="../vendor/slick/slick/slick.min.js"></script>
 
-  <script type="8e0a516ce71bc8370ce6d775-text/javascript" src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
+  <script  src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
 
-  <script type="8e0a516ce71bc8370ce6d775-text/javascript" src="../js/osahan.js"></script>
-  <script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="8e0a516ce71bc8370ce6d775-|49" defer></script>
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8a5eb155385d94ed","version":"2024.7.0","r":1,"serverTiming":{"name":{"cfL4":true}},"token":"dd471ab1978346bbb991feaa79e6ce5c","b":1}' crossorigin="anonymous"></script>
+  <script  src="../js/osahan.js"></script>
+  <script  src="../js/orderInfo.js"></script>
+ 
+ 
   <script src="../js/headerFooterManager.js"></script>
 </body>
 

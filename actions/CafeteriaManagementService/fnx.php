@@ -41,58 +41,56 @@ function getCafeteriaInfo($cafID = -1) {
     return $cafeterias;
 }
 
+// // Function to retrieve trending meals based on average ratings
+// function trendingMeals($numMeals) {
+//     global $conn;
 
+//     $trendingMeals = array();
 
-// Function to retrieve trending meals based on average ratings
-function trendingMeals($numMeals) {
-    global $conn;
+//     // Prepare the SQL statement
+//     $sql = "SELECT Meals.mealID, Meals.name, Meals.price, Meals.timeframe, Cafeterias.cafeteriaName, AVG(MealRatings.ratingValue) as avgRating
+//             FROM Meals
+//             INNER JOIN MealRatings ON Meals.mealID = MealRatings.mealID
+//             INNER JOIN Cafeterias ON Meals.cafeteriaID = Cafeterias.cafeteriaID
+//             GROUP BY Meals.mealID
+//             ORDER BY avgRating DESC
+//             LIMIT ?";
+//     $stmt = $conn->prepare($sql);
+//     $stmt->bind_param("i", $numMeals);
 
-    $trendingMeals = array();
+//     // Execute the query
+//     $stmt->execute();
 
-    // Prepare the SQL statement
-    $sql = "SELECT Meals.mealID, Meals.name, Meals.price, Meals.timeframe, AVG(MealRatings.ratingValue) as avgRating
-            FROM Meals
-            INNER JOIN MealRatings ON Meals.mealID = MealRatings.mealID
-            GROUP BY Meals.mealID
-            ORDER BY avgRating DESC
-            LIMIT ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $numMeals);
+//     // Get the result
+//     $result = $stmt->get_result();
 
-    // Execute the query
-    $stmt->execute();
+//     // Check if there are any results
+//     if ($result->num_rows > 0) {
+//         while ($row = $result->fetch_assoc()) {
+//             $trendingMeals[] = $row;
+//         }
+//     } else {
+//         return null; // No results found
+//     }
 
-    // Get the result
-    $result = $stmt->get_result();
+//     // Close the statement
+//     $stmt->close();
 
-    // Check if there are any results
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $trendingMeals[] = $row;
-        }
-    } else {
-        return null; // No results found
-    }
-
-    // Close the statement
-    $stmt->close();
-
-    return $trendingMeals;
-}
-
-
+//     return $trendingMeals;
+// }
 
 // Function to retrieve recent meals purchased by a specific user
-function getRecentMeals($userID = -1, $numMeals=10) {
+function getRecentMeals($userID = -1, $numMeals = 10) {
     global $conn;
 
     $meals = array();
 
     // Prepare the SQL statement
-    $sql = "SELECT Meals.mealID, Meals.name, Meals.price, Meals.timeframe
+    $sql = "SELECT Meals.mealID, Meals.name, Meals.price, Meals.avgRating, Meals.timeframe, Cafeterias.cafeteriaName
             FROM Meals
-            INNER JOIN OrderDetails ON Meals.mealID = OrderDetails.mealID
-            INNER JOIN Orders ON OrderDetails.orderID = Orders.orderID
+            INNER JOIN MealOrder ON Meals.mealID = MealOrder.mealID
+            INNER JOIN Orders ON MealOrder.orderID = Orders.orderID
+            INNER JOIN Cafeterias ON Meals.cafeteriaID = Cafeterias.cafeteriaID
             WHERE Orders.userID = ?
             ORDER BY Orders.orderID DESC
             LIMIT ?";
@@ -119,6 +117,44 @@ function getRecentMeals($userID = -1, $numMeals=10) {
 
     return $meals;
 }
+
+
+// Function to retrieve trending meals based on average ratings
+function trendingMeals($numMeals) {
+    global $conn;
+
+    $trendingMeals = array();
+
+    // Prepare the SQL statement
+    $sql = "SELECT m.mealID, m.name, m.price, m.timeframe, c.cafeteriaName, m.avgRating, c.cafeteriaName
+            FROM meals m
+            INNER JOIN cafeterias c ON m.cafeteriaID = c.cafeteriaID
+            ORDER BY m.avgRating DESC
+            LIMIT ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $numMeals);
+
+    // Execute the query
+    $stmt->execute();
+
+    // Get the result
+    $result = $stmt->get_result();
+
+    // Check if there are any results
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $trendingMeals[] = $row;
+        }
+    } else {
+        return null; // No results found
+    }
+
+    // Close the statement
+    $stmt->close();
+
+    return $trendingMeals;
+}
+
 
 
 ?>
