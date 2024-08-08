@@ -18,7 +18,7 @@ $paymentMethod = $input['paymentMethod'];
 $paymentID = $input['paymentID'];
 
 // Update delivery option
-$stmt = $conn->prepare("UPDATE OrderDetails SET deliveryStatus = ? WHERE orderID = ?");
+$stmt = $conn->prepare("UPDATE orders SET deliveryStatus = ? WHERE orderID = ?");
 if (!$stmt) {
     echo json_encode(['status' => 'error', 'message' => 'Prepare failed: ' . $conn->error]);
     exit;

@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+    // Fetch payment methods and populate the payment methods container
+    fetchPaymentMethods();
+
     const saveButton = document.querySelector('#savePreference');
     saveButton.addEventListener('click', function () {
       const selectedOption = document.querySelector('input[name="deliveryPickup"]:checked').value;
@@ -118,4 +121,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Open the Paystack payment modal
     handler.openIframe();
+    
   });
+
+  // Function to fetch payment methods and populate the payment methods
+  function fetchPaymentMethods() {
+    fetch('../actions/PaymentManagementService/get/fetchPaymentMethods.php')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Data fetched:', data); // Check if data is logged
+            const container = document.getElementById('payment-methods-container');
+            container.innerHTML = ''; // Clear the container before adding new content
+            // Check if data is in expected format
+            if (Array.isArray(data)) {
+                data.forEach(method => {
+                    const methodHTML = `
+                        <div class="col-lg-3 col-md-6">
+                            <div class="form-check position-relative border-custom-radio p-0">
+                                <input type="radio" id="paymentMethod${method.methodID}" name="paymentMethod" value="${method.payment_method}" class="form-check-input" />
+                                <label class="form-check-label w-100 border rounded" for="paymentMethod${method.methodID}"></label>
+                                <div>
+                                    <div class="p-3 rounded rounded-bottom-0 bg-white shadow-sm w-100" style="min-height: 80px;">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <h6 class="mb-0">${method.payment_method}</h6>
+                                            <p class="mb-0 badge text-bg-light ms-auto"></p>
+                                        </div>
+                                        ${method.method_description ? `<p class="meal-plan-details text-muted mb-0">${method.method_description}</p>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.innerHTML += methodHTML;
+                });
+            } else {
+                console.error('Unexpected data format:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching payment methods:', error);
+        });
+}
