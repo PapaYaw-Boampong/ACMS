@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,34 +15,13 @@
     <link href="../css/style.css" rel="stylesheet" />
     <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function checkEmail() {
-            jQuery.ajax({
-                url: "../actions/UserManagementService/post/login_action.php",
-                data: 'action=check_email&email=' + $("#email").val(),
-                type: "POST",
-                success: function(data) {
-                    $("#check-email").html(data);
-                },
-                error: function() {}
-            });
-        }
-
-        function checkPassword() {
-            jQuery.ajax({
-                url: "../actions/UserManagementService/post/login_action.php",
-                data: 'action=check_password&email=' + $("#email").val() + '&password=' + $("#password").val(),
-                type: "POST",
-                success: function(data) {
-                    $("#check-password").html(data);
-                },
-                error: function() {}
-            });
-        }
-    </script>
+    <script src="../js/login.js"></script>
 </head>
 
 <body>
+
+
+ 
     <div class="login-page vh-100">
         <div class="d-flex align-items-center justify-content-center vh-100">
             <div class="px-5 col-md-6 ms-auto">
@@ -76,12 +54,11 @@
         </div>
     </div>
 
-    <script type="a23f6b8ceb65cc74bcb60ae7-text/javascript" src="../vendor/jquery/jquery.min.js"></script>
-    <script type="a23f6b8ceb65cc74bcb60ae7-text/javascript" src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script type="a23f6b8ceb65cc74bcb60ae7-text/javascript" src="../vendor/slick/slick/slick.min.js"></script>
-    <script type="a23f6b8ceb65cc74bcb60ae7-text/javascript" src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
-    <script type="a23f6b8ceb65cc74bcb60ae7-text/javascript" src="../js/osahan.js"></script>
-    <script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="a23f6b8ceb65cc74bcb60ae7-|49" defer></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/slick/slick/slick.min.js"></script>
+    <script src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
+    <script src="../js/osahan.js"></script>
 </body>
 
 </html>

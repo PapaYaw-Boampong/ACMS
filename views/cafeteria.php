@@ -254,13 +254,13 @@ $cafeteriaDetails = getCafeteriaDetails($conn, $cafID);
   </div>
 
 
-  <script type="7e678b0dbcbf2a926c40af51-text/javascript" src="../vendor/jquery/jquery.min.js"></script>
+  <script  src="../vendor/jquery/jquery.min.js"></script>
 
-  <script type="7e678b0dbcbf2a926c40af51-text/javascript" src="../vendor/slick/slick/slick.min.js"></script>
+  <script  src="../vendor/slick/slick/slick.min.js"></script>
 
-  <script type="7e678b0dbcbf2a926c40af51-text/javascript" src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
+  <script  src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
 
-  <script type="7e678b0dbcbf2a926c40af51-text/javascript" src="../js/osahan.js"></script>
+  <script  src="../js/osahan.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

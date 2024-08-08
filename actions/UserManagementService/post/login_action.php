@@ -152,4 +152,5 @@ if (isset($_POST['login'])) {
 
 // Close the connection
 mysqli_close($conn);
+
 ?>

@@ -71,7 +71,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
               <i class="feather-star"></i>
             </li>
           </ul>
-          <p class="label-rating text-white ms-2 small"><?php echo getReviewCount($conn,$cafID) ?> Reviews</p>
+          <p class="label-rating text-white ms-2 small"><?php echo getReviewCount($conn, $cafID) ?> Reviews</p>
         </div>
       </div>
       <div class="pb-4">
@@ -283,7 +283,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
               </div>
             </div>
           </div>
-          <form name="cafeteriaFeedback" method="POST" action="../actions/FeedBackService/post/addCafeteriaReview.php?cafID=<?php echo $cafID?>">
+          <form name="cafeteriaFeedback" method="POST" action="../actions/FeedBackService/post/addCafeteriaReview.php?cafID=<?php echo $cafID ?>">
             <input type="hidden" name="rating" id="rating" value="">
             <div class="form-group mb-3">
               <label class="form-label small">Your Comment</label>
@@ -302,7 +302,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
           if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
               $rating = $row["rating"];
-              ?>
+          ?>
               <div class="reviews-members py-3">
                 <div class="d-flex align-items-start gap-3">
                   <a href="#">
@@ -349,7 +349,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                 </div>
               </div>
               <hr />
-              <?php
+          <?php
             }
           } else {
             echo "No reviews found.";
@@ -358,105 +358,105 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
         </div>
 
       </div>
-    
-    <div class="col-md-4 pt-3">
-      <div class="osahan-cart-item rounded rounded shadow-sm overflow-hidden bg-white sticky_sidebar">
-        <div class="d-flex border-bottom osahan-cart-item-profile bg-white p-3">
-          <img alt="osahan" src="../img/starter1.jpg" class="me-3 rounded-circle img-fluid" />
-          <div class="d-flex flex-column">
-            <h6 class="mb-1 fw-bold">Munchies Extra</h6>
-            <p class="mb-0 small text-muted">
-              <i class="feather-map-pin"></i> Inside Ashesi University
+
+      <div class="col-md-4 pt-3">
+        <div class="osahan-cart-item rounded rounded shadow-sm overflow-hidden bg-white sticky_sidebar">
+          <div class="d-flex border-bottom osahan-cart-item-profile bg-white p-3">
+            <img alt="osahan" src="../img/starter1.jpg" class="me-3 rounded-circle img-fluid" />
+            <div class="d-flex flex-column">
+              <h6 class="mb-1 fw-bold">Munchies Extra</h6>
+              <p class="mb-0 small text-muted">
+                <i class="feather-map-pin"></i> Inside Ashesi University
+              </p>
+            </div>
+          </div>
+          <div class="bg-white border-bottom py-2">
+            <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+              <div class="d-flex align-items-center">
+                <div class="me-2 text-success">&middot;</div>
+                <div class="media-body">
+                  <p class="m-0">Fried rice</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <span class="count-number float-end"><button type="button"
+                    class="btn-sm left dec btn btn-outline-secondary">
+                    <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
+                    value="1" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
+                    <i class="feather-plus"></i></button></span>
+                <p class="text-gray mb-0 float-end ms-2 text-muted small">
+                  GHS 12
+                </p>
+              </div>
+            </div>
+            <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+              <div class="d-flex align-items-center">
+                <div class="me-2 text-success">&middot;</div>
+                <div class="media-body">
+                  <p class="m-0">Fried Chicken Thigh</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <span class="count-number float-end"><button type="button"
+                    class="btn-sm left dec btn btn-outline-secondary">
+                    <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
+                    value="1" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
+                    <i class="feather-plus"></i></button></span>
+                <p class="text-gray mb-0 float-end ms-2 text-muted small">
+                  GHS 13
+                </p>
+              </div>
+            </div>
+            <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+              <div class="d-flex align-items-center">
+                <div class="me-2 text-danger">&middot;</div>
+                <div class="media-body">
+                  <p class="m-0">Sausage Kebab</p>
+                </div>
+              </div>
+              <div class="d-flex align-items-center">
+                <span class="count-number float-end"><button type="button"
+                    class="btn-sm left dec btn btn-outline-secondary">
+                    <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
+                    value="2" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
+                    <i class="feather-plus"></i></button></span>
+                <p class="text-gray mb-0 float-end ms-2 text-muted small">
+                  GHS 20
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white p-3 py-3 border-bottom clearfix">
+            <div class="input-group">
+              <span class="input-group-text" id="message"><i class="feather-message-square"></i></span>
+              <textarea placeholder="Any suggestions? We will pass it on..." aria-label="With textarea"
+                class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="bg-white p-3 clearfix border-bottom">
+            <p class="mb-1">
+              Item Total <span class="float-end text-dark">GHS 50</span>
             </p>
+            <p class="mb-1">
+              Restaurant Charges
+              <span class="float-end text-dark">GHS 5</span>
+            </p>
+            <p class="mb-1">
+              Delivery Fee<span class="text-info ms-1"><i class="feather-info"></i></span><span
+                class="float-end text-dark">GHS 5</span>
+            </p>
+            <hr />
+            <h6 class="fw-bold mb-0">
+              TO PAY <span class="float-end">GHS 60</span>
+            </h6>
           </div>
-        </div>
-        <div class="bg-white border-bottom py-2">
-          <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
-            <div class="d-flex align-items-center">
-              <div class="me-2 text-success">&middot;</div>
-              <div class="media-body">
-                <p class="m-0">Fried rice</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center">
-              <span class="count-number float-end"><button type="button"
-                  class="btn-sm left dec btn btn-outline-secondary">
-                  <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
-                  value="1" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
-                  <i class="feather-plus"></i></button></span>
-              <p class="text-gray mb-0 float-end ms-2 text-muted small">
-                GHS 12
-              </p>
-            </div>
+          <div class="p-3">
+            <a class="btn btn-success w-100 btn-lg" href="successful.html">PAY GHS 60<i
+                class="feather-arrow-right"></i></a>
           </div>
-          <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
-            <div class="d-flex align-items-center">
-              <div class="me-2 text-success">&middot;</div>
-              <div class="media-body">
-                <p class="m-0">Fried Chicken Thigh</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center">
-              <span class="count-number float-end"><button type="button"
-                  class="btn-sm left dec btn btn-outline-secondary">
-                  <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
-                  value="1" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
-                  <i class="feather-plus"></i></button></span>
-              <p class="text-gray mb-0 float-end ms-2 text-muted small">
-                GHS 13
-              </p>
-            </div>
-          </div>
-          <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
-            <div class="d-flex align-items-center">
-              <div class="me-2 text-danger">&middot;</div>
-              <div class="media-body">
-                <p class="m-0">Sausage Kebab</p>
-              </div>
-            </div>
-            <div class="d-flex align-items-center">
-              <span class="count-number float-end"><button type="button"
-                  class="btn-sm left dec btn btn-outline-secondary">
-                  <i class="feather-minus"></i></button><input class="count-number-input" type="text" readonly
-                  value="2" /><button type="button" class="btn-sm right inc btn btn-outline-secondary">
-                  <i class="feather-plus"></i></button></span>
-              <p class="text-gray mb-0 float-end ms-2 text-muted small">
-                GHS 20
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="bg-white p-3 py-3 border-bottom clearfix">
-          <div class="input-group">
-            <span class="input-group-text" id="message"><i class="feather-message-square"></i></span>
-            <textarea placeholder="Any suggestions? We will pass it on..." aria-label="With textarea"
-              class="form-control"></textarea>
-          </div>
-        </div>
-        <div class="bg-white p-3 clearfix border-bottom">
-          <p class="mb-1">
-            Item Total <span class="float-end text-dark">GHS 50</span>
-          </p>
-          <p class="mb-1">
-            Restaurant Charges
-            <span class="float-end text-dark">GHS 5</span>
-          </p>
-          <p class="mb-1">
-            Delivery Fee<span class="text-info ms-1"><i class="feather-info"></i></span><span
-              class="float-end text-dark">GHS 5</span>
-          </p>
-          <hr />
-          <h6 class="fw-bold mb-0">
-            TO PAY <span class="float-end">GHS 60</span>
-          </h6>
-        </div>
-        <div class="p-3">
-          <a class="btn btn-success w-100 btn-lg" href="successful.html">PAY GHS 60<i
-              class="feather-arrow-right"></i></a>
         </div>
       </div>
     </div>
-  </div>
   </div>
 
   <!-- Footer -->
@@ -465,25 +465,21 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
   <nav id="main-nav"></nav>
 
 
-  <script type="7e678b0dbcbf2a926c40af51-text/javascript" src="../vendor/jquery/jquery.min.js"></script>
+  <script  src="../vendor/jquery/jquery.min.js"></script>
 
 
-  <script type="7e678b0dbcbf2a926c40af51-text/javascript" src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script  src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <script type="7e678b0dbcbf2a926c40af51-text/javascript" src="../vendor/slick/slick/slick.min.js"></script>
+  <script  src="../vendor/slick/slick/slick.min.js"></script>
 
-  <script type="7e678b0dbcbf2a926c40af51-text/javascript" src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
+  <script  src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
 
-  <script type="7e678b0dbcbf2a926c40af51-text/javascript" src="../js/osahan.js"></script>
-  <script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
-    data-cf-settings="7e678b0dbcbf2a926c40af51-|49" defer></script>
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
-    integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
-    data-cf-beacon='{"rayId":"8a5eb09f3977639d","version":"2024.7.0","r":1,"serverTiming":{"name":{"cfL4":true}},"token":"dd471ab1978346bbb991feaa79e6ce5c","b":1}'
-    crossorigin="anonymous"></script>
+  <script  src="../js/osahan.js"></script>
+
   <script src="../js/headerFooterManager.js"></script>
+
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
       const stars = document.querySelectorAll(".star-rating .feather-star");
       let rating = 0;
 
@@ -508,7 +504,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
     });
   </script>
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
       const stars = document.querySelectorAll(".star-rating .feather-star");
       const ratingInput = document.getElementById("rating");
 
