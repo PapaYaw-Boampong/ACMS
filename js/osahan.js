@@ -1,147 +1,16 @@
-(function ($) {
-  "use strict";
-  $(".offer-slider").slick({
-    slidesToShow: 4,
-    arrows: true,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: true,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          arrows: false,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 2,
-        },
-      },
-    ],
-  });
-  $(".cat-slider").slick({
-    slidesToShow: 8,
-    arrows: true,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: true,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          arrows: false,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 4,
-        },
-      },
-    ],
-  });
-  $(".trending-slider").slick({
-    slidesToShow: 3,
-    arrows: true,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: false,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          arrows: false,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 1,
-        },
-      },
-    ],
-  });
-  $(".popular-slider").slick({
-    centerMode: true,
-    centerPadding: "30px",
-    slidesToShow: 1,
-    arrows: false,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: false,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          arrows: false,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 1,
-        },
-      },
-    ],
-  });
-  $(".osahan-slider").slick({
-    centerMode: false,
-    slidesToShow: 1,
-    arrows: false,
-    dots: true,
-  });
-  $(".osahan-slider-map").slick({
-    autoplay: true,
-    slidesToShow: 5,
-    arrows: true,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: false,
-          autoplay: true,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          arrows: false,
-          autoplay: true,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 3,
-        },
-      },
-    ],
-  });
+document.addEventListener("DOMContentLoaded", function () {
+  renderSideBar();
+});
 
-
-  // Function to insert navigation menu into #main-nav
-  function insertNavMenu(selector) {
-    const navHtml = `
+// Function to insert navigation menu into #main-nav
+function insertNavMenu(selector) {
+  const navHtml = `
       <ul class="second-nav">
         <li>
           <a href="home.php"><i class="feather-home me-2"></i> Homepage</a>
         </li>
         <li>
-          <a href="my_order.html"><i class="feather-list me-2"></i> My Orders</a>
+          <a href="my_order.php"><i class="feather-list me-2"></i> My Orders</a>
         </li>
         <li>
           <a href="favorites.html"><i class="feather-heart me-2"></i> Favorites</a>
@@ -180,37 +49,17 @@
         </li>
       </ul>
     `;
-    const nav_container = document.querySelector(selector);
-    if (nav_container) {
-      nav_container.innerHTML = navHtml;
-    } else {
-      console.error(`Selector ${selector} not found.`);
-    }
+  const nav_container = document.querySelector(selector);
+  if (nav_container) {
+    nav_container.innerHTML = navHtml;
+  } else {
+    console.error(`Selector ${selector} not found.`);
   }
+}
 
-  // Insert the navigation menu HTML into #main-nav
-  insertNavMenu("#main-nav");
-
-  var $main_nav = $("#main-nav");
-
-  var $toggle = $(".toggle");
-  var defaultOptions = {
-    disableAt: false,
-    customToggle: $toggle,
-    levelSpacing: 40,
-    navTitle: "Ashesi Eats",
-    levelTitles: true,
-    levelTitleAsBack: true,
-    pushContent: "#container",
-    insertClose: 2,
-  };
-  var Nav = $main_nav.hcOffcanvasNav(defaultOptions);
-  // $('[data-bs-toggle="tooltip"]').tooltip();
-
-
-  // Function to insert profile menu into #profile-nav
-  function insertProfileMenu(selector) {
-    const profileNavHtml = `
+// Function to insert profile menu into #profile-nav
+function insertProfileMenu(selector) {
+  const profileNavHtml = `
 
               <a href="profile.html" class>
                 <div class="d-flex align-items-center p-3">
@@ -340,14 +189,126 @@
             </div>
           </div>
     `;
-    const profile_container = document.querySelector(selector);
-    if (profile_container) {
-      profile_container.innerHTML = profileNavHtml;
-    } else {
-      console.error(`Selector ${selector} not found.`);
-    }
+  const profile_container = document.querySelector(selector);
+  if (profile_container) {
+    profile_container.innerHTML = profileNavHtml;
+  } else {
+    console.error(`Selector ${selector} not found.`);
   }
+}
+
+
+// Function to render sidebar button and initialize sidebar content
+function renderSideBar() {
+  // Insert the navigation menu HTML into #main-nav
+  insertNavMenu("#main-nav");
+
+  var $main_nav = $("#main-nav");
+
+  var $toggle = $(".toggle");
+  var defaultOptions = {
+    disableAt: false,
+    customToggle: $toggle,
+    levelSpacing: 40,
+    navTitle: "Ashesi Eats",
+    levelTitles: true,
+    levelTitleAsBack: true,
+    pushContent: "#container",
+    insertClose: 2,
+  };
+
+  var Nav = $main_nav.hcOffcanvasNav(defaultOptions);
 
   // Insert the navigation menu HTML into #main-nav
   insertProfileMenu("#profile-nav");
-})(jQuery);
+}
+
+
+
+
+
+// $(document).ready(function ($) {
+//   "use strict";
+//   $(".offer-slider").slick({
+//     slidesToShow: 4,
+//     arrows: true,
+//     responsive: [
+//       {
+//         breakpoint: 768,
+//         settings: {
+//           arrows: true,
+//           centerMode: true,
+//           centerPadding: "40px",
+//           slidesToShow: 2,
+//         },
+//       },
+//       {
+//         breakpoint: 480,
+//         settings: {
+//           arrows: false,
+//           centerMode: true,
+//           centerPadding: "40px",
+//           slidesToShow: 2,
+//         },
+//       },
+//     ],
+//   });
+//   $(".offer-slider").slick({
+//     slidesToShow: 4,
+//     arrows: true,
+//     responsive: [
+//       {
+//         breakpoint: 768,
+//         settings: {
+//           arrows: true,
+//           centerMode: true,
+//           centerPadding: "40px",
+//           slidesToShow: 2,
+//         },
+//       },
+//       {
+//         breakpoint: 480,
+//         settings: {
+//           arrows: false,
+//           centerMode: true,
+//           centerPadding: "40px",
+//           slidesToShow: 2,
+//         },
+//       },
+//     ],
+//   });
+//   $(".cat-slider").slick({
+//     slidesToShow: 8,
+//     arrows: true,
+//     responsive: [
+//       {
+//         breakpoint: 768,
+//         settings: {
+//           arrows: true,
+//           centerMode: true,
+//           centerPadding: "40px",
+//           slidesToShow: 4,
+//         },
+//       },
+//       {
+//         breakpoint: 480,
+//         settings: {
+//           arrows: false,
+//           centerMode: true,
+//           centerPadding: "40px",
+//           slidesToShow: 4,
+//         },
+//       },
+//     ],
+//   });
+
+//
+//   $(".osahan-slider").slick({
+//     centerMode: false,
+//     slidesToShow: 1,
+//     arrows: false,
+//     dots: true,
+//   });
+// })(jQuery);
+
+// $('[data-bs-toggle="tooltip"]').tooltip();
