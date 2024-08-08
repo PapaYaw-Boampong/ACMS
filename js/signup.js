@@ -90,7 +90,7 @@ function handleFormSubmit(event) {
     formData.append("signup", true); 
 
     // Make AJAX request
-    fetch('ACMS/actions/UserManagementService/post/signup_action.php', {
+    fetch('../../ACMS/actions/UserManagementService/post/signup_action.php', {
         method: 'POST',
         body: formData
     })
