@@ -1,9 +1,8 @@
 <?php 
 include_once '../settings/connection.php';
 
-function getRecentReviews($conn) {
+function getRecentReviews($conn, $cafID) {
     // Ensure that the cafID is properly sanitized to prevent SQL injection
-    $cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
 
     $sql = "
         SELECT 

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // Include the connection file
 include_once '../../../settings/connection.php';
 
@@ -80,8 +81,11 @@ if (isset($_POST['signup'])) {
     // Encrypt the password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
+    // Read the default image file in binary mode
+    $defaultImage = file_get_contents('../../../img/user/1.jpg');
+
     // Write your INSERT query
-    $query = "INSERT INTO users (email, phoneNo, name, password, roleID, mealPlanStatus) VALUES (?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO users (email, phoneNo, name, password, roleID, mealPlanStatus, userImage) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     // Prepare the statement
     $stmt = mysqli_stmt_init($conn);
@@ -91,7 +95,7 @@ if (isset($_POST['signup'])) {
     }
 
     // Bind parameters and execute the query
-    mysqli_stmt_bind_param($stmt, "ssssii", $email, $phoneNo, $name, $hashedPassword, $role, $mealPlan);
+    mysqli_stmt_bind_param($stmt, "ssssibs", $email, $phoneNo, $name, $hashedPassword, $role, $mealPlan, $defaultImage);
 
     if (mysqli_stmt_execute($stmt)) {
         // Redirect to login page if execution is successful
@@ -109,4 +113,3 @@ if (isset($_POST['signup'])) {
 
 // Close the connection
 mysqli_close($conn);
-?>

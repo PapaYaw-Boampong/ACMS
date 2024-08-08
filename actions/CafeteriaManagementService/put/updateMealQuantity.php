@@ -1,5 +1,5 @@
 <?php
-include('../settings/connection.php');
+include('../../../settings/connection.php');
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $quantity = $input['quantity'];
 
         // Update query
-        $stmt = $conn->prepare('UPDATE meals SET mealQuantity = ? WHERE mealID = ?');
+        $stmt = $conn->prepare('UPDATE meals SET quantity = ? WHERE mealID = ?');
         $stmt->bind_param('ii', $quantity, $mealID);
 
         if ($stmt->execute()) {
