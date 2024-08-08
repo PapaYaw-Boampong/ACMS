@@ -25,7 +25,7 @@ try {
         $response['data'] = $recentMeals;
     } else {
         $response['success'] = false;
-        $response['message'] = "No recent meals found.";
+        $response['message'] = "No recent meals found";
     }
 
     // Encode the response array as JSON and echo it

@@ -2,6 +2,10 @@
 
 class SpecialHeader extends HTMLElement {
     connectedCallback() {
+        // Use the userName variable from PHP
+        const userName = window.userName || 'Guest';
+
+        // Set the innerHTML with dynamic user name
         this.innerHTML = `
         <header class="section-header">
             <section class="header-main shadow-sm bg-white">
@@ -29,16 +33,16 @@ class SpecialHeader extends HTMLElement {
                                 <div class="dropdown me-4 m-none">
                                     <a href="#" class="dropdown-toggle text-dark py-3 d-block" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <img alt="#" src="../img/user/1.jpg" class="img-fluid rounded-circle header-user me-2 header-user" />
-                                        Hi Osahan
+                                        Hi ${userName}
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="profile.php">My account</a>
-                                        <a class="dropdown-item" href="contact-us.html">Contact us</a>
+                                        <a class="dropdown-item" href="contact-us.php">Contact us</a>
                                         <a class="dropdown-item" href="privacy.php">Term of use</a>
                                         <a class="dropdown-item" href="login.php">Logout</a>
                                     </div>
                                 </div>
-                                <a href="checkout.html" class="widget-header me-4 text-dark">
+                                <a href="checkout.php" class="widget-header me-4 text-dark">
                                     <div class="icon d-flex align-items-center">
                                         <i class="feather-shopping-cart h6 me-2 mb-0"></i>
                                         <span>Cart</span>
@@ -112,33 +116,19 @@ class SpecialFooter extends HTMLElement {
                     </article>
                     </aside>
                     <aside class="col-sm-3 col-md-2 text-white">
-                    <h6 class="title">Error Pages</h6>
-                    <ul class="list-unstyled hov_footer">
-                        <li>
-                        <a href="not-found.html" class="text-muted">Not found</a>
-                        </li>
-                        <li>
-                        <a href="maintence.html" class="text-muted">Maintence</a>
-                        </li>
-                        <li>
-                        <a href="coming-soon.html" class="text-muted">Coming Soon</a>
-                        </li>
-                    </ul>
+                    
                     </aside>
                     <aside class="col-sm-3 col-md-2 text-white">
                     <h6 class="title">Services</h6>
                     <ul class="list-unstyled hov_footer">
                         <li>
-                        <a href="faq.html" class="text-muted">Delivery Support</a>
+                        <a href="contact-us.php" class="text-muted">Contact Us</a>
                         </li>
                         <li>
-                        <a href="contact-us.html" class="text-muted">Contact Us</a>
+                        <a href="privacy.php" class="text-muted">Terms of use</a>
                         </li>
                         <li>
-                        <a href="terms.html" class="text-muted">Terms of use</a>
-                        </li>
-                        <li>
-                        <a href="privacy.html" class="text-muted">Privacy policy</a>
+                        <a href="privacy.php" class="text-muted">Privacy policy</a>
                         </li>
                     </ul>
                     </aside>
@@ -146,18 +136,18 @@ class SpecialFooter extends HTMLElement {
                     <h6 class="title">For users</h6>
                     <ul class="list-unstyled hov_footer">
                         <li>
-                        <a href="login.html" class="text-muted"> User Login </a>
+                        <a href="../login/login.php" class="text-muted"> User Login </a>
                         </li>
                         <li>
-                        <a href="signup.html" class="text-muted"> User register </a>
+                        <a href="../login/signup.php" class="text-muted"> User Register </a>
                         </li>
                         <li>
-                        <a href="forgot_password.html" class="text-muted">
+                        <a href="coming-soon.html" class="text-muted">
                             Forgot Password
                         </a>
                         </li>
                         <li>
-                        <a href="profile.html" class="text-muted">
+                        <a href="profile.php" class="text-muted">
                             Account Setting
                         </a>
                         </li>
@@ -167,20 +157,15 @@ class SpecialFooter extends HTMLElement {
                     <h6 class="title">More Pages</h6>
                     <ul class="list-unstyled hov_footer">
                         <li>
-                        <a href="trending.html" class="text-muted"> Trending </a>
+                        <a href="trending.php" class="text-muted"> Trending </a>
                         </li>
                         <li>
-                        <a href="most_popular.html" class="text-muted">
-                            Most popular
-                        </a>
-                        </li>
-                        <li>
-                        <a href="restaurant.html" class="text-muted">
+                        <a href="restaurant.php" class="text-muted">
                             Restaurant Details
                         </a>
                         </li>
                         <li>
-                        <a href="favorites.html" class="text-muted"> Favorites </a>
+                        <a href="favorites.php" class="text-muted"> Favorites </a>
                         </li>
                     </ul>
                     </aside>
