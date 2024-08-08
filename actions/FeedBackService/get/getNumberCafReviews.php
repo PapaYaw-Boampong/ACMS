@@ -1,7 +1,6 @@
 <?php
 include_once '../settings/connection.php';
-function getReviewCount($conn) {
-    $cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
+function getReviewCount($conn, $cafID) {
     $sql = "
         SELECT COUNT(*) as reviewCount
         FROM CafeteriaReviews

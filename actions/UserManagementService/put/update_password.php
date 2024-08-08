@@ -1,39 +1,42 @@
 <?php
-include_once '../settings/connection.php';
+session_start();
+include_once '../../../settings/connection.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $userID = $_SESSION['userID'];
+    $old_password = $_POST['old_password'];
     $new_password = $_POST['new_password'];
-    $token = $_POST['token'];
+    $confirm_password = $_POST['confirm_password'];
 
-    // Check if the token is valid and not expired
-    $query = "SELECT userID FROM password_resets WHERE token = ? AND expiry_time > NOW()";
+    if ($new_password !== $confirm_password) {
+        echo "New passwords do not match.";
+        exit();
+    }
+
+    // Fetch the old password from the database
+    $query = "SELECT password FROM users WHERE userID = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $token);
+    $stmt->bind_param("i", $userID);
     $stmt->execute();
     $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
 
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        $userID = $row['userID'];
-        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-
-        // Update the password in the users table
+    if (password_verify($old_password, $user['password'])) {
+        // Update the password
+        $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
         $update_query = "UPDATE users SET password = ? WHERE userID = ?";
         $update_stmt = $conn->prepare($update_query);
-        $update_stmt->bind_param("si", $hashed_password, $userID);
-        if ($update_stmt->execute()) {
-            // Delete the token from the password_resets table
-            $delete_query = "DELETE FROM password_resets WHERE token = ?";
-            $delete_stmt = $conn->prepare($delete_query);
-            $delete_stmt->bind_param("s", $token);
-            $delete_stmt->execute();
+        $update_stmt->bind_param("si", $hashedPassword, $userID);
 
-            echo "Your password has been successfully reset.";
+        if ($update_stmt->execute()) {
+            echo "<span style='color:green'>Password changed successfully.</span>";
         } else {
-            echo "Failed to reset password.";
+            echo "<span style='color:red'>Error updating password: " . $conn->error . "</span>";
         }
+
+        $update_stmt->close();
     } else {
-        echo "Invalid or expired token.";
+        echo "<span style='color:red'>Old password is incorrect.</span>";
     }
 
     $stmt->close();

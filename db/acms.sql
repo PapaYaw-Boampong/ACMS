@@ -611,7 +611,10 @@ ALTER TABLE `managercafeteria`
 
 --
 -- Indexes for table `mealclassification`
+-- Indexes for table `mealclassification`
 --
+ALTER TABLE `mealclassification`
+  ADD PRIMARY KEY (`classificationID`),
 ALTER TABLE `mealclassification`
   ADD PRIMARY KEY (`classificationID`),
   ADD KEY `mealID` (`mealID`);
@@ -685,6 +688,8 @@ ALTER TABLE `mealplan_accounts`
 --
 -- AUTO_INCREMENT for table `meals`
 --
+ALTER TABLE `meals`
+  MODIFY `mealID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 ALTER TABLE `meals`
   MODIFY `mealID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 

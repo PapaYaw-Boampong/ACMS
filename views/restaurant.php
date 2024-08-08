@@ -6,14 +6,12 @@ include_once '../actions/CafeteriaManagementService/get/getResturantDetails.php'
 include_once '../actions/FeedBackService/get/getNumberCafReviews.php';
 include_once '../actions/CafeteriaManagementService/get/getMenu.php';
 // session_start();
-$result = getRecentReviews($conn);
+$cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
+$result = getRecentReviews($conn, $cafID);
 $resultsDetails = getAllCafeteriaDetails($conn);
 $menusBF = getCafeteriaMenus($conn, 'BREAKFAST');
 $menusL = getCafeteriaMenus($conn, 'LUNCH');
 $menusD = getCafeteriaMenus($conn, 'DINNER');
-$cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
-
-
 
 ?>
 <!DOCTYPE html>
@@ -73,7 +71,7 @@ $cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 0; // Default to 0 if 
               <i class="feather-star"></i>
             </li>
           </ul>
-          <p class="label-rating text-white ms-2 small"><?php echo getReviewCount($conn) ?> Reviews</p>
+          <p class="label-rating text-white ms-2 small"><?php echo getReviewCount($conn,$cafID) ?> Reviews</p>
         </div>
       </div>
       <div class="pb-4">

@@ -2,23 +2,27 @@
 session_start();
 // Include the connection file
 include_once '../settings/connection.php';
+include_once '../actions/UserManagementService/get/getUserDetails.php';
+$userID = userIdExist();
 
-// Assuming user is logged in and userID is stored in session
-$userID = $_SESSION['userID'];
+$userDetails = getUserDetailsByID($conn, $userID);
 
-// Fetch user data from the database
-$query = "SELECT name, phoneNo, email FROM users WHERE userID = ?";
-$stmt = mysqli_stmt_init($conn);
-if (!mysqli_stmt_prepare($stmt, $query)) {
-    die("Error: " . mysqli_error($conn));
-}
-mysqli_stmt_bind_param($stmt, "i", $userID);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
-$user = mysqli_fetch_assoc($result);
-mysqli_stmt_close($stmt);
-mysqli_close($conn);
-?>
+// // Assuming user is logged in and userID is stored in session
+// $userID = $_SESSION['userID'];
+
+// // Fetch user data from the database
+// $query = "SELECT name, phoneNo, email FROM users WHERE userID = ?";
+// $stmt = mysqli_stmt_init($conn);
+// if (!mysqli_stmt_prepare($stmt, $query)) {
+//     die("Error: " . mysqli_error($conn));
+// }
+// mysqli_stmt_bind_param($stmt, "i", $userID);
+// mysqli_stmt_execute($stmt);
+// $result = mysqli_stmt_get_result($stmt);
+// $user = mysqli_fetch_assoc($result);
+// mysqli_stmt_close($stmt);
+// mysqli_close($conn);
+// ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -104,10 +108,7 @@ mysqli_close($conn);
                             </div>
                             <div class="additional">
                                 <div class="change_password my-3">
-                                    <a href="forgot_password.html" class="p-3 border rounded bg-white btn d-flex align-items-center">Change Password<i class="feather-arrow-right ms-auto"></i></a>
-                                </div>
-                                <div class="deactivate_account">
-                                    <a href="forgot_password.html" class="p-3 border rounded bg-white btn d-flex align-items-center">Deactivate Account<i class="feather-arrow-right ms-auto"></i></a>
+                                    <a href="change_password.php" class="p-3 border rounded bg-white btn d-flex align-items-center">Change Password<i class="feather-arrow-right ms-auto"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +165,7 @@ mysqli_close($conn);
           </div>
           <div class="col selected">
             <a
-              href="profile.html"
+              href="profile.php"
               class="text-danger small fw-bold text-decoration-none"
             >
               <p class="h4 m-0"><i class="feather-user"></i></p>
