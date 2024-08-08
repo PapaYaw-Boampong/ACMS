@@ -1,5 +1,5 @@
 <?php
-$host = "localhost";
+$host = "16.171.2.135";
 $dbname = "acms";
 $username = "root"; 
 $password = ""; 
