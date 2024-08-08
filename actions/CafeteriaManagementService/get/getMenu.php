@@ -1,5 +1,5 @@
 <?php 
-include_once '../../../settings/connection.php';
+include_once '../settings/connection.php';
 
 function getCafeteriaMenus($conn, $parameter) {
     $cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided

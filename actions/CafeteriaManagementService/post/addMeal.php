@@ -1,30 +1,47 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+session_start();
+include_once '../../../settings/connection.php';
 
-include('../../../settings/connection.php');
+// Get the cafeteria ID from the session
+$cafID = $_SESSION['cafID'];
 
-$data = json_decode(file_get_contents('php://input'), true);
+// Get the data from the request
+$name = $_POST['name'];
+$price = $_POST['price'];
+$quantity = $_POST['quantity'];
+$type = $_POST['mealType'];
 
-if (isset($data['name'], $data['price'], $data['quantity'])) {
-    $mealName = $data['name'];
-    $mealPrice = $data['price'];
-    $mealQuantity = $data['quantity'];
+// Handle the file upload
+$imageData = null;
 
-    // Example query - replace with your actual table and columns
-    $query = "INSERT INTO meals (name, price, quantity, mealStatus) VALUES (?, ?, ?, 'AVAILABLE')";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('sii', $mealName, $mealPrice, $mealQuantity);
-    
-    if ($stmt->execute()) {
-        echo json_encode(["success" => true]);
-    } else {
-        echo json_encode(["success" => false, "message" => "Database error"]);
-    }
-    $stmt->close();
+if (isset($_POST['mealImage'])) {
+    $base64Image = $_POST['mealImage'];
+    $image = str_replace('data:image/jpeg;base64,', '', $base64Image);
+    $image = str_replace(' ', '+', $image);
+    $imageData = base64_decode($image);
 } else {
-    echo json_encode(["success" => false, "message" => "Invalid input"]);
+    echo json_encode(['success' => false, 'message' => "No file was uploaded."]);
+    exit();
 }
-$conn->close();
+
+// Insert the meal into the database
+$query = "INSERT INTO meals (cafeteriaID, name, price, quantity, timeframe, mealimg, mealStatus) VALUES (?, ?, ?, ?, ?, ?, 'AVAILABLE')";
+$stmt = mysqli_stmt_init($conn);
+
+if (!mysqli_stmt_prepare($stmt, $query)) {
+    echo json_encode(['success' => false, 'message' => "SQL error: " . mysqli_error($conn)]);
+    exit();
+}
+
+// Bind parameters and execute statement
+mysqli_stmt_bind_param($stmt, "issdss", $cafID, $name, $price, $quantity, $type, $imageData);
+
+if (mysqli_stmt_execute($stmt)) {
+    echo json_encode(['success' => true, 'message' => "Meal added successfully"]);
+} else {
+    echo json_encode(['success' => false, 'message' => "Failed to add meal: " . mysqli_error($conn)]);
+}
+
+mysqli_stmt_close($stmt);
+mysqli_close($conn);
 ?>

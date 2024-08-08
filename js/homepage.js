@@ -200,24 +200,32 @@ function initializePopularSlider() {
 // Recents fetch helper functions
 
 function fetchRecentMeals() {
-  const url = `../actions/CafeteriaManagementService/get/recentMeals.php?userID=${1}`; // Change this to your actual API endpoint
+  const sliderContainer = document.querySelector(".recents-slider");
+  console.log('Slider container:', sliderContainer); // Check if container is found
+  const userID = sliderContainer.dataset.userId;
+  console.log('User ID:', userID); // Check userID
+
+  const url = `../actions/CafeteriaManagementService/get/recentMeals.php?userID=${userID}`;
 
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
+      console.log('Fetched data:', data); // Inspect the data
       if (data.success && data.data.length > 0) {
-        const sliderContainer = document.querySelector(".recents-slider");
         sliderContainer.innerHTML = ""; // Clear previous contents
         data.data.forEach((meal) => {
           const mealElement = createRecentMealElement(meal);
           sliderContainer.appendChild(mealElement);
         });
 
-        initializeRecentsSlider()
-
-
+        initializeRecentsSlider();
       } else {
-        console.error("No recent meals found");
+        sliderContainer.outerHTML = `
+            <div class="p-3 no-recent-meals text-center">
+                <h5 class="fw-bold text-muted">${data.message || 'No recent meals found'}</h5>
+            </div>
+        `;
+        console.error(data.message || "No recent meals found");
       }
     })
     .catch((error) => {
