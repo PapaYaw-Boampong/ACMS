@@ -1072,4 +1072,8 @@ footer .text-muted {
     flex: unset !important;
     max-width: 100%;
   }
+  .img-fluid.rounded {
+    border-radius: 0.25rem !important; /* Adjust as needed */
+    object-fit: cover !important; /* Ensures the image fits the container without distortion */
+}
 }

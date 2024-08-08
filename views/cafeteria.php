@@ -9,7 +9,7 @@ include_once '../actions/CafeteriaManagementService/get/getMenu.php';
 include_once '../actions/UserManagementService/get/getCafDetails.php';
 // session_start();
 $cafID = cafIdExist(); // Default to 0 if cafID is not provided
-$result = getRecentReviews($conn,$cafID);
+$result = getRecentReviews($conn, $cafID);
 // $menusBF = getCafeteriaMenus($conn, 'BREAKFAST');
 // $menusL = getCafeteriaMenus($conn, 'LUNCH');
 // $menusD = getCafeteriaMenus($conn, 'DINNER');
@@ -90,9 +90,12 @@ $cafeteriaDetails = getCafeteriaDetails($conn, $cafID);
     <div class="p-3 bg-primary mt-n3 rounded position-relative" id="con1">
       <div class="d-flex align-items-center">
         <div class="feather_icon">
-          <a href="#ratings-and-reviews" class="text-decoration-none text-dark"><i class="p-2 bg-light rounded-circle fw-bold feather-upload"></i></a>
-          <a href="#ratings-and-reviews" class="text-decoration-none text-dark mx-2"><i class="p-2 bg-light rounded-circle fw-bold feather-star"></i></a>
-          <a href="#ratings-and-reviews" class="text-decoration-none text-dark"><i class="p-2 bg-light rounded-circle fw-bold feather-map-pin"></i></a>
+          <a href="#ratings-and-reviews" class="text-decoration-none text-dark"><i
+              class="p-2 bg-light rounded-circle fw-bold feather-upload"></i></a>
+          <a href="#ratings-and-reviews" class="text-decoration-none text-dark mx-2"><i
+              class="p-2 bg-light rounded-circle fw-bold feather-star"></i></a>
+          <a href="#ratings-and-reviews" class="text-decoration-none text-dark"><i
+              class="p-2 bg-light rounded-circle fw-bold feather-map-pin"></i></a>
         </div>
         <a href="contact-us.html" class="btn btn-sm btn-outline-light ms-auto">Contact</a>
       </div>
@@ -145,7 +148,7 @@ $cafeteriaDetails = getCafeteriaDetails($conn, $cafID);
           <div class="d-flex border-bottom osahan-cart-item-profile bg-white p-3">
             <img alt="osahan" src="../img/starter1.jpg" class="me-3 rounded-circle img-fluid" />
             <div class="d-flex flex-column">
-              <h6 class="mb-1 fw-bold">Munchies Extra</h6>
+              <h6 class="mb-1 fw-bold"><?php echo $cafeteriaDetails['cafeteriaName'] ?></h6>
               <p class="mb-0 small text-muted">
                 <i class="feather-map-pin"></i> Inside Ashesi University
               </p>
@@ -156,10 +159,24 @@ $cafeteriaDetails = getCafeteriaDetails($conn, $cafID);
 
             <div class="gold-members align-items-center justify-content-between px-3 py-2">
 
+              <!-- Form -->
               <form id="addMealForm">
                 <div class="form-group mb-3">
                   <label for="name">Meal Name</label>
                   <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="mealType">Meal Type</label>
+                  <select class="form-control" id="mealType" name="mealType" required>
+                    <option value="">Select</option>
+                    <option value="BREAKFAST">BREAKFAST</option>
+                    <option value="LUNCH">LUNCH</option>
+                    <option value="SUPPER">SUPPER</option>
+                  </select>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="mealImage">Meal Image</label>
+                  <input type="file" class="form-control" id="mealImage" name="mealImage" accept="image/*" required>
                 </div>
                 <div class="form-group mb-3">
                   <label for="price">Price</label>
@@ -228,7 +245,8 @@ $cafeteriaDetails = getCafeteriaDetails($conn, $cafID);
   <nav id="main-nav"></nav>
 
   <!-- Edit Meal Modal -->
-  <div class="modal fade" id="editMealModal" tabmeal.mealID="-1" aria-labelledby="editMealModalLabel" aria-hidden="true">
+  <div class="modal fade" id="editMealModal" tabmeal.mealID="-1" aria-labelledby="editMealModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
