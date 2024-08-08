@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2024 at 09:15 AM
+-- Generation Time: Aug 08, 2024 at 11:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -426,26 +426,6 @@ INSERT INTO `notification` (`notificationID`, `userID`, `message`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orderpayment`
---
-
-CREATE TABLE `orderpayment` (
-  `orderID` int(11) NOT NULL,
-  `paymentID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `orderpayment`
---
-
-INSERT INTO `orderpayment` (`orderID`, `paymentID`) VALUES
-(1, 1),
-(2, 2),
-(3, 3);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `orders`
 --
 
@@ -464,7 +444,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`orderID`, `userID`, `message`, `status`, `deliveryStatus`, `orderTotal`, `orderDate`) VALUES
-(1, 1, 'Please deliver to room 101', 'COMPLETE', 'pickup', 0, '2024-08-08'),
+(1, 1, 'Please deliver to room 101', 'COMPLETE', 'delivery', 0, '2024-08-08'),
 (2, 2, 'Extra napkins please', 'IN_PROGRESS', 'pickup', 0, '2024-08-08'),
 (3, 3, 'No onions in the salad', 'CANCELLED', 'pickup', 0, '2024-08-08'),
 (4, 1, 'Deliver to the office', 'IN_PROGRESS', 'pickup', 20.97, '2024-08-08');
@@ -477,19 +457,31 @@ INSERT INTO `orders` (`orderID`, `userID`, `message`, `status`, `deliveryStatus`
 
 CREATE TABLE `payment` (
   `paymentID` int(11) NOT NULL,
-  `userID` int(11) DEFAULT NULL,
-  `amount` double DEFAULT NULL,
-  `method` enum('CASH','MOMO/BANK TRANSFER','MEAL PLAN') DEFAULT NULL
+  `orderID` int(11) NOT NULL,
+  `methodID` int(11) NOT NULL,
+  `paymentStatus` enum('PAID','NOT PAID') NOT NULL DEFAULT 'NOT PAID'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paymentmethod`
+--
+
+CREATE TABLE `paymentmethod` (
+  `methodID` int(11) NOT NULL,
+  `payment_method` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `payment`
+-- Dumping data for table `paymentmethod`
 --
 
-INSERT INTO `payment` (`paymentID`, `userID`, `amount`, `method`) VALUES
-(1, 1, 10, 'CASH'),
-(2, 2, 20, 'MOMO/BANK TRANSFER'),
-(3, 3, 15, 'MEAL PLAN');
+INSERT INTO `paymentmethod` (`methodID`, `payment_method`) VALUES
+(1, 'Credit/Debit Card'),
+(2, 'Mobile Banking'),
+(3, 'Meal Plan'),
+(4, 'Cash on Delivery');
 
 -- --------------------------------------------------------
 
@@ -619,7 +611,10 @@ ALTER TABLE `managercafeteria`
 
 --
 -- Indexes for table `mealclassification`
+-- Indexes for table `mealclassification`
 --
+ALTER TABLE `mealclassification`
+  ADD PRIMARY KEY (`classificationID`),
 ALTER TABLE `mealclassification`
   ADD PRIMARY KEY (`classificationID`),
   ADD KEY `mealID` (`mealID`);
@@ -636,6 +631,18 @@ ALTER TABLE `mealplan_accounts`
 --
 ALTER TABLE `meals`
   ADD PRIMARY KEY (`mealID`);
+
+--
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`paymentID`);
+
+--
+-- Indexes for table `paymentmethod`
+--
+ALTER TABLE `paymentmethod`
+  ADD PRIMARY KEY (`methodID`);
 
 --
 -- Indexes for table `preferences`
@@ -683,6 +690,20 @@ ALTER TABLE `mealplan_accounts`
 --
 ALTER TABLE `meals`
   MODIFY `mealID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `meals`
+  MODIFY `mealID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `paymentID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `paymentmethod`
+--
+ALTER TABLE `paymentmethod`
+  MODIFY `methodID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `preferences`

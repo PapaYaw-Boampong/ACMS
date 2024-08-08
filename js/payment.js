@@ -1,121 +1,198 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    const saveButton = document.querySelector('#savePreference');
-    saveButton.addEventListener('click', function () {
+  // Fetch payment methods and populate the payment methods container
+  fetchPaymentMethods();
+
+  const userID = 1; // Define userID
+  const orderID = 1; // Define orderID
+  const paymentID = 1; // Define paymentID, if it's constant
+
+  const saveButton = document.querySelector('#savePreference');
+  saveButton.addEventListener('click', function () {
       const selectedOption = document.querySelector('input[name="deliveryPickup"]:checked').value;
-      const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-      const orderID = 1; // Replace with dynamic orderID if needed
-      const paymentID = document.getElementById('paymentIDField').value; 
+      const selectedPaymentMethodID = document.querySelector('input[name="paymentMethod"]:checked').value;
 
       fetch('../actions/PaymentManagementService/put/updateOrderDetails.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          orderID: orderID,
-          deliveryPickup: selectedOption,
-          paymentMethod: selectedPaymentMethod,
-          paymentID: paymentID,
-        }),
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              orderID: orderID,
+              deliveryPickup: selectedOption,
+              paymentMethodID: selectedPaymentMethodID,
+              paymentID: paymentID,
+          }),
       })
       .then(response => response.json())
       .then(data => {
-        if (data.status === 'success') {
-          alert('Preference saved successfully!');
-        } else {
-          alert('Error saving preference: ' + data.message);
-        }
+          if (data.status === 'success') {
+              Swal.fire({
+                  title: 'Success!',
+                  text: 'Preference saved successfully!',
+                  icon: 'success',
+                  confirmButtonText: 'OK'
+              });
+          } else {
+              Swal.fire({
+                  title: 'Error!',
+                  text: 'Error saving preference: ' + data.message,
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+              });
+          }
       })
       .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to save preference.');
+          console.error('Error:', error);
+          Swal.fire({
+              title: 'Failed!',
+              text: 'Failed to save preference.',
+              icon: 'error',
+              confirmButtonText: 'OK'
+          });
       });
-    });
-
-    const modal = document.getElementById('exampleModal');
-    const addressIDField = document.getElementById('addressIDField');
-    const addressField = document.getElementById('addressField');
-    const instructionField = document.getElementById('instructionField');
-
-    modal.addEventListener('show.bs.modal', async (event) => {
-      // Assume you have a way to get the addressID; for example, from a button data attribute
-      const addressID = 1;
-
-      // Set the hidden field with the addressID
-      addressIDField.value = addressID;
-
-      try {
-        // Fetch the address data
-        const response = await fetch(`../actions/PaymentManagementService/get/fetchAddress.php?addressID=${addressID}`);
-        const data = await response.json();
-
-        // Populate the form fields
-        addressField.value = data.address;
-        instructionField.value = data.deliveryInstruction;
-      } catch (error) {
-        console.error('Error fetching address data:', error);
-      }
-    });
-
-    document.getElementById('saveChangesBtn').addEventListener('click', async () => {
-      const addressID = addressIDField.value;
-      const address = addressField.value;
-      const deliveryInstruction = instructionField.value;
-
-      try {
-        // Send updated data to server
-        const response = await fetch('../actions/PaymentManagementService/put/updateAddress.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            addressID,
-            address,
-            deliveryInstruction,
-          }),
-        });
-
-        if (response.ok) {
-          // Optionally handle a successful update
-          console.log('Address updated successfully');
-        } else {
-          console.error('Error updating address');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    });
   });
 
-  // Example of paying using Paystack API
+  // Handle payment button click
   document.getElementById('payButton').addEventListener('click', function (event) {
-    event.preventDefault();
+      event.preventDefault();
 
-    // Get the amount to be paid
-    const amount = 60 * 100;
+      // Get the selected payment method
+      const selectedPaymentMethodID = document.querySelector('input[name="paymentMethod"]:checked').value;
+      const amount = 60
 
-    // Initialize Paystack payment
-    const handler = PaystackPop.setup({
-      key: 'pk_test_4956ceabc8e23826517b60fc6853310bf79974b7', // Replace with your Paystack public key
-      email: 'akooku12@gmail.com', // Replace with the customer's email address
-      amount: amount, // Amount to be charged
-      currency: 'GHS', // Currency code
-      callback: function(response) {
-        // This function will be called when the payment is successful
-        // You can handle the successful payment here
-        console.log('Payment successful. Reference:', response.reference);
-        alert('Payment successful!');
-        // Optionally, you can redirect or perform other actions
-        window.location.href = 'successful.html'; // Redirect to a success page or handle post-payment actions
-      },
-      onClose: function() {
-        // This function will be called if the user closes the Paystack popup
-        alert('Payment window closed.');
+      if (selectedPaymentMethodID == 1 || selectedPaymentMethodID == 2) {
+          // Trigger Paystack API for methods 1 and 2
+          const handler = PaystackPop.setup({
+              key: 'pk_test_4956ceabc8e23826517b60fc6853310bf79974b7', // Replace with your Paystack public key
+              email: 'akooku12@gmail.com', // Replace with the customer's email address
+              amount: amount * 100, // Amount to be charged in pesowas
+              currency: 'GHS', // Currency code
+              callback: function(response) {
+                  console.log('Payment successful. Reference:', response.reference);
+                  Swal.fire({
+                      title: 'Payment Successful!',
+                      text: 'Your payment was successful. Reference: ' + response.reference,
+                      icon: 'success',
+                      confirmButtonText: 'OK'
+                  }).then(() => {
+                      window.location.href = 'successful.html'; // Redirect to a success page
+                  });
+              },
+              onClose: function() {
+                  Swal.fire({
+                      title: 'Payment Cancelled',
+                      text: 'You closed the payment window.',
+                      icon: 'warning',
+                      confirmButtonText: 'OK'
+                  });
+              }
+          });
+          handler.openIframe();
+      } else if (selectedPaymentMethodID == 3) {
+          // Handle meal plan verification for method 3
+          fetch('../actions/PaymentManagementService/get/checkMealPlan.php', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  userID: userID,
+                  orderID: orderID,
+                  paymentID: paymentID,
+                  amount: amount
+              }),
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.status === 'success' && data.balanceSufficient) {
+                  // Deduct from meal plan
+                  return fetch('../actions/PaymentManagementService/put/deductMealPlan.php', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                          userID: userID,
+                          amount: amount
+                      }),
+                  });
+              } else {
+                  throw new Error('Insufficient balance in meal plan.');
+              }
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.status === 'success') {
+                  Swal.fire({
+                      title: 'Payment Successful!',
+                      text: 'Your payment was successful.',
+                      icon: 'success',
+                      confirmButtonText: 'OK'
+                  }).then(() => {
+                      window.location.href = 'successful.html'; // Redirect to a success page
+                  });
+              } else {
+                  throw new Error('Failed to deduct meal plan balance.');
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              Swal.fire({
+                  title: 'Payment Failed!',
+                  text: error.message,
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+              });
+          });
+      } else if (selectedPaymentMethodID == 4) {
+          // Directly proceed for method 4
+          Swal.fire({
+            title: 'Payment Successful!',
+            text: 'Your payment was successful. Please make sure to pay with cash.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = 'successful.html'; // Redirect to a success page
+        });        
       }
-    });
-
-    // Open the Paystack payment modal
-    handler.openIframe();
   });
+
+  // Function to fetch payment methods and populate the payment methods
+  function fetchPaymentMethods() {
+      fetch('../actions/PaymentManagementService/get/fetchPaymentMethods.php')
+          .then(response => response.json())
+          .then(data => {
+              console.log('Data fetched:', data);
+              const container = document.getElementById('payment-methods-container');
+              container.innerHTML = '';
+              if (Array.isArray(data)) {
+                  data.forEach(method => {
+                      const methodHTML = `
+                          <div class="col-lg-3 col-md-6">
+                              <div class="form-check position-relative border-custom-radio p-0">
+                                  <input type="radio" id="paymentMethod${method.methodID}" name="paymentMethod" value="${method.methodID}" class="form-check-input" />
+                                  <label class="form-check-label w-100 border rounded" for="paymentMethod${method.methodID}"></label>
+                                  <div>
+                                      <div class="p-3 rounded rounded-bottom-0 bg-white shadow-sm w-100" style="min-height: 80px;">
+                                          <div class="d-flex align-items-center mb-2">
+                                              <h6 class="mb-0">${method.payment_method}</h6>
+                                              <p class="mb-0 badge text-bg-light ms-auto"></p>
+                                          </div>
+                                          ${method.method_description ? `<p class="meal-plan-details text-muted mb-0">${method.method_description}</p>` : ''}
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      `;
+                      container.innerHTML += methodHTML;
+                  });
+              } else {
+                  console.error('Unexpected data format:', data);
+              }
+          })
+          .catch(error => {
+              console.error('Error fetching payment methods:', error);
+          });
+  }
+});
