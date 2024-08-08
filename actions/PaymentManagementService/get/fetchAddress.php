@@ -1,5 +1,5 @@
 <?php
-include('../settings/connection.php');
+include('../../../settings/connection.php');
 
 $addressID = intval($_GET['addressID']);
 $sql = "SELECT address, deliveryInstruction FROM address WHERE addressID = ?";
