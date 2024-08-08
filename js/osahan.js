@@ -61,16 +61,6 @@ function insertNavMenu(selector) {
 
 // Function to insert profile menu into #profile-nav
 function insertProfileMenu(selector) {
-  // const profile_container = document.querySelector(selector);
-  // const username;
-  // const 
-
-  // if (profile_container) {
-  //    username = profile_container.dataset.userName;
-  // } else {
-  //   console.error(`Selector ${selector} not found.`);
-  // }
-
   const profileNavHtml = `
 
               <a href="profile.html" class>

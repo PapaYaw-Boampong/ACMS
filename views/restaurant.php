@@ -9,11 +9,9 @@ include_once '../actions/FeedBackService/get/getNumberCafReviews.php';
 include_once '../actions/CafeteriaManagementService/get/getMenu.php';
 
 
-$cafID = cafIdExist() ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
-
+$cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
 $result = getRecentReviews($conn, $cafID);
 $resultsDetails = getAllCafeteriaDetails($conn);
-
 $menusBF = getCafeteriaMenus($conn, 'BREAKFAST');
 $menusL = getCafeteriaMenus($conn, 'LUNCH');
 $menusD = getCafeteriaMenus($conn, 'DINNER');
@@ -105,16 +103,18 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
           <a href="#ratings-and-reviews" class="text-decoration-none text-dark"><i
               class="p-2 bg-light rounded-circle fw-bold feather-map-pin"></i></a>
         </div>
-        <a href="contact-us.html" class="btn btn-sm btn-outline-light ms-auto">Contact</a>
       </div>
     </div>
   </div>
+
+
   <div class="container">
     <div class>
       <p class="fw-bold pt-4 m-0">FEATURED ITEMS</p>
 
-      <div class="trending-slider rounded">
-        <div class="osahan-slider-item">
+      <div class="trending-slider  rounded" data-caf-id= "<?php echo $cafID?>">
+
+        <!-- <div class="osahan-slider-item">
           <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
             <div class="list-card-image">
               <a href="checkout.html">
@@ -193,7 +193,8 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
+
       </div>
     </div>
   </div>
@@ -483,52 +484,10 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
 
   <script src="../js/headerFooterManager.js"></script>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const stars = document.querySelectorAll(".star-rating .feather-star");
-      let rating = 0;
+  <script src="../js/restaurant.js"></script>
 
-      stars.forEach((star, index) => {
-        star.addEventListener("click", () => {
-          // Set the rating to the star's value
-          rating = index + 1;
 
-          // Update the UI to show the selected rating
-          stars.forEach((s, i) => {
-            if (i < rating) {
-              s.classList.add("text-warning");
-            } else {
-              s.classList.remove("text-warning");
-            }
-          });
-
-          console.log("Rating selected:", rating);
-          // You can now send the rating to the server or handle it as needed
-        });
-      });
-    });
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const stars = document.querySelectorAll(".star-rating .feather-star");
-      const ratingInput = document.getElementById("rating");
-
-      stars.forEach((star, index) => {
-        star.addEventListener("click", () => {
-          const rating = index + 1;
-          ratingInput.value = rating;
-
-          stars.forEach((s, i) => {
-            if (i < rating) {
-              s.classList.add("text-warning");
-            } else {
-              s.classList.remove("text-warning");
-            }
-          });
-        });
-      });
-    });
-  </script>
+          
 </body>
 
 </html>

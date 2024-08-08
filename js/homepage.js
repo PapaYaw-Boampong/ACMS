@@ -42,7 +42,7 @@ function createCafeteriaElement(cafeteria) {
   itemDiv.innerHTML = `
          <h5 class="m-0">${cafeteria.cafeteriaName}</h5>
          <br>
-        <a class="d-block text-center shadow-sm" href="cafeteriaDetails.html?cafID=${
+        <a class="d-block text-center shadow-sm" href="restaurant.php?cafID=${
           cafeteria.cafeteriaID
         }">
             <img class="img-fluid rounded" src="${
@@ -133,7 +133,7 @@ function createMealElement(meal) {
                 <div class="member-plan position-absolute">
                     <span class="badge text-bg-dark">Promoted</span>
                 </div>
-                <a href="restaurant.html">
+                <a href="restaurant.php?cafID=${meal.cafeteriaID}">
                     <img alt="#" src="../img/trending1.png" class="img-fluid item-img w-100" />
                 </a>
             </div>
@@ -145,12 +145,18 @@ function createMealElement(meal) {
                         }
                         </a>
                     </h6>
-                    <p class="text-gray mb-1 small">• ${meal.timeframe} • ${meal.name}</p>
+                    <p class="text-gray mb-1 small">• ${meal.timeframe} • ${
+    meal.name
+  }</p>
                     <p class="text-gray mb-1 rating"></p>
                     <ul class="rating-stars list-unstyled">
                         ${generateStars(meal.avgRating)}
                     </ul>         
                 </div>
+
+                <h5 class="mb-1"> ${meal.cafeteriaName}</h5>
+                
+                
 
             </div>
         </div>
@@ -173,7 +179,7 @@ function generateStars(avgRating) {
 function initializePopularSlider() {
   $(".trending-slider").slick({
     slidesToShow: 3,
-    arrows: false,
+    arrows: true,
     responsive: [
       {
         breakpoint: 768,
@@ -201,7 +207,7 @@ function initializePopularSlider() {
 
 function fetchRecentMeals() {
   const sliderContainer = document.querySelector(".recents-slider");
-  const userID = sliderContainer.dataset.userId
+  const userID = sliderContainer.dataset.userId;
 
   const url = `../actions/CafeteriaManagementService/get/recentMeals.php?userID=${userID}`; // Change this to your actual API endpoint
 
@@ -209,16 +215,13 @@ function fetchRecentMeals() {
     .then((response) => response.json())
     .then((data) => {
       if (data.success && data.data.length > 0) {
-        
         sliderContainer.innerHTML = ""; // Clear previous contents
         data.data.forEach((meal) => {
           const mealElement = createRecentMealElement(meal);
           sliderContainer.appendChild(mealElement);
         });
 
-        initializeRecentsSlider()
-
-
+        initializeRecentsSlider();
       } else {
         console.error("No recent meals found");
       }
@@ -284,6 +287,3 @@ function initializeRecentsSlider() {
     ],
   });
 }
-
-
-
