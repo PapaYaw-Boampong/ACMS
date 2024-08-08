@@ -1,7 +1,7 @@
 <?php
-$host = "16.171.2.135";
+$host = "127.0.0.1";
 $dbname = "acms";
-$username = "root"; 
+$username = "root@localhost"; 
 $password = ""; 
 
 $conn = mysqli_connect($host, $username, $password, $dbname);
