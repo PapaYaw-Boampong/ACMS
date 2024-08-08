@@ -1,5 +1,5 @@
 <?php
-include('../settings/connection.php');
+include('../../../settings/connection.php');
 
 // Get the JSON input
 $input = file_get_contents('php://input');
