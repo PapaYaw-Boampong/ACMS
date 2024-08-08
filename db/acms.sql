@@ -170,17 +170,6 @@ CREATE TABLE `managercafeteria` (
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `mealclassification`
---
-
-CREATE TABLE `mealclassification` (
-  `classificationID` int(11) NOT NULL,
-  `mealID` int(11) NOT NULL,
-  `dietaryRestriction` enum('None','Gluten-free','Dairy-free','Nut allergy','Shellfish allergy','Soy allergy','Other') NOT NULL,
-  `specificDiet` enum('None','Vegetarian','Vegan','Keto','Paleo','Pescatarian') NOT NULL,
-  `culturalRestriction` enum('None','Halal','Kosher','Hindu dietary laws') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -609,15 +598,7 @@ ALTER TABLE `managercafeteria`
   ADD UNIQUE KEY `cafeteriaID` (`cafeteriaID`),
   ADD KEY `userID` (`userID`);
 
---
--- Indexes for table `mealclassification`
--- Indexes for table `mealclassification`
---
-ALTER TABLE `mealclassification`
-  ADD PRIMARY KEY (`classificationID`),
-ALTER TABLE `mealclassification`
-  ADD PRIMARY KEY (`classificationID`),
-  ADD KEY `mealID` (`mealID`);
+
 
 --
 -- Indexes for table `mealplan_accounts`
@@ -673,11 +654,7 @@ ALTER TABLE `users`
 ALTER TABLE `address`
   MODIFY `addressID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
---
--- AUTO_INCREMENT for table `mealclassification`
---
-ALTER TABLE `mealclassification`
-  MODIFY `classificationID` int(11) NOT NULL AUTO_INCREMENT;
+
 
 --
 -- AUTO_INCREMENT for table `mealplan_accounts`
@@ -728,11 +705,8 @@ ALTER TABLE `managercafeteria`
   ADD CONSTRAINT `cafeteriaConstraint` FOREIGN KEY (`cafeteriaID`) REFERENCES `cafeterias` (`cafeteriaID`),
   ADD CONSTRAINT `userConstraint` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
 
---
--- Constraints for table `mealclassification`
---
-ALTER TABLE `mealclassification`
-  ADD CONSTRAINT `mealclassification_ibfk_1` FOREIGN KEY (`mealID`) REFERENCES `meals` (`mealID`);
+
+
 
 --
 -- Constraints for table `mealplan_accounts`

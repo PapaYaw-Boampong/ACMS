@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+ 
+
   fetchCafeterias();
   fetchMealsAndRenderSlider();
   fetchRecentMeals();
@@ -133,7 +136,7 @@ function createMealElement(meal) {
                 <div class="member-plan position-absolute">
                     <span class="badge text-bg-dark">Promoted</span>
                 </div>
-                <a href="restaurant.php?cafID=${meal.cafeteriaID}">
+                <a href="restaurant.php?cafID=${meal.cafeteriaID}"  class = "order-trigger">
                     <img alt="#" src="../img/trending1.png" class="img-fluid item-img w-100" />
                 </a>
             </div>
@@ -145,16 +148,14 @@ function createMealElement(meal) {
                         }
                         </a>
                     </h6>
-                    <p class="text-gray mb-1 small">• ${meal.timeframe} • ${
-    meal.name
-  }</p>
+                    <p class="text-gray mb-1 small">• ${meal.timeframe} • ${meal.name} </p>
                     <p class="text-gray mb-1 rating"></p>
                     <ul class="rating-stars list-unstyled">
                         ${generateStars(meal.avgRating)}
                     </ul>         
                 </div>
-
-                <h5 class="mb-1"> ${meal.cafeteriaName}</h5>
+                  <p class="text-gray mb-1 small">${meal.cafeteriaName} </p>
+  
                 
                 
 
@@ -242,7 +243,7 @@ function createRecentMealElement(meal) {
                 <div class="member-plan position-absolute">
                     <span class="badge text-bg-dark">Promoted</span>
                 </div>
-                <a href="restaurant.html">
+                <a href="restaurant.html"  class = "order-trigger">
                     <img alt="#" src="../img/trending1.png" class="img-fluid item-img w-100" />
                 </a>
             </div>

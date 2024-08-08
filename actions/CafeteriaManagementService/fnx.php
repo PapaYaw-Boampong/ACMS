@@ -41,6 +41,7 @@ function getCafeteriaInfo($cafID = -1) {
     return $cafeterias;
 }
 
+
 // Function to retrieve recent meals purchased by a specific user
 function getRecentMeals($userID = -1, $numMeals = 10) {
     global $conn;
@@ -53,7 +54,7 @@ function getRecentMeals($userID = -1, $numMeals = 10) {
             INNER JOIN MealOrder ON Meals.mealID = MealOrder.mealID
             INNER JOIN Orders ON MealOrder.orderID = Orders.orderID
             INNER JOIN Cafeterias ON Meals.cafeteriaID = Cafeterias.cafeteriaID
-            WHERE Orders.userID = ?
+            WHERE Orders.userID = ? AND Meals.mealStatus = 'AVAILABLE'
             ORDER BY Orders.orderID DESC
             LIMIT ?";
     $stmt = $conn->prepare($sql);
@@ -81,6 +82,7 @@ function getRecentMeals($userID = -1, $numMeals = 10) {
 }
 
 
+
 // Function to retrieve trending meals based on average ratings
 function trendingMeals($numMeals) {
     global $conn;
@@ -91,6 +93,7 @@ function trendingMeals($numMeals) {
     $sql = "SELECT m.mealID, m.name, m.price, m.timeframe, c.cafeteriaName, m.avgRating, c.cafeteriaName, c.cafeteriaID
             FROM meals m
             INNER JOIN cafeterias c ON m.cafeteriaID = c.cafeteriaID
+            WHERE m.mealStatus = 'AVAILABLE'
             ORDER BY m.avgRating DESC
             LIMIT ?";
     $stmt = $conn->prepare($sql);
@@ -128,7 +131,7 @@ function getRecentMealsByCafeteria($cafeteriaID, $numMeals = 10) {
     $sql = "SELECT Meals.mealID, Meals.name, Meals.price, Meals.avgRating, Meals.timeframe, Cafeterias.cafeteriaName
             FROM Meals
             INNER JOIN Cafeterias ON Meals.cafeteriaID = Cafeterias.cafeteriaID
-            WHERE Meals.cafeteriaID = ?
+            WHERE Meals.cafeteriaID = ? AND Meals.mealStatus = 'AVAILABLE'
             ORDER BY Meals.mealID DESC
             LIMIT ?";
     $stmt = $conn->prepare($sql);

@@ -136,5 +136,95 @@ function fetchRecentCafMeals() {
   
 
 
+// Recents fetch helper functions
+  function fetchOrderDetails(orderID, userID) {
+    $.ajax({
+        url: '../actions/OrderService/get/orderInfo.php', // Replace with the actual path to your endpoint
+        type: 'GET',
+        data: {
+            orderID: orderID,
+            userID: userID
+        },
+        success: function(response) {
+            const result = JSON.parse(response);
+            if (result.success) {
+                displayOrderDetails(result.data);
+            } else {
+                Swal.fire({
+                    title: 'Error!',
+                    text: result.message,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'An error occurred while fetching order details.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+}
+
+function displayOrderDetails(orderInfo) {
+    const orderContainer = document.getElementById('order-details');
+    orderContainer.innerHTML = '';
+
+    if (orderInfo) {
+        let orderHTML = '';
+
+        orderHTML += `
+            <div class="d-flex border-bottom osahan-cart-item-profile bg-white p-3">
+                <img alt="osahan" src="../img/starter1.jpg" class="me-3 rounded-circle img-fluid" />
+                <div class="d-flex flex-column">
+                    <h6 class="mb-1 fw-bold">Order ID: ${orderInfo.orderID}</h6>
+                    <p class="mb-0 small text-muted"><i class="feather-map-pin"></i> ${orderInfo.cafeteriaName}</p>
+                </div>
+            </div>
+        `;
+
+        orderInfo.meals.forEach(item => {
+            orderHTML += `
+                <div class="gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+                    <div class="d-flex align-items-center">
+                        <div class="me-2 text-success">&middot;</div>
+                        <div class="media-body">
+                            <p class="m-0">${item.mealName}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="form-group mb-0">
+                            <input type="number" class="form-control" id="quantity-${item.mealID}" name="quantity" value="${item.quantity}" required>
+                        </div>
+                        <p class="text-gray mb-0 float-end ms-2 text-muted small">GHS ${item.price}</p>
+                    </div>
+                </div>
+            `;
+        });
+
+        const itemTotal = orderInfo.meals.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+        orderHTML += `
+            <div class="bg-white p-3 clearfix border-bottom">
+                <p class="mb-1">Item Total <span class="float-end text-dark">GHS ${itemTotal}</span></p>
+                <p class="mb-1">Restaurant Charges <span class="float-end text-dark">GHS 5</span></p>
+                <p class="mb-1">Delivery Fee <span class="text-info ms-1"><i class="feather-info"></i></span><span class="float-end text-dark">GHS 5</span></p>
+                <hr />
+                <h6 class="fw-bold mb-0">TO PAY <span class="float-end">GHS ${itemTotal + 10}</span></h6>
+            </div>
+            <div class="p-3">
+                <a class="btn btn-success w-100 btn-lg" href="successful.html">PAY GHS ${itemTotal + 10}<i class="feather-arrow-right"></i></a>
+            </div>
+        `;
+
+        orderContainer.innerHTML = orderHTML;
+    }
+}
+
+
+
 
 
