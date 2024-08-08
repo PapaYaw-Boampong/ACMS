@@ -116,8 +116,32 @@ if (isset($_POST['login'])) {
         // Create session for user id
         $_SESSION['userID'] = $row['userID'];
 
+        // Check roleID and if it is 3, get cafeteriaID
+        $roleID = $row['roleID'];
+        if ($roleID == 3) {
+            $userID = $row['userID'];
+            $query = "SELECT cafeteriaID FROM ManagerCafeteria WHERE userID = ?";
+            if ($stmt = mysqli_prepare($conn, $query)) {
+                // echo "here2";
+                // exit();
+                mysqli_stmt_bind_param($stmt, "i", $userID);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+                // echo mysqli_fetch_assoc($result);
+                // exit();
+                if ($managerRow = mysqli_fetch_assoc($result)) {
+                    // echo "here";
+                    // exit();
+                    $_SESSION['cafID'] = $managerRow['cafeteriaID'];
+                    header("Location: ../../../views/cafeteria.php");
+                    exit();
+                }
+                mysqli_stmt_close($stmt);
+            }
+        }
+
         // Redirect to home/dashboard page
-        header("Location: ../home.html");
+        header("Location: ../../../views/home.php");
         exit();
     } else {
         // Passwords don't match, provide appropriate response
