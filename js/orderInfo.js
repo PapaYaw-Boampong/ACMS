@@ -1,16 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const flag = localStorage.getItem("currentOrderID")
-    ? localStorage.getItem("currentOrderID")
-    : -1;
-  if (flag !== -1) {
-    fetchOrderDetails(flag);
-  } else {
-    renderNoOrdersMessage();
-  }
+    // const flag = localStorage.getItem("currentOrderID") ? localStorage.getItem("currentOrderID"): -1;
+
+    // if (flag !== -1) {
+    //   fetchOrderDetails(flag);
+    // } else {
+    //   renderNoOrdersMessage();
+    // }
+
+    fetchOrderDetails(2);
 });
 
 function fetchOrderDetails(orderId) {
-  const url = `../actions/OrderService/get/OrderInfo.php?orderID=${flag}`;
+  const url = `../actions/OrderService/get/OrderInfo.php?orderID=${4}`;
 
   fetch(url)
     .then((response) => response.json())

@@ -135,8 +135,6 @@ function fetchRecentCafMeals() {
   }
   
 
-
-// Recents fetch helper functions
   function fetchOrderDetails(orderID, userID) {
     $.ajax({
         url: '../actions/OrderService/get/orderInfo.php', // Replace with the actual path to your endpoint
