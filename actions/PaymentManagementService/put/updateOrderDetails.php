@@ -14,7 +14,7 @@ if (!isset($input['orderID']) || !isset($input['deliveryPickup'])) {
 
 $orderID = $input['orderID'];
 $deliveryPickup = $input['deliveryPickup'];
-$paymentMethod = $input['paymentMethod'];
+$methodID = $input['paymentMethodID'];
 $paymentID = $input['paymentID'];
 
 // Update delivery option
@@ -32,9 +32,9 @@ if ($stmt->execute()) {
 }
 
 // Update payment method
-$updatePaymentSql = "UPDATE payment SET method = ? WHERE paymentID = ?";
+$updatePaymentSql = "UPDATE payment SET methodID = ? WHERE paymentID = ?";
 $stmt = $conn->prepare($updatePaymentSql);
-$stmt->bind_param('si', $paymentMethod, $paymentID);
+$stmt->bind_param('ii', $methodID, $paymentID);
 
 if (!$stmt->execute()) {
     echo json_encode(['status' => 'error', 'message' => 'Failed to update payment method']);

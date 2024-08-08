@@ -33,6 +33,8 @@ include_once "../settings/connection.php"; // Include your database connection f
     <link href="../css/style.css" rel="stylesheet" />
 
     <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   </head>
   <body class="fixed-bottom-bar">
     <special-header></special-header>
@@ -364,40 +366,25 @@ include_once "../settings/connection.php"; // Include your database connection f
     </div>
 
     <script
-      type="df6ebe39ae268b2498852a47-text/javascript"
       src="../vendor/jquery/jquery.min.js"
     ></script>
     <script
-      type="df6ebe39ae268b2498852a47-text/javascript"
       src="../vendor/bootstrap/js/bootstrap.bundle.min.js"
     ></script>
 
     <script
-      type="df6ebe39ae268b2498852a47-text/javascript"
       src="../vendor/slick/slick/slick.min.js"
     ></script>
 
     <script
-      type="df6ebe39ae268b2498852a47-text/javascript"
       src="../vendor/sidebar/hc-offcanvas-nav.js"
     ></script>
 
     <script
-      type="df6ebe39ae268b2498852a47-text/javascript"
       src="../js/osahan.js"
     ></script>
-    <script
-      src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js"
-      data-cf-settings="df6ebe39ae268b2498852a47-|49"
-      defer
-    ></script>
-    <script
-      defer
-      src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
-      integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
-      data-cf-beacon='{"rayId":"8a5eb0c07c26639d","version":"2024.7.0","r":1,"serverTiming":{"name":{"cfL4":true}},"token":"dd471ab1978346bbb991feaa79e6ce5c","b":1}'
-      crossorigin="anonymous"
-    ></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="https://js.paystack.co/v1/inline.js"></script>
 
