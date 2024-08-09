@@ -141,7 +141,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                       <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
                       <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
                     </div>
-                    <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                    <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" 
                         data-bs-target="#extras" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">ADD</a></span>
                   </div>
                 <?php endforeach; ?>
@@ -164,7 +164,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                     <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
                     <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
                   </div>
-                  <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                  <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" 
                       data-bs-target="#extras" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">ADD</a></span>
                 </div>
               <?php endforeach; ?>
@@ -186,7 +186,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                     <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
                     <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
                   </div>
-                  <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                  <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" 
                       data-bs-target="#extras" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">ADD</a></span>
                 </div>
               <?php endforeach; ?>
