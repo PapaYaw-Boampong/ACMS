@@ -3,10 +3,27 @@ session_start();
 // Include the connection file
 include_once '../settings/connection.php';
 include_once '../actions/UserManagementService/get/getUserDetails.php';
+
+// Assuming userIdExist() returns the user ID if the user exists
 $userID = userIdExist();
 
+// Fetch user details using the function
 $userDetails = getUserDetailsByID($conn, $userID);
-$userID = $_SESSION['userID'];
+
+if ($userDetails) {
+    $user = [
+        'name' => $userDetails['name'],
+        'phoneNo' => $userDetails['phoneNo'],
+        'email' => $userDetails['email']
+    ];
+} else {
+    // Handle case where user details are not found
+    $user = [
+        'name' => '',
+        'phoneNo' => '',
+        'email' => ''
+    ];
+}
 
 // // Fetch user data from the database
 // $query = "SELECT name, phoneNo, email FROM users WHERE userID = ?";
@@ -20,7 +37,10 @@ $userID = $_SESSION['userID'];
 // $user = mysqli_fetch_assoc($result);
 // mysqli_stmt_close($stmt);
 // mysqli_close($conn);
-// ?>
+
+// Close the database connection
+mysqli_close($conn);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -61,23 +81,23 @@ $userID = $_SESSION['userID'];
                         <div id="edit_profile">
                             <div id="success-message" style="display:none;"></div>
                             <div>
-                                <form method="POST" action="../actions/UserManagementService/put/update_account.php">
-                                    <div class="form-group mb-3">
-                                        <label class="pb-1">Name</label>
-                                        <input type="text" name="name" class="form-control" value="<?php echo htmlspecialchars($user['name']); ?>" required />
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label class="pb-1">Mobile Number</label>
-                                        <input type="text" name="phoneNo" class="form-control" value="<?php echo htmlspecialchars($user['phoneNo']); ?>" required />
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label class="pb-1">Email</label>
-                                        <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['email']); ?>" required />
-                                    </div>
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary w-100">Save Changes</button>
-                                    </div>
-                                </form>
+                            <form method="POST" action="../actions/UserManagementService/put/update_account.php">
+                              <div class="form-group mb-3">
+                                  <label class="pb-1">Name</label>
+                                  <input type="text" name="name" class="form-control" value="<?php echo htmlspecialchars($user['name']); ?>" required />
+                              </div>
+                              <div class="form-group mb-3">
+                                  <label class="pb-1">Mobile Number</label>
+                                  <input type="text" name="phoneNo" class="form-control" value="<?php echo htmlspecialchars($user['phoneNo']); ?>" required />
+                              </div>
+                              <div class="form-group mb-3">
+                                  <label class="pb-1">Email</label>
+                                  <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['email']); ?>" required />
+                              </div>
+                              <div class="text-center">
+                                  <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                              </div>
+                          </form>
                             </div>
                             <div class="additional">
                                 <div class="change_password my-3">
@@ -89,11 +109,6 @@ $userID = $_SESSION['userID'];
                 </div>
             </div>
         </div>
-
-
-
-
-
 
       <div
         class="osahan-menu-fotter fixed-bottom bg-white px-3 py-2 text-center d-none"
