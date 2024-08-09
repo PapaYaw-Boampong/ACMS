@@ -25,7 +25,7 @@ $userName = $_SESSION['username'];
         $(document).ready(function() {
             // Load preferences
             $.ajax({
-                url: 'load_preferences.php',
+                url: '../actions/load_preferences.php',
                 type: 'GET',
                 success: function(response) {
                     const preferences = JSON.parse(response);
@@ -48,7 +48,7 @@ $userName = $_SESSION['username'];
             $('#preferenceForm').on('submit', function(e) {
                 e.preventDefault();
                 $.ajax({
-                    url: 'save_preferences.php',
+                    url: '../actions/save_preferences.php',
                     type: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
