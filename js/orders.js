@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function() {
   });
   
   function fetchOrders() {
-    const userID = 1; // Example user ID
     const limit = 10; // Example limit
     const status = null; // Example status
     
@@ -60,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
           <div>
             <p class="mb-0 fw-bold"><a href="restaurant.html" class="text-dark">${order.cafeteriaName}</a></p>
             <p class="text- fw-bold mb-0">${order.mealName} x ${order.quantity} and ...</p>
-            <p>ORDER #${order.orderID}</p>
+            <p>ORDER # ${order.orderID}</p>
             <p class="mb-0 small"><a href="orderDetails.php?${order.mealID}">View Details</a></p>
           </div>
           <div class="ms-auto">

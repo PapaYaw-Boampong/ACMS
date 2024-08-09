@@ -6,9 +6,7 @@ include_once '../actions/UserManagementService/get/getUserDetails.php';
 $userID = userIdExist();
 
 $userDetails = getUserDetailsByID($conn, $userID);
-
-// // Assuming user is logged in and userID is stored in session
-// $userID = $_SESSION['userID'];
+$userID = $_SESSION['userID'];
 
 // // Fetch user data from the database
 // $query = "SELECT name, phoneNo, email FROM users WHERE userID = ?";
@@ -40,32 +38,7 @@ $userDetails = getUserDetailsByID($conn, $userID);
     <link href="../css/style.css" rel="stylesheet" />
     <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelector('form').addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent the default form submission
-
-                var formData = new FormData(this);
-
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '../actions/UserManagementService/put/update_account.php', true);
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        document.getElementById('success-message').innerHTML = xhr.responseText;
-                        document.getElementById('success-message').style.display = 'block';
-                        setTimeout(function() {
-                            document.getElementById('success-message').style.display = 'none';
-                        }, 3000);
-                    } else {
-                        document.getElementById('success-message').innerHTML = '<span style="color:red">An error occurred. Please try again.</span>';
-                        document.getElementById('success-message').style.display = 'block';
-                        setTimeout(function() {
-                            document.getElementById('success-message').style.display = 'none';
-                        }, 3000);
-                    }
-                };
-                xhr.send(formData);
-            });
-        });
+       
     </script>
 </head>
 <body class="fixed-bottom-bar">
@@ -461,6 +434,13 @@ $userDetails = getUserDetailsByID($conn, $userID);
       </div>
     </div>
 
+     <!-- Pass session data to JavaScript -->
+     <script>
+          // Pass PHP session data to JavaScript
+          var userName = <?php echo json_encode($_SESSION['username']); ?>;
+          var userID =  <?php echo json_encode($userID); ?>;
+      </script>
+
     <script
       data-cfasync="false"
       src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
@@ -484,13 +464,8 @@ $userDetails = getUserDetailsByID($conn, $userID);
       src="../js/osahan.js"
     ></script>
     <script src="../js/headerFooterManager.js"></script>
-    <!-- <script
-      defer
-      src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
-      integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
-      data-cf-beacon='{"rayId":"8a5eb0b859d888c1","version":"2024.7.0","r":1,"serverTiming":{"name":{"cfL4":true}},"token":"dd471ab1978346bbb991feaa79e6ce5c","b":1}'
-      crossorigin="anonymous"
-    ></script> -->
+    
+ 
   </body>
 
 

@@ -205,85 +205,6 @@ function createOrder($userID, $mealID, $quantity = 1) {
     return array('success' => true, 'message' => "Order created successfully.", 'orderID' => $orderID);
 }
 
-// Function to update an order by adding a meal
-function updateOrder($userID, $mealID, $quantity = 1) {
-    global $conn;
-
-    // Step 1: Check for an open order
-    $sqlOpenOrder = "SELECT orderID, orderTotal FROM orders WHERE userID = ? AND status = 'IN_PROGRESS'";
-    $stmtOpenOrder = $conn->prepare($sqlOpenOrder);
-    $stmtOpenOrder->bind_param("i", $userID);
-    $stmtOpenOrder->execute();
-    $resultOpenOrder = $stmtOpenOrder->get_result();
-
-    if ($resultOpenOrder->num_rows === 0) {
-        return "No open order found for this user.";
-    }
-
-    $openOrder = $resultOpenOrder->fetch_assoc();
-    $orderID = $openOrder['orderID'];
-    $stmtOpenOrder->close();
-
-    // Step 2: Check if the meal is already associated with the order
-    $sqlMealCheck = "SELECT mealID FROM mealorder WHERE orderID = ? AND mealID = ?";
-    $stmtMealCheck = $conn->prepare($sqlMealCheck);
-    $stmtMealCheck->bind_param("ii", $orderID, $mealID);
-    $stmtMealCheck->execute();
-    $resultMealCheck = $stmtMealCheck->get_result();
-
-    if ($resultMealCheck->num_rows > 0) {
-        return "Meal is already associated with the order.";
-    }
-    $stmtMealCheck->close();
-
-    // Step 3: Check if the meal comes from the same cafeteria as other meals in the order
-    $sqlCafeteriaCheck = "SELECT m.cafeteriaID
-                          FROM meals m
-                          INNER JOIN mealorder mo ON m.mealID = mo.mealID
-                          WHERE mo.orderID = ?";
-    $stmtCafeteriaCheck = $conn->prepare($sqlCafeteriaCheck);
-    $stmtCafeteriaCheck->bind_param("i", $orderID);
-    $stmtCafeteriaCheck->execute();
-    $resultCafeteriaCheck = $stmtCafeteriaCheck->get_result();
-    $sameCafeteria = true;
-
-    while ($row = $resultCafeteriaCheck->fetch_assoc()) {
-        if ($row['cafeteriaID'] != getCafeteriaIDByMeal($mealID)) {
-            $sameCafeteria = false;
-            break;
-        }
-    }
-
-    if (!$sameCafeteria) {
-        return "Meals come from different cafeterias. Order cannot be updated.";
-    }
-    $stmtCafeteriaCheck->close();
-
-    // Step 4: Add the meal to the order
-    $mealPrice = getMealPrice($mealID);
-    $sqlAddMeal = "INSERT INTO mealorder (mealID, orderID, quantity) VALUES (?, ?, ?)";
-    $stmtAddMeal = $conn->prepare($sqlAddMeal);
-    $stmtAddMeal->bind_param("iii", $mealID, $orderID, $quantity);
-
-    if (!$stmtAddMeal->execute()) {
-        return "Error: " . $stmtAddMeal->error;
-    }
-    $stmtAddMeal->close();
-
-    // Step 5: Update the order total
-    $newOrderTotal = $openOrder['orderTotal'] + ($mealPrice * $quantity);
-    $sqlUpdateOrderTotal = "UPDATE orders SET orderTotal = ? WHERE orderID = ?";
-    $stmtUpdateOrderTotal = $conn->prepare($sqlUpdateOrderTotal);
-    $stmtUpdateOrderTotal->bind_param("di", $newOrderTotal, $orderID);
-
-    if (!$stmtUpdateOrderTotal->execute()) {
-        return "Error: " . $stmtUpdateOrderTotal->error;
-    }
-    $stmtUpdateOrderTotal->close();
-
-    return "Order updated successfully.";
-}
-
 // Helper function to get the cafeteria ID by meal ID
 function getCafeteriaIDByMeal($mealID) {
     global $conn;
@@ -311,42 +232,58 @@ function getMealPrice($mealID) {
 }
 
 
-// // Function to fetch order information based on order ID and user ID
-// function getOrderInfo($orderID, $userID) {
-//     global $conn;
+// Function to update an order with a specific meal
+function updateOrder($orderID, $mealID, $quantity) {
+    global $conn;
 
-//     $orderInfo = array();
+    // Prepare the SQL statement to check if the meal is already associated with the order
+    $sqlCheck = "SELECT * FROM mealorder WHERE orderID = ? AND mealID = ?";
+    $stmtCheck = $conn->prepare($sqlCheck);
+    $stmtCheck->bind_param("ii", $orderID, $mealID);
 
-//     // Prepare the SQL statement
-//     $sql = "SELECT o.orderID, o.orderDate, o.status, o.deliveryStatus, o.orderTotal, o.message,
-//                    m.mealID, m.name as mealName, m.price, mo.quantity, c.cafeteriaName
-//             FROM orders o
-//             INNER JOIN mealorder mo ON o.orderID = mo.orderID
-//             INNER JOIN meals m ON mo.mealID = m.mealID
-//             INNER JOIN cafeterias c ON m.cafeteriaID = c.cafeteriaID
-//             WHERE o.orderID = ? AND o.userID = ?";
-//     $stmt = $conn->prepare($sql);
-//     $stmt->bind_param("ii", $orderID, $userID);
+    // Execute the query
+    $stmtCheck->execute();
+    $resultCheck = $stmtCheck->get_result();
 
-//     // Execute the query
-//     $stmt->execute();
+    // Prepare the response array
+    $response = array();
 
-//     // Get the result
-//     $result = $stmt->get_result();
+    if ($resultCheck->num_rows > 0) {
+        // If the meal is already associated with the order, update the quantity to the new value
+        $sqlUpdate = "UPDATE mealorder SET quantity = ? WHERE orderID = ? AND mealID = ?";
+        $stmtUpdate = $conn->prepare($sqlUpdate);
+        $stmtUpdate->bind_param("iii", $quantity, $orderID, $mealID);
 
-//     // Check if there are any results
-//     if ($result->num_rows > 0) {
-//         while ($row = $result->fetch_assoc()) {
-//             $orderInfo[] = $row;
-//         }
-//     } else {
-//         return null; // No results found
-//     }
+        // Execute the update query
+        if ($stmtUpdate->execute()) {
+            $response['success'] = true;
+            $response['message'] = "Meal quantity updated successfully.";
+        } else {
+            $response['success'] = false;
+            $response['message'] = "Error updating meal quantity: " . $stmtUpdate->error;
+        }
 
-//     // Close the statement
-//     $stmt->close();
+        $stmtUpdate->close();
+    } else {
+        // If the meal is not associated with the order, insert it into the mealorder table
+        $sqlInsert = "INSERT INTO mealorder (orderID, mealID, quantity) VALUES (?, ?, ?)";
+        $stmtInsert = $conn->prepare($sqlInsert);
+        $stmtInsert->bind_param("iii", $orderID, $mealID, $quantity);
 
-//     return $orderInfo;
-// }
+        // Execute the insert query
+        if ($stmtInsert->execute()) {
+            $response['success'] = true;
+            $response['message'] = "Meal added to the order successfully.";
+        } else {
+            $response['success'] = false;
+            $response['message'] = "Error adding meal to order: " . $stmtInsert->error;
+        }
 
+        $stmtInsert->close();
+    }
 
+    // Close the check statement
+    $stmtCheck->close();
+
+    return $response;
+}

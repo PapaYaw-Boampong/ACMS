@@ -1,11 +1,14 @@
 
 document.addEventListener("DOMContentLoaded", function() {
-    fetchTrendingMeals();
+    const params = new URLSearchParams(window.location.search);
+    const userID = params.get('userID');
+  
+    fetchTrendingMeals(userID);
 });
 
-function fetchTrendingMeals() {
-    const userID = 1;
-    const url = `../actions/CafeteriaManagementService/get/popularMeals.php?userID=${userID}`; 
+function fetchTrendingMeals(userID) {
+
+    const url = `../actions/CafeteriaManagementService/get/popularMeals.php`; 
 
     fetch(url)
         .then(response => response.json())
@@ -48,13 +51,13 @@ function createTrendingMealElement(meal) {
                 <div class="favourite-heart text-danger position-absolute rounded-circle">
                     <a href="#"><i class="feather-heart"></i></a>
                 </div>
-                <a href="restaurant.html" class = "order-trigger">
+                <a href="restaurant.php?cafID=${meal.cafeteriaID}&userID=${userID}&mealID=${meal.mealID}" class = "order-trigger">
                     <img alt="#" src="../img/trending1.png" class="img-fluid item-img w-100" />
                 </a>
             </div>
             <div class="p-3 position-relative">
                 <div class="list-card-body">
-                    <h6 class="mb-1"><a href="restaurant.html" class="text-black">${meal.name}</a></h6>
+                    <h6 class="mb-1"><a href="restaurant.php?cafID = ${meal.cafeteriaID} &mealID =${meal.cafeteriaID}" class="text-black">${meal.name}</a></h6>
                     <p class="text-gray mb-3">${meal.timeframe} • $${meal.price}</p>
                     <p class="text-gray mb-3 time">
                         <span class="bg-light text-dark rounded-sm py-1 px-2"><i class="feather-clock"></i> 15–25 min</span>

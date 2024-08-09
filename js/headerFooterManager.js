@@ -24,12 +24,7 @@ class SpecialHeader extends HTMLElement {
                                         <span>Search</span>
                                     </div>
                                 </a>
-                                <a href="../login/login.php" class="widget-header me-4 text-dark m-none">
-                                    <div class="icon d-flex align-items-center">
-                                        <i class="feather-user h6 me-2 mb-0"></i>
-                                        <span>Sign in</span>
-                                    </div>
-                                </a>
+                             
                                 <div class="dropdown me-4 m-none">
                                     <a href="#" class="dropdown-toggle text-dark py-3 d-block" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <img alt="#" src="../img/user/1.jpg" class="img-fluid rounded-circle header-user me-2 header-user" />

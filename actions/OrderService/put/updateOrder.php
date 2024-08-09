@@ -15,24 +15,24 @@ $response = array();
 
 try {
     // Retrieve parameters from the request
-    $userID = isset($_POST['userID']) ? (int)$_POST['userID'] : null;
+    $orderID = isset($_POST['orderID']) ? (int)$_POST['orderID'] : null;
     $mealID = isset($_POST['mealID']) ? (int)$_POST['mealID'] : null;
     $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
 
     // Check if required parameters are provided
-    if ($userID === null || $mealID === null) {
-        throw new Exception("User ID and Meal ID are required.");
+    if ($orderID === null || $mealID === null) {
+        throw new Exception("Order ID and Meal ID are required.");
     }
 
     // Call the function to update an order
-    $result = updateOrder($userID, $mealID, $quantity);
+    $result = updateOrder($orderID, $mealID, $quantity);
 
-    if (strpos($result, 'successfully') !== false) {
+    if ($result['success']) {
         $response['success'] = true;
-        $response['message'] = $result;
+        $response['message'] = $result['message'];
     } else {
         $response['success'] = false;
-        $response['message'] = $result;
+        $response['message'] = $result['message'];
     }
 
     // Encode the response array as JSON and echo it
@@ -45,7 +45,5 @@ try {
     echo json_encode($response);
     exit;
 }
-
-
 
 ?>

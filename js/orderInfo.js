@@ -1,17 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // const flag = localStorage.getItem("currentOrderID") ? localStorage.getItem("currentOrderID"): -1;
+  const flag = localStorage.getItem("currentOrderID") ?? -1;
 
-    // if (flag !== -1) {
-    //   fetchOrderDetails(flag);
-    // } else {
-    //   renderNoOrdersMessage();
-    // }
-
-    fetchOrderDetails(2);
+  if (flag !== -1) {
+    fetchOrderDetails(flag);
+  } else {
+    renderNoOrdersMessage();
+  }
 });
 
 function fetchOrderDetails(orderId) {
-  const url = `../actions/OrderService/get/OrderInfo.php?orderID=${4}`;
+  const url = `../actions/OrderService/get/OrderInfo.php?orderID=${orderId}`;
 
   fetch(url)
     .then((response) => response.json())
@@ -53,9 +51,9 @@ function renderOrderDetails(order) {
                 </div>
                 <div class="d-flex justify-content-between">
                     <div class="form-group mb-0">
-                        <input type="number" class="form-control" id="quantity-${meal.mealID}" name="quantity" value="${meal.quantity}" required>
+                        <input type="number" class="form-control w-20" id="quantity-${meal.mealID}" name="quantity" value="${meal.quantity}" required>
                     </div>
-                    <p class="text-gray mb-0 float-end ms-2 text-muted small">GHS${meal.price}</p>
+                    <p class="text-gray mb-0 float-end ms-2 text-muted small">GHS ${meal.price}</p>
                 </div>
             </div>
         `;

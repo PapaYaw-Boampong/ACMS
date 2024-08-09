@@ -55,7 +55,7 @@ function createRecentsMealElement(meal) {
             </div>
             <div class="p-3 position-relative">
                 <div class="list-card-body">
-                    <h6 class="mb-1"><a href="restaurant.html" class="text-black">${meal.name}</a></h6>
+                    <h6 class="mb-1"><a href="restaurant.html?cafID = ${meal.cafeteriaID} &mealID =${meal.cafeteriaName}" class="text-black">${meal.name}</a></h6>
                     <p class="text-gray mb-3">${meal.timeframe} • GHS ${meal.price}</p>
                     <p class="text-gray mb-3 time">
                         <span class="bg-light text-dark rounded-sm py-1 px-2"><i class="feather-clock"></i> 15–25 min</span>

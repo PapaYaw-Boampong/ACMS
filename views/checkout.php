@@ -368,6 +368,13 @@ $userName = $_SESSION['username'];
     >
     </div>
 
+    <script>
+          // Pass PHP session data to JavaScript
+          var userName = <?php echo json_encode($_SESSION['username']); ?>;
+          var userID =  <?php echo json_encode($userID); ?>;
+      </script>
+
+
     <script
       src="../vendor/jquery/jquery.min.js"
     ></script>

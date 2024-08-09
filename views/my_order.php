@@ -29,7 +29,7 @@ $userName = $_SESSION['username'];
 
   <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
   
-  <script type="5cb679197af610f49395a3d9-text/javascript" src="../vendor/jquery/jquery.min.js"></script>
+  <script  src="../vendor/jquery/jquery.min.js"></script>
 </head>
 
 <body class="fixed-bottom-bar">
@@ -75,18 +75,25 @@ $userName = $_SESSION['username'];
   <!-- Footer -->
   <special-footer></special-footer>
 
+    <!-- Pass session data to JavaScript -->
+    <script>
+          // Pass PHP session data to JavaScript
+          var userName = <?php echo json_encode($_SESSION['username']); ?>;
+          var userID =  <?php echo json_encode($userID); ?>;
+      </script>
+
+
   <nav id="main-nav">
 
    
-    <script type="5cb679197af610f49395a3d9-text/javascript" src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script  src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="../js/orders.js"></script>
-    <script type="5cb679197af610f49395a3d9-text/javascript" src="../vendor/slick/slick/slick.min.js"></script>
+    <script  src="../vendor/slick/slick/slick.min.js"></script>
 
-    <script type="5cb679197af610f49395a3d9-text/javascript" src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
+    <script  src="../vendor/sidebar/hc-offcanvas-nav.js"></script>
 
-    <script type="5cb679197af610f49395a3d9-text/javascript" src="../js/osahan.js"></script>
-    <script src="../cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="5cb679197af610f49395a3d9-|49" defer></script>
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"8a5eb0e2bddb639d","version":"2024.7.0","r":1,"serverTiming":{"name":{"cfL4":true}},"token":"dd471ab1978346bbb991feaa79e6ce5c","b":1}' crossorigin="anonymous"></script>
+    <script  src="../js/osahan.js"></script>
+  
     <script src="../js/headerFooterManager.js"></script>
 </body>
 
