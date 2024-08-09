@@ -108,15 +108,6 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
     </div>
   </div>
 
-
-  <div class="container">
-    <div class>
-      <p class="fw-bold pt-4 m-0">FEATURED ITEMS</p>
-
-      <div class="trending-slider  rounded" data-caf-id="<?php echo $cafID ?>"></div>
-    </div>
-  </div>
-
   <div class="container position-relative">
     <div class="row">
       <div class="col-md-8 pt-3">
@@ -141,8 +132,11 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                       <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
                       <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
                     </div>
-                    <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" 
-                        data-bs-target="#extras" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">ADD</a></span>
+                    <span class="ms-auto">
+                      <a href="#" class="btn btn-outline-secondary btn-sm" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">
+                        ADD
+                      </a>
+                    </span>
                   </div>
                 <?php endforeach; ?>
 
@@ -164,8 +158,11 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                     <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
                     <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
                   </div>
-                  <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" 
-                      data-bs-target="#extras" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">ADD</a></span>
+                  <span class="ms-auto">
+                      <a href="#" class="btn btn-outline-secondary btn-sm" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">
+                        ADD
+                      </a>
+                  </span>
                 </div>
               <?php endforeach; ?>
             </div>
@@ -186,8 +183,11 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                     <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
                     <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
                   </div>
-                  <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" 
-                      data-bs-target="#extras" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">ADD</a></span>
+                  <span class="ms-auto">
+                      <a href="#" class="btn btn-outline-secondary btn-sm" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">
+                        ADD
+                      </a>
+                  </span>
                 </div>
               <?php endforeach; ?>
             </div>
