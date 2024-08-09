@@ -29,14 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
 
-    if (isset($data['mealID'], $data['mealName'], $data['mealPrice'])) {
+    if (isset($data['mealID'], $data['name'], $data['price'])) {
         $mealID = $data['mealID'];
-        $mealName = $data['mealName'];
-        $mealPrice = $data['mealPrice'];
+        $name = $data['name'];
+        $price = $data['price'];
 
-        $query = "UPDATE meals SET mealName = ?, mealPrice = ? WHERE mealID = ?";
+        error_log("Received data - mealID: $mealID, name: $name, price: $price");
+
+        $query = "UPDATE meals SET name = ?, price = ? WHERE mealID = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param('sii', $mealName, $mealPrice, $mealID);
+        $stmt->bind_param('sii', $name, $price, $mealID);
 
         if ($stmt->execute()) {
             echo json_encode(["success" => true]);

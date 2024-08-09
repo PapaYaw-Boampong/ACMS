@@ -133,6 +133,8 @@ document.addEventListener('DOMContentLoaded', function() {
         price: parseFloat(document.getElementById('editprice').value),
       };
 
+      console.log(updatedMeal);
+
       fetch('../actions/CafeteriaManagementService/put/editMeal.php', {
           method: 'POST',
           headers: {
@@ -142,6 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
+          console.log(data);
           if (data.success) {
             fetchMeals(); // Refresh meals
             new bootstrap.Modal(document.getElementById('editMealModal')).hide(); // Hide modal
