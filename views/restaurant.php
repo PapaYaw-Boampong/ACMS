@@ -8,7 +8,7 @@ include_once '../actions/CafeteriaManagementService/get/getResturantDetails.php'
 include_once '../actions/FeedBackService/get/getNumberCafReviews.php';
 include_once '../actions/CafeteriaManagementService/get/getMenu.php';
 
-
+$userID = $_SESSION['userID'];
 $cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
 $result = getRecentReviews($conn, $cafID);
 $resultsDetails = getAllCafeteriaDetails($conn);
@@ -52,6 +52,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
 
 <body class="fixed-bottom-bar">
   <special-header></special-header>
+
   <div class="d-none">
     <div class="bg-primary p-3 d-flex align-items-center">
       <a class="toggle togglew toggle-2" href="#"><span></span></a>
@@ -107,102 +108,11 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
     </div>
   </div>
 
-
-  <div class="container">
-    <div class>
-      <p class="fw-bold pt-4 m-0">FEATURED ITEMS</p>
-
-      <div class="trending-slider  rounded" data-caf-id="<?php echo $cafID ?>">
-
-        <!-- <div class="osahan-slider-item">
-          <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-            <div class="list-card-image">
-              <a href="checkout.html">
-                <img alt="#" src="../img/trending1.png" class="img-fluid item-img w-100" />
-              </a>
-            </div>
-            <div class="p-3 position-relative">
-              <div class="list-card-body">
-                <h6 class="mb-1">
-                  <a href="checkout.html" class="text-black">Famous Dave's Bar-B-Que</a>
-                </h6>
-                <p class="text-gray mb-3">Vegetarian • Indian • Pure veg</p>
-                <p class="text-gray m-0">
-                  <span class="text-black-50"> $350 FOR TWO</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="osahan-slider-item">
-          <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-            <div class="list-card-image">
-              <a href="checkout.html">
-                <img alt="#" src="../img/trending2.png" class="img-fluid item-img w-100" />
-              </a>
-            </div>
-            <div class="p-3 position-relative">
-              <div class="list-card-body">
-                <h6 class="mb-1">
-                  <a href="checkout.html" class="text-black">Thai Famous Cuisine</a>
-                </h6>
-                <p class="text-gray mb-3">North Indian • Indian • Pure veg</p>
-                <p class="text-gray m-0">
-                  <span class="text-black-50"> $250 FOR TWO</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="osahan-slider-item">
-          <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-            <div class="list-card-image">
-              <a href="checkout.html">
-                <img alt="#" src="../img/trending3.png" class="img-fluid item-img w-100" />
-              </a>
-            </div>
-            <div class="p-3 position-relative">
-              <div class="list-card-body">
-                <h6 class="mb-1">
-                  <a href="checkout.html" class="text-black">The osahan Restaurant</a>
-                </h6>
-                <p class="text-gray mb-3">North • Hamburgers • Pure veg</p>
-                <p class="text-gray m-0">
-                  <span class="text-black-50"> $500 FOR TWO</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="osahan-slider-item">
-          <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-            <div class="list-card-image">
-              <a href="checkout.html">
-                <img alt="#" src="../img/trending2.png" class="img-fluid item-img w-100" />
-              </a>
-            </div>
-            <div class="p-3 position-relative">
-              <div class="list-card-body">
-                <h6 class="mb-1">
-                  <a href="checkout.html" class="text-black">Thai Famous Cuisine</a>
-                </h6>
-                <p class="text-gray mb-3">North Indian • Indian • Pure veg</p>
-                <p class="text-gray m-0">
-                  <span class="text-black-50"> $250 FOR TWO</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-      </div>
-    </div>
-  </div>
-
   <div class="container position-relative">
     <div class="row">
       <div class="col-md-8 pt-3">
         <div class="shadow-sm rounded bg-white mb-3 overflow-hidden">
+
           <div class="d-flex item-aligns-center">
             <p class="fw-bold h6 p-3 border-bottom mb-0 w-100">Menu</p>
           </div>
@@ -222,10 +132,14 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                       <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
                       <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
                     </div>
-                    <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#extras">ADD</a></span>
+                    <span class="ms-auto">
+                      <a href="#" class="btn btn-outline-secondary btn-sm" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">
+                        ADD
+                      </a>
+                    </span>
                   </div>
                 <?php endforeach; ?>
+
               </div>
             </div>
           </div>
@@ -244,8 +158,11 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                     <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
                     <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
                   </div>
-                  <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
-                      data-bs-target="#extras">ADD</a></span>
+                  <span class="ms-auto">
+                      <a href="#" class="btn btn-outline-secondary btn-sm" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">
+                        ADD
+                      </a>
+                  </span>
                 </div>
               <?php endforeach; ?>
             </div>
@@ -266,12 +183,16 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                     <h6 class="mb-1"><?php echo $menu['name']; ?></h6>
                     <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
                   </div>
-                  <span class="ms-auto"><a href="#" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal"
-                      data-bs-target="#extras">ADD</a></span>
+                  <span class="ms-auto">
+                      <a href="#" class="btn btn-outline-secondary btn-sm" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">
+                        ADD
+                      </a>
+                  </span>
                 </div>
               <?php endforeach; ?>
             </div>
           </div>
+
         </div>
 
         <div class="bg-white p-3 mb-3 rating-review-select-page rounded shadow-sm">
@@ -301,83 +222,33 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
               </button>
             </div>
         </div>
-        <div class="bg-white p-3 mb-3 restaurant-detailed-ratings-and-reviews shadow-sm rounded">
-          <a class="text-primary float-end" href="#">Top Rated</a>
-          <h6 class="mb-1">All Ratings and Reviews</h6>
-          <?php
-          if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-              $rating = $row["rating"];
-          ?>
-              <div class="reviews-members py-3">
-                <div class="d-flex align-items-start gap-3">
-                  <a href="#">
-                    <img alt="#" src="<?php echo $row['userImage']; ?>" class="rounded-pill" />
-                  </a>
-                  <div>
-                    <div class="reviews-members-header">
-                      <div class="star-rating float-end">
-                        <div class="d-inline-block" style="font-size: 14px">
-                          <?php
-                          for ($i = 1; $i <= 5; $i++) {
-                            if ($i <= $rating) {
-                              echo '<i class="feather-star text-warning"></i>';
-                            } else {
-                              echo '<i class="feather-star"></i>';
-                            }
-                          }
-                          ?>
-                        </div>
-                      </div>
-                      <h6 class="mb-0">
-                        <a class="text-dark" href="#"><?php echo $row["name"]; ?></a>
-                      </h6>
-                      <p class="text-muted small"><?php echo date("D, d M Y", strtotime($row["dateTime"])); ?></p>
-                    </div>
-                    <div class="reviews-members-body">
-                      <p><?php echo htmlspecialchars($row["feedback"]); ?></p>
-                    </div>
-                    <div class="reviews-members-footer">
-                      <a class="total-like btn btn-sm btn-outline-primary" href="#">
-                        <i class="feather-thumbs-up"></i> 856M
-                      </a>
-                      <a class="total-like btn btn-sm btn-outline-primary" href="#">
-                        <i class="feather-thumbs-down"></i> 158K
-                      </a>
-                      <span class="total-like-user-main ms-2" dir="rtl">
-                        <a href="#"><img alt="#" src="../img/reviewer3.png" class="total-like-user rounded-pill" /></a>
-                        <a href="#"><img alt="#" src="../img/reviewer4.png" class="total-like-user rounded-pill" /></a>
-                        <a href="#"><img alt="#" src="../img/reviewer5.png" class="total-like-user rounded-pill" /></a>
-                        <a href="#"><img alt="#" src="../img/reviewer6.png" class="total-like-user rounded-pill" /></a>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <hr />
-          <?php
-            }
-          } else {
-            echo "No reviews found.";
-          } ?>
-          <a class="text-center w-100 d-block mt-3 fw-bold" href="#">See All Reviews</a>
-        </div>
+
 
       </div>
 
       <div class="col-md-4 pt-3">
-        <div class="osahan-cart-item rounded rounded shadow-sm overflow-hidden bg-white sticky_sidebar" id="order-details">
+        <div class="osahan-cart-item rounded rounded shadow-sm overflow-hidden bg-white sticky_sidebar" id="order-details" data-user-id="<?php echo $userID; ?>">
 
         </div>
       </div>
     </div>
   </div>
 
+
+
   <!-- Footer -->
   <special-footer></special-footer>
 
+   <!-- Pass session data to JavaScript -->
+   <script>
+          // Pass PHP session data to JavaScript
+          var userName = <?php echo json_encode($_SESSION['username']); ?>;
+          var userID =  <?php echo json_encode($userID); ?>;
+      </script>
+
   <nav id="main-nav"></nav>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script src="../vendor/jquery/jquery.min.js"></script>
 
@@ -395,6 +266,8 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
   <script src="../js/restaurant.js"></script>
 
   <script src="../js/orderInfo.js"></script>
+
+  <script src="../js/orderSelect.js"></script>
 
 
 

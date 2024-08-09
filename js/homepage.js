@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-
- 
-
   fetchCafeterias();
   fetchMealsAndRenderSlider();
   fetchRecentMeals();
@@ -9,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Cafeteria fetch helper functions
 function fetchCafeterias() {
+
   const url = `../actions/CafeteriaManagementService/get/allCafeterias.php`;
 
   fetch(url)
@@ -97,6 +95,7 @@ function initializeOfferSlider() {
 // Meal fetch helper functions
 
 function fetchMealsAndRenderSlider() {
+
   const url = "../actions/CafeteriaManagementService/get/popularMeals.php"; // Adjust with your actual API endpoint
   fetch(url)
     .then((response) => response.json())
@@ -136,7 +135,7 @@ function createMealElement(meal) {
                 <div class="member-plan position-absolute">
                     <span class="badge text-bg-dark">Promoted</span>
                 </div>
-                <a href="restaurant.php?cafID=${meal.cafeteriaID}"  class = "order-trigger">
+                <a href="restaurant.php?cafID=${meal.cafeteriaID}&userID=${userID}&mealID=${meal.mealID}"  class = "order-trigger">
                     <img alt="#" src="../img/trending1.png" class="img-fluid item-img w-100" />
                 </a>
             </div>
@@ -208,7 +207,6 @@ function initializePopularSlider() {
 
 function fetchRecentMeals() {
   const sliderContainer = document.querySelector(".recents-slider");
-  const userID = sliderContainer.dataset.userId;
 
   const url = `../actions/CafeteriaManagementService/get/recentMeals.php?userID=${userID}`;
 
@@ -256,7 +254,7 @@ function createRecentMealElement(meal) {
             <div class="p-3 position-relative">
                 <div class="list-card-body">
                     <h6 class="mb-1">
-                        <a href="restaurant.html" class="text-black">${meal.name}
+                        <a href="restaurant.php?cafID=${meal.cafeteriaID}&userID=${userID}&mealID=${meal.mealID}" class="text-black">${meal.name}
                         </a>
                     </h6>
                     <p class="text-gray mb-3">${meal.timeframe} • GHS ${meal.price}</p>

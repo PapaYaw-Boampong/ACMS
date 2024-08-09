@@ -14,20 +14,18 @@ function insertNavMenu(selector) {
         <li>
           <a href="my_order.php"><i class="feather-list me-2"></i> My Orders</a>
         </li>
+
         <li>
-          <a href="favorites.html"><i class="feather-heart me-2"></i> Favorites</a>
+          <a href="trending.php"><i class="feather-trending-up me-2"></i> Trending</a>
         </li>
         <li>
-          <a href="trending.html"><i class="feather-trending-up me-2"></i> Trending</a>
+          <a href="recents.php"><i class="feather-award me-2"></i> Recents</a>
         </li>
         <li>
-          <a href="most_popular.html"><i class="feather-award me-2"></i> Most Popular</a>
+          <a href="checkout.php"><i class="feather-list me-2"></i> Checkout</a>
         </li>
         <li>
-          <a href="checkout.html"><i class="feather-list me-2"></i> Checkout</a>
-        </li>
-        <li>
-          <a href="profile.html"><i class="feather-user me-2"></i> Profile</a>
+          <a href="profile.php"><i class="feather-user me-2"></i> Profile</a>
         </li>
       </ul>
       <ul class="bottom-nav">
@@ -61,6 +59,8 @@ function insertNavMenu(selector) {
 
 // Function to insert profile menu into #profile-nav
 function insertProfileMenu(selector) {
+  const profile_container = document.querySelector(selector);
+  
   const profileNavHtml = `
 
               <a href="profile.html" class>

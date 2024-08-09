@@ -3,12 +3,27 @@ session_start();
 // Include the connection file
 include_once '../settings/connection.php';
 include_once '../actions/UserManagementService/get/getUserDetails.php';
+
+// Assuming userIdExist() returns the user ID if the user exists
 $userID = userIdExist();
 
+// Fetch user details using the function
 $userDetails = getUserDetailsByID($conn, $userID);
 
-// // Assuming user is logged in and userID is stored in session
-// $userID = $_SESSION['userID'];
+if ($userDetails) {
+    $user = [
+        'name' => $userDetails['name'],
+        'phoneNo' => $userDetails['phoneNo'],
+        'email' => $userDetails['email']
+    ];
+} else {
+    // Handle case where user details are not found
+    $user = [
+        'name' => '',
+        'phoneNo' => '',
+        'email' => ''
+    ];
+}
 
 // // Fetch user data from the database
 // $query = "SELECT name, phoneNo, email FROM users WHERE userID = ?";
@@ -22,7 +37,10 @@ $userDetails = getUserDetailsByID($conn, $userID);
 // $user = mysqli_fetch_assoc($result);
 // mysqli_stmt_close($stmt);
 // mysqli_close($conn);
-// ?>
+
+// Close the database connection
+mysqli_close($conn);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,32 +58,7 @@ $userDetails = getUserDetailsByID($conn, $userID);
     <link href="../css/style.css" rel="stylesheet" />
     <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelector('form').addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent the default form submission
-
-                var formData = new FormData(this);
-
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '../actions/UserManagementService/put/update_account.php', true);
-                xhr.onload = function() {
-                    if (xhr.status === 200) {
-                        document.getElementById('success-message').innerHTML = xhr.responseText;
-                        document.getElementById('success-message').style.display = 'block';
-                        setTimeout(function() {
-                            document.getElementById('success-message').style.display = 'none';
-                        }, 3000);
-                    } else {
-                        document.getElementById('success-message').innerHTML = '<span style="color:red">An error occurred. Please try again.</span>';
-                        document.getElementById('success-message').style.display = 'block';
-                        setTimeout(function() {
-                            document.getElementById('success-message').style.display = 'none';
-                        }, 3000);
-                    }
-                };
-                xhr.send(formData);
-            });
-        });
+       
     </script>
 </head>
 <body class="fixed-bottom-bar">
@@ -88,23 +81,23 @@ $userDetails = getUserDetailsByID($conn, $userID);
                         <div id="edit_profile">
                             <div id="success-message" style="display:none;"></div>
                             <div>
-                                <form method="POST" action="../actions/UserManagementService/put/update_account.php">
-                                    <div class="form-group mb-3">
-                                        <label class="pb-1">Name</label>
-                                        <input type="text" name="name" class="form-control" value="<?php echo htmlspecialchars($user['name']); ?>" required />
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label class="pb-1">Mobile Number</label>
-                                        <input type="text" name="phoneNo" class="form-control" value="<?php echo htmlspecialchars($user['phoneNo']); ?>" required />
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label class="pb-1">Email</label>
-                                        <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['email']); ?>" required />
-                                    </div>
-                                    <div class="text-center">
-                                        <button type="submit" class="btn btn-primary w-100">Save Changes</button>
-                                    </div>
-                                </form>
+                            <form method="POST" action="../actions/UserManagementService/put/update_account.php">
+                              <div class="form-group mb-3">
+                                  <label class="pb-1">Name</label>
+                                  <input type="text" name="name" class="form-control" value="<?php echo htmlspecialchars($user['name']); ?>" required />
+                              </div>
+                              <div class="form-group mb-3">
+                                  <label class="pb-1">Mobile Number</label>
+                                  <input type="text" name="phoneNo" class="form-control" value="<?php echo htmlspecialchars($user['phoneNo']); ?>" required />
+                              </div>
+                              <div class="form-group mb-3">
+                                  <label class="pb-1">Email</label>
+                                  <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['email']); ?>" required />
+                              </div>
+                              <div class="text-center">
+                                  <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                              </div>
+                          </form>
                             </div>
                             <div class="additional">
                                 <div class="change_password my-3">
@@ -116,11 +109,6 @@ $userDetails = getUserDetailsByID($conn, $userID);
                 </div>
             </div>
         </div>
-
-
-
-
-
 
       <div
         class="osahan-menu-fotter fixed-bottom bg-white px-3 py-2 text-center d-none"
@@ -461,6 +449,13 @@ $userDetails = getUserDetailsByID($conn, $userID);
       </div>
     </div>
 
+     <!-- Pass session data to JavaScript -->
+     <script>
+          // Pass PHP session data to JavaScript
+          var userName = <?php echo json_encode($_SESSION['username']); ?>;
+          var userID =  <?php echo json_encode($userID); ?>;
+      </script>
+
     <script
       data-cfasync="false"
       src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"
@@ -484,13 +479,8 @@ $userDetails = getUserDetailsByID($conn, $userID);
       src="../js/osahan.js"
     ></script>
     <script src="../js/headerFooterManager.js"></script>
-    <!-- <script
-      defer
-      src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015"
-      integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ=="
-      data-cf-beacon='{"rayId":"8a5eb0b859d888c1","version":"2024.7.0","r":1,"serverTiming":{"name":{"cfL4":true}},"token":"dd471ab1978346bbb991feaa79e6ce5c","b":1}'
-      crossorigin="anonymous"
-    ></script> -->
+    
+ 
   </body>
 
 

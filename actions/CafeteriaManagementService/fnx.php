@@ -49,7 +49,7 @@ function getRecentMeals($userID, $numMeals) {
     $meals = array();
 
     // Prepare the SQL statement
-    $sql = "SELECT Meals.mealID, Meals.name, Meals.price, Meals.avgRating, Meals.timeframe, Cafeterias.cafeteriaName
+    $sql = "SELECT Meals.mealID, Meals.name, Meals.price, Meals.avgRating, Meals.timeframe, Cafeterias.cafeteriaName,Cafeterias.cafeteriaID
             FROM Meals
             INNER JOIN MealOrder ON Meals.mealID = MealOrder.mealID
             INNER JOIN Orders ON MealOrder.orderID = Orders.orderID

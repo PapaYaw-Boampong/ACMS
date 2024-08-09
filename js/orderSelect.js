@@ -1,123 +1,108 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const sliderItems = document.querySelectorAll('.order-trigger');
+    // Use URLSearchParams to get the mealID and cafID from the URL
+    const params = new URLSearchParams(window.location.search);
+    const mealID = params.get('mealID');
+    const cafID = params.get('cafID'); // Assuming cafID is also present in the URL
 
-    sliderItems.forEach(item => {
-        item.addEventListener('click', function(event) {
-            event.preventDefault();
-            const mealID = item.getAttribute('data-mealid');
-            const cafID = item.getAttribute('data-cafid');
-            createOrder(mealID, cafID);
-        });
-    });
-});
+    if (mealID) {
+        const quantity = 1; // Default quantity
+        const userID = 1; // Replace with actual userID from your session or local storage
+        const currentOrderID = localStorage.getItem('currentOrderID') ?? -1;
 
-
-document.addEventListener("DOMContentLoaded", function() {
-    const sliderItems = document.querySelectorAll('.order-trigger');
-
-    sliderItems.forEach(item => {
-        item.addEventListener('click', function(event) {
-            event.preventDefault();
-            const mealID = item.getAttribute('data-mealid');
-            const cafID = item.getAttribute('data-cafid');
-            const userID = 1; // Example user ID, you should replace this with the actual user ID
-            const quantity = 1; // Example quantity
-
-            const flag = localStorage.getItem('currentOrderID');
-
-            if (flag !== -1 ) {
-                updateOrder(userID, mealID, quantity, cafID);
-            } else {
-                createOrder(userID, mealID, quantity, cafID);
+        Swal.fire({
+            title: 'Add Meal to Order?',
+            text: "Do you want to add this meal to your order?",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, add it!',
+            cancelButtonText: 'No, cancel',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (currentOrderID === -1) {
+                    createOrder(userID, mealID, quantity, cafID);
+                } else {
+                    updateOrder(currentOrderID, mealID, quantity, cafID);
+                }
             }
+            // Clear the mealID and cafID parameters from the URL after processing
+            params.delete('mealID');
+            const newUrl = `${window.location.pathname}?${params.toString()}`;
+            history.replaceState(null, '', newUrl);
+        });
+    }
+});
+
+function updateOrder(orderID, mealID, quantity, cafID) {
+    fetch('../actions/OrderService/put/updateOrder.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ orderID, mealID, quantity })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            Swal.fire({
+                title: 'Success!',
+                text: result.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = `restaurant.php?cafID=${cafID}`;
+            });
+        } else {
+            Swal.fire({
+                title: 'Error!',
+                text: result.message,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    })
+    .catch(error => {
+        Swal.fire({
+            title: 'Error!',
+            text: 'An error occurred while updating the order.',
+            icon: 'error',
+            confirmButtonText: 'OK'
         });
     });
-});
+}
 
 function createOrder(userID, mealID, quantity, cafID) {
-    $.ajax({
-        url: 'path/to/create/order/endpoint.php', // Replace with the actual path to your create order endpoint
-        type: 'POST',
-        data: {
-            userID: userID,
-            mealID: mealID,
-            quantity: quantity
-        },
-        success: function(response) {
-            const result = JSON.parse(response);
-            if (result.success) {
-                // Store the order ID in local storage
-                localStorage.setItem('currentOrderID', result.orderID);
+    fetch('../actions/OrderService/post/createorder.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ userID, mealID, quantity })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            // Store the order ID in local storage
+            localStorage.setItem('currentOrderID', result.orderID);
 
-                Swal.fire({
-                    title: 'Success!',
-                    text: result.message,
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    window.location.href = `restaurant.php?cafID=${cafID}`;
-                });
-            } else {
-                Swal.fire({
-                    title: 'Error!',
-                    text: result.message,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-        },
-        error: function(xhr, status, error) {
+            Swal.fire({
+                title: 'Success!',
+                text: result.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = `restaurant.php?cafID=${cafID}`;
+            });
+        } else {
             Swal.fire({
                 title: 'Error!',
-                text: 'An error occurred while creating the order.',
+                text: result.message,
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
         }
+    })
+    .catch(error => {
+        Swal.fire({
+            title: 'Error!',
+            text: 'An error occurred while creating the order.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
     });
 }
-
-function updateOrder(userID, mealID, quantity, cafID) {
-    const orderID = localStorage.getItem('currentOrderID');
-    $.ajax({
-        url: 'path/to/update/order/endpoint.php', // Replace with the actual path to your update order endpoint
-        type: 'POST',
-        data: {
-            userID: userID,
-            mealID: mealID,
-            quantity: quantity,
-            orderID: orderID
-        },
-        success: function(response) {
-            const result = JSON.parse(response);
-            if (result.success) {
-                Swal.fire({
-                    title: 'Success!',
-                    text: result.message,
-                    icon: 'success',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    window.location.href = `restaurant.php?cafID=${cafID}`;
-                });
-            } else {
-                Swal.fire({
-                    title: 'Error!',
-                    text: result.message,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                });
-            }
-        },
-        error: function(xhr, status, error) {
-            Swal.fire({
-                title: 'Error!',
-                text: 'An error occurred while updating the order.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        }
-    });
-}
-
-
-

@@ -1,6 +1,6 @@
 <?php
-include_once "../../../settings/connection.php";
-include_once "../../../settings/core.php";
+include_once "../settings/connection.php";
+include_once "../settings/core.php";
 
 function getUserDetailsByID($conn, $userID) {
     $query = "SELECT * FROM users WHERE userID = ?";
