@@ -1,4 +1,23 @@
 <!-- Include Connection File -->
+<?php
+
+include_once '../settings/connection.php';
+include_once '../settings/core.php';
+
+include_once '../actions/FeedBackService/get/getReview.php';
+include_once '../actions/CafeteriaManagementService/get/getResturantDetails.php';
+include_once '../actions/FeedBackService/get/getNumberCafReviews.php';
+include_once '../actions/CafeteriaManagementService/get/getMenu.php';
+
+$userID = $_SESSION['userID'];
+$cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
+$result = getRecentReviews($conn, $cafID);
+$resultsDetails = getAllCafeteriaDetails($conn);
+$menusBF = getCafeteriaMenus($conn, 'BREAKFAST');
+$menusL = getCafeteriaMenus($conn, 'LUNCH');
+$menusD = getCafeteriaMenus($conn, 'DINNER');
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +58,7 @@
     <div class="container position-relative">
       <img alt="#" src="../img/trending1.png" class="restaurant-pic" />
       <div class="pt-3 text-white">
-        <h2 class="fw-bold"><?php echo $cafeteriaDetails['cafeteriaName'] ?></h2>
+        <h2 class="fw-bold"><?php echo $resultsDetails['cafeteriaName'] ?></h2>
         <p class="text-white m-0">Inside Ashesi University</p>
         <div class="rating-wrap d-flex align-items-center mt-2">
           <ul class="rating-stars list-unstyled">
@@ -57,12 +76,12 @@
       <div class="pb-4">
         <div class="row">
           <div class="col-6 col-md-2">
-            <p class="text-white-50 fw-bold m-0 small">Delivery</p>
-            <p class="text-white m-0"><?php echo $cafeteriaDetails['openingTime'] ?></p>
+            <p class="text-white-50 fw-bold m-0 small">Opening time</p>
+            <p class="text-white m-0"> <?php echo $resultsDetails['openingTime'] ?> </p>
           </div>
           <div class="col-6 col-md-2">
-            <p class="text-white-50 fw-bold m-0 small">Open time</p>
-            <p class="text-white m-0"><?php echo $cafeteriaDetails['openingTime'] ?></p>
+            <p class="text-white-50 fw-bold m-0 small">Closing time</p>
+            <p class="text-white m-0"><?php echo $resultsDetails['closingTime'] ?></p>
           </div>
         </div>
       </div>
@@ -131,7 +150,7 @@
           <div class="d-flex border-bottom osahan-cart-item-profile bg-white p-3">
             <img alt="osahan" src="../img/starter1.jpg" class="me-3 rounded-circle img-fluid" />
             <div class="d-flex flex-column">
-              <h6 class="mb-1 fw-bold"><?php echo $cafeteriaDetails['cafeteriaName'] ?></h6>
+              <h6 class="mb-1 fw-bold"><?php echo $resultsDetails['cafeteriaName'] ?></h6>
               <p class="mb-0 small text-muted">
                 <i class="feather-map-pin"></i> Inside Ashesi University
               </p>
@@ -159,7 +178,7 @@
                 </div>
                 <div class="form-group mb-3">
                   <label for="mealImage">Meal Image</label>
-                  <input type="file" class="form-control" id="mealImage" name="mealImage" accept="image/*" required>
+                  <input type="file" class="form-control" id="mealImage" name="mealImage" accept="image/*">
                 </div>
                 <div class="form-group mb-3">
                   <label for="price">Price</label>
