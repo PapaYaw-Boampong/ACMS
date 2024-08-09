@@ -9,58 +9,58 @@ $userName = $_SESSION['username'];
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="Ashesi Eats" />
-  <link rel="icon" type="image/png" href="../img/fav.png" />
-  <title>Ashesi Eats</title>
-  <link href="../vendor/slick/slick/slick.css" rel="stylesheet" type="text/css" />
-  <link href="../vendor/slick/slick-theme.css" rel="stylesheet" type="text/css" />
-  <link href="../vendor/icons/feather.css" rel="stylesheet" type="text/css" />
-  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="../css/style.css" rel="stylesheet" />
-  <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
-  <script src="../vendor/jquery/jquery.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      // Load preferences
-      $.ajax({
-        url: 'load_preferences.php',
-        type: 'GET',
-        success: function(response) {
-          const preferences = JSON.parse(response);
-          // Set dietary restrictions
-          preferences.dietaryRestrictions.split(',').forEach(function(item) {
-            $(`input[name="dietaryRestrictions"][value="${item}"]`).prop('checked', true);
-          });
-          // Set diet
-          preferences.diet.split(',').forEach(function(item) {
-            $(`input[name="diet"][value="${item}"]`).prop('checked', true);
-          });
-          // Set cultural restrictions
-          preferences.culturalRestrictions.split(',').forEach(function(item) {
-            $(`input[name="culturalRestrictions"][value="${item}"]`).prop('checked', true);
-          });
-        }
-      });
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Ashesi Eats" />
+    <link rel="icon" type="image/png" href="../img/fav.png" />
+    <title>Ashesi Eats</title>
+    <link href="../vendor/slick/slick/slick.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/slick/slick-theme.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/icons/feather.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet" />
+    <link href="../vendor/sidebar/demo.css" rel="stylesheet" />
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Load preferences
+            $.ajax({
+                url: 'load_preferences.php',
+                type: 'GET',
+                success: function(response) {
+                    const preferences = JSON.parse(response);
+                    // Set dietary restrictions
+                    preferences.dietaryRestrictions.split(',').forEach(function(item) {
+                        $(`input[name="dietaryRestrictions"][value="${item}"]`).prop('checked', true);
+                    });
+                    // Set diet
+                    preferences.diet.split(',').forEach(function(item) {
+                        $(`input[name="diet"][value="${item}"]`).prop('checked', true);
+                    });
+                    // Set cultural restrictions
+                    preferences.culturalRestrictions.split(',').forEach(function(item) {
+                        $(`input[name="culturalRestrictions"][value="${item}"]`).prop('checked', true);
+                    });
+                }
+            });
 
-      // Save preferences
-      $('#preferenceForm').on('submit', function(e) {
-        e.preventDefault();
-        $.ajax({
-          url: 'save_preferences.php',
-          type: 'POST',
-          data: $(this).serialize(),
-          success: function(response) {
-            alert('Preferences updated successfully');
-          },
-          error: function() {
-            alert('Failed to update preferences');
-          }
+            // Save preferences
+            $('#preferenceForm').on('submit', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: 'save_preferences.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        alert('Preferences updated successfully');
+                    },
+                    error: function() {
+                        alert('Failed to update preferences');
+                    }
+                });
+            });
         });
-      });
-    });
-  </script>
+    </script>
 </head>
 
 <body class="fixed-bottom-bar">
