@@ -59,6 +59,8 @@ function insertNavMenu(selector) {
 
 // Function to insert profile menu into #profile-nav
 function insertProfileMenu(selector) {
+  const profile_container = document.querySelector(selector);
+  
   const profileNavHtml = `
 
               <a href="profile.html" class>
