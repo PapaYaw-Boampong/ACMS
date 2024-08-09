@@ -4,46 +4,36 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Include the database connection file
 include '../../../settings/connection.php';
+include '../fnx.php';  // Assuming functions are stored in fnx.php
 
-// Include the functions file (where updateOrder is defined)
-include '../fnx.php';
-
-// Initialize response array
 $response = array();
 
 try {
-    // Retrieve parameters from the request
-    $orderID = isset($_POST['orderID']) ? (int)$_POST['orderID'] : null;
-    $mealID = isset($_POST['mealID']) ? (int)$_POST['mealID'] : null;
-    $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
+    $orderID = $_POST['orderID'];
+    $mealID = $_POST['mealID'];
+    $quantity = $_POST['quantity'];
+    $cafeteriaID = $_POST['cafID']; // Assuming this is passed
 
-    // Check if required parameters are provided
-    if ($orderID === null || $mealID === null) {
-        throw new Exception("Order ID and Meal ID are required.");
-    }
-
-    // Call the function to update an order
-    $result = updateOrder($orderID, $mealID, $quantity);
-
-    if ($result['success']) {
-        $response['success'] = true;
-        $response['message'] = $result['message'];
-    } else {
+    // Check if the meal belongs to the cafeteria
+    if (!doesMealBelongToSameCafeteria($orderID, $mealID)) {
         $response['success'] = false;
-        $response['message'] = $result['message'];
+        $response['message'] = "Meals in the same order must come from the same cafeteria.";
+    } else {
+        // Check if the meal is already in the order
+        if (isMealInOrder($orderID, $mealID)) {
+            $response = updateMealQuantityInOrder($orderID, $mealID, $quantity);
+        } else {
+            $response = insertMealIntoOrder($orderID, $mealID, $quantity);
+        }
     }
 
-    // Encode the response array as JSON and echo it
     echo json_encode($response);
-    exit;
 } catch (Exception $e) {
-    // Handle errors
     $response['success'] = false;
-    $response['message'] = $e->getMessage();
+    $response['message'] = "An error occurred: " . $e->getMessage();
     echo json_encode($response);
-    exit;
 }
+
 
 ?>

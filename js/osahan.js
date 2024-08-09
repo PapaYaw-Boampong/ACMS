@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
   renderSideBar();
 });
 
+
+
 // Function to insert navigation menu into #main-nav
 function insertNavMenu(selector) {
   const nav_container = document.querySelector(selector);
@@ -30,19 +32,13 @@ function insertNavMenu(selector) {
       </ul>
       <ul class="bottom-nav">
         <li class="email">
-          <a class="text-danger" href="home.html">
+          <a class="text-danger" href="home.php">
             <p class="h5 m-0"><i class="feather-home text-danger"></i></p>
             Home
           </a>
         </li>
-        <li class="github">
-          <a href="faq.html">
-            <p class="h5 m-0"><i class="feather-message-circle"></i></p>
-            FAQ
-          </a>
-        </li>
         <li class="ko-fi">
-          <a href="contact-us.html">
+          <a href="contact-us.php">
             <p class="h5 m-0"><i class="feather-phone"></i></p>
             Help
           </a>
@@ -63,14 +59,14 @@ function insertProfileMenu(selector) {
   
   const profileNavHtml = `
 
-              <a href="profile.html" class>
+              <a href="profile.php" class>
                 <div class="d-flex align-items-center p-3">
                   <div class="left me-3">
                     <img alt="#" src="../img/user1.jpg" class="profile-pic" />
                   </div>
                   <div class="right">
                     <h6 class="mb-1 fw-bold">
-                      Ako Oku
+                      
                       <i class="feather-check-circle text-success"></i>
                     </h6>
                     <p class="text-muted m-0 small">
@@ -129,7 +125,7 @@ function insertProfileMenu(selector) {
                 </a>
 
                 <a
-                  href="preferences.html"
+                  href="preferences.php"
                   class="d-flex w-100 align-items-center border-bottom px-3 py-4"
                 >
                   <div class="left me-3">
@@ -150,7 +146,7 @@ function insertProfileMenu(selector) {
                
               
                 <a
-                  href="contact-us.html"
+                  href="contact-us.php"
                   class="d-flex w-100 align-items-center border-bottom px-3 py-4"
                 >
                   <div class="left me-3">
@@ -169,7 +165,7 @@ function insertProfileMenu(selector) {
                   </div>
                 </a>
                 <a
-                  href="privacy.html"
+                  href="privacy.php"
                   class="d-flex w-100 align-items-center px-3 py-4"
                 >
                   <div class="left me-3">

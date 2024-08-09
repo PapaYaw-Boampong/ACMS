@@ -133,7 +133,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                       <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
                     </div>
                     <span class="ms-auto">
-                      <a href="#" class="btn btn-outline-secondary btn-sm" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">
+                      <a href="#" class="btn btn-outline-secondary btn-sm" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $userID;?>">
                         ADD
                       </a>
                     </span>
@@ -159,7 +159,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                     <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
                   </div>
                   <span class="ms-auto">
-                      <a href="#" class="btn btn-outline-secondary btn-sm" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">
+                      <a href="#" class="btn btn-outline-secondary btn-sm" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $userID;?>">
                         ADD
                       </a>
                   </span>
@@ -184,7 +184,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
                     <p class="text-muted mb-0"><?php echo $menu['price']; ?></p>
                   </div>
                   <span class="ms-auto">
-                      <a href="#" class="btn btn-outline-secondary btn-sm" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $menu['mealID'];?>">
+                      <a href="#" class="btn btn-outline-secondary btn-sm" data-meal-id="<?php echo $menu['mealID'];?>"   data-user-id="<?php echo $userID;?>">
                         ADD
                       </a>
                   </span>
@@ -244,6 +244,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
           // Pass PHP session data to JavaScript
           var userName = <?php echo json_encode($_SESSION['username']); ?>;
           var userID =  <?php echo json_encode($userID); ?>;
+          var cafID =  <?php echo json_encode($cafID); ?>;
       </script>
 
   <nav id="main-nav"></nav>
@@ -264,11 +265,6 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
   <script src="../js/headerFooterManager.js"></script>
 
   <script src="../js/restaurant.js"></script>
-
-  <script src="../js/orderInfo.js"></script>
-
-  <script src="../js/orderSelect.js"></script>
-
 
 
 </body>

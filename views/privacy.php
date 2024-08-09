@@ -534,6 +534,15 @@
     </div>
   </div>
 
+     <!-- Pass session data to JavaScript -->
+     <script>
+          // Pass PHP session data to JavaScript
+          var userName = <?php echo json_encode($_SESSION['username']); ?>;
+          var userID =  <?php echo json_encode($userID); ?>;
+          var cafID =  <?php echo json_encode($cafID); ?>;
+      </script>
+
+
   <script
     data-cfasync="false"
     src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>

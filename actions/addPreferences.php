@@ -75,56 +75,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 } else {
     echo "Form not submitted.";
 }
+
 ?>
-
-// <!-- Redirect  -->
-// <!-- <a href="success.html">bye</a> -->
-// $dietaryRestrictions = isset($_POST['dietaryRestrictions']) ? $_POST['dietaryRestrictions'] : '';
-//     $dietaryDetails = [];
-//     if ($dietaryRestrictions === 'yes') {
-//         $dietaryDetails = [
-//             'gluten-free' => isset($_POST['glutenFree']) ? 'gluten-free' : '',
-//             'dairy-free' => isset($_POST['dairyFree']) ? 'dairy-free' : '',
-//             'nut-allergy' => isset($_POST['nutAllergy']) ? 'nut-allergy' : '',
-//             'shellfish-allergy' => isset($_POST['shellfishAllergy']) ? 'shellfish-allergy' : '',
-//             'soy-allergy' => isset($_POST['soyAllergy']) ? 'soy-allergy' : '',
-//             'other' => isset($_POST['otherDietary']) ? $_POST['otherDietary'] : ''
-//         ];
-//     }
-//     $dietaryDetails = array_filter($dietaryDetails); // Remove empty values
-//     $dietaryDetailsStr = implode(',', $dietaryDetails);
-
-//     $diets = [
-//         'vegetarian' => isset($_POST['vegetarian']) ? 'vegetarian' : '',
-//         'vegan' => isset($_POST['vegan']) ? 'vegan' : '',
-//         'keto' => isset($_POST['keto']) ? 'keto' : '',
-//         'paleo' => isset($_POST['paleo']) ? 'paleo' : '',
-//         'pescatarian' => isset($_POST['pescatarian']) ? 'pescatarian' : '',
-//         'none' => isset($_POST['none']) ? 'none' : ''
-//     ];
-//     $diets = array_filter($diets); // Remove empty values
-//     $dietsStr = implode(',', $diets);
-
-//     $culturalRestrictions = isset($_POST['culturalRestrictions']) ? $_POST['culturalRestrictions'] : '';
-//     $culturalDetails = [];
-//     if ($culturalRestrictions === 'yes') {
-//         $culturalDetails = [
-//             'halal' => isset($_POST['halal']) ? 'halal' : '',
-//             'kosher' => isset($_POST['kosher']) ? 'kosher' : '',
-//             'hindu-dietary-laws' => isset($_POST['hinduDietaryLaws']) ? 'hindu-dietary-laws' : '',
-//             'other' => isset($_POST['otherCultural']) ? $_POST['otherCultural'] : ''
-//         ];
-//     }
-//     $culturalDetails = array_filter($culturalDetails); // Remove empty values
-//     $culturalDetailsStr = implode(',', $culturalDetails);
-
-//     // Assume userID is retrieved from session or other authentication mechanism
-//     $userID = 1; // Example userID, replace with actual logic
-
-//     // Insert into database
-//     $query = "INSERT INTO `Preferences` (`userID`, `dietaryRestrictions`, `diet`, `culturalRestrictions`) VALUES (?, ?, ?, ?)";
-//     echo $query;
-//     exit();
-//     $stmt = $conn->prepare($query);
-//     $stmt->bind_param("isss", $userID, $dietaryDetailsStr, $dietsStr, $culturalDetailsStr);
-
