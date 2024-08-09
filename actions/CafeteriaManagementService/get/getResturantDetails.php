@@ -2,7 +2,7 @@
 include_once "../settings/connection.php";
 
 function getAllCafeteriaDetails($conn) {
-    $cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 0; // Default to 0 if cafID is not provided
+    $cafID = isset($_GET['cafID']) ? intval($_GET['cafID']) : 1; // Default to 0 if cafID is not provided
     $sql = "
         SELECT 
             cafeteriaID, cafeteriaName, description, cafeteriaImage, openingTime, closingTime

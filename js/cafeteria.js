@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
           li.className = 'list-group-item';
           li.innerHTML = `
               <div class="d-flex align-items-center">
-              <img src="${meal.mealimg}" style="max-width: 50px; max-height: 50px; object-fit: cover;" class="img-fluid rounded" />
+              <img src="../img/starter1.jpg" style="max-width: 50px; max-height: 50px; object-fit: cover;" class="img-fluid rounded" />
                   <div class="ps-3">
                       <h6 class="mb-1 fw-bold">${meal.name}</h6>
                       <p class="text-muted mb-0">GHS ${meal.price}</p>
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
           li.className = 'list-group-item';
           li.innerHTML = `
               <div class="d-flex align-items-center">
-                  <img src="${meal.image}" class="img-fluid rounded" />
+                  <img src="../img/starter1.jpg" class="img-fluid rounded" />
                   <div class="ps-3">
                       <h6 class="mb-1 fw-bold">${meal.name}</h6>
                       <p class="text-muted mb-0">GHS ${meal.price}</p>
