@@ -18,15 +18,10 @@ try {
     $userID = isset($_POST['userID']) ? (int)$_POST['userID'] : null;
     $mealID = isset($_POST['mealID']) ? (int)$_POST['mealID'] : null;
     $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
-    $cafeteriaID = isset($_POST['cafeteriaID']) ? (int)$_POST['cafeteriaID'] : null;
 
-    // Check if required parameters are provided
-    if ($userID === null || $mealID === null || $cafeteriaID === null) {
-        throw new Exception("User ID, Meal ID, and Cafeteria ID are required.");
-    }
 
     // Call the function to create an order with the meal
-    $result = createOrderWithMeal($userID, $mealID, $cafeteriaID, $quantity);
+    $result = createOrderWithMeal($userID, $mealID, $quantity);
 
     if ($result['success']) {
         $response['success'] = true;
@@ -49,3 +44,13 @@ try {
 }
 
 ?>
+
+
+
+
+
+
+
+
+
+

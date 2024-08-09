@@ -365,24 +365,108 @@ function insertOrder($userID) {
 }
 
 
-// Function to create an order and add a meal, verifying the cafeteria
-function createOrderWithMeal($userID, $mealID, $cafeteriaID, $quantity = 1) {
+// // Function to create an order and add a meal, verifying the cafeteria
+// function createOrderWithMeal($userID, $mealID, $quantity = 1) {
 
-    // Insert the order
-    $orderResult = insertOrder($userID);
-    if (!$orderResult['success']) {
-        return $orderResult; // Return error if order insertion failed
+//     // Insert the order
+//     $orderResult = insertOrder($userID);
+//     if (!$orderResult['success']) {
+//         return $orderResult; // Return error if order insertion failed
+//     }
+
+//     $orderID = $orderResult['orderID'];
+
+//     // Insert the meal into the order
+//     $mealResult = insertMealIntoOrder($orderID, $mealID, $quantity);
+//     if (!$mealResult['success']) {
+//         return $mealResult; // Return error if meal insertion failed
+//     }
+
+//     return array('success' => true, 'message' => "Order created successfully.", 'orderID' => $orderID);
+// }
+
+
+// Function to create an order and insert the first meal associated with the order
+function createOrderWithMeal($userID, $mealID, $quantity = 1) {
+    global $conn;
+
+    // Step 1: Insert the order into the orders table
+    $sqlOrder = "INSERT INTO orders (userID, status, deliveryStatus, orderTotal, orderDate)
+                 VALUES (?, 'IN_PROGRESS', 'pickup', 0, CURDATE())";
+    $stmtOrder = $conn->prepare($sqlOrder);
+    $stmtOrder->bind_param("i", $userID);
+    
+    if (!$stmtOrder->execute()) {
+        return array('success' => false, 'message' => "Error: " . $stmtOrder->error);
     }
 
-    $orderID = $orderResult['orderID'];
+    // Get the inserted order ID
+    $orderID = $stmtOrder->insert_id;
+    $stmtOrder->close();
 
-    // Insert the meal into the order
-    $mealResult = insertMealIntoOrder($orderID, $mealID, $quantity);
-    if (!$mealResult['success']) {
-        return $mealResult; // Return error if meal insertion failed
+    // Step 2: Get the price of the meal
+    $sqlMeal = "SELECT price FROM meals WHERE mealID = ?";
+    $stmtMeal = $conn->prepare($sqlMeal);
+    $stmtMeal->bind_param("i", $mealID);
+    $stmtMeal->execute();
+    $resultMeal = $stmtMeal->get_result();
+    if ($resultMeal->num_rows > 0) {
+        $meal = $resultMeal->fetch_assoc();
+        $mealPrice = $meal['price'];
+    } else {
+        return array('success' => false, 'message' => "Error: Meal not found.");
+    }
+    $stmtMeal->close();
+
+    // Step 3: Calculate the order total
+    $orderTotal = $mealPrice * $quantity;
+
+    // Step 4: Insert the meal into the mealorder table
+    $sqlMealOrder = "INSERT INTO mealorder (mealID, orderID, quantity) VALUES (?, ?, ?)";
+    $stmtMealOrder = $conn->prepare($sqlMealOrder);
+    $stmtMealOrder->bind_param("iii", $mealID, $orderID, $quantity);
+
+    if (!$stmtMealOrder->execute()) {
+        return array('success' => false, 'message' => "Error: " . $stmtMealOrder->error);
+    }
+    $stmtMealOrder->close();
+
+    // Step 5: Update the order total in the orders table (a trigger may handle this)
+    $sqlUpdateOrder = "UPDATE orders SET orderTotal = ? WHERE orderID = ?";
+    $stmtUpdateOrder = $conn->prepare($sqlUpdateOrder);
+    $stmtUpdateOrder->bind_param("di", $orderTotal, $orderID);
+
+    if (!$stmtUpdateOrder->execute()) {
+        return array('success' => false, 'message' => "Error: " . $stmtUpdateOrder->error);
+    }
+    $stmtUpdateOrder->close();
+
+    // Step 6: Create a payment record using the helper function
+    $paymentResult = createPaymentRecord($orderID);
+    if (!$paymentResult['success']) {
+        return array('success' => false, 'message' => $paymentResult['message']);
     }
 
     return array('success' => true, 'message' => "Order created successfully.", 'orderID' => $orderID);
 }
 
 
+// Function to create a payment record for a given order
+function createPaymentRecord($orderID, $paymentMethodID = 1) {
+    global $conn;
+
+    // Prepare the SQL statement to insert into the payment table
+    $sqlPayment = "INSERT INTO payment (orderID, methodID, paymentStatus) VALUES (?, ?, 'NOT PAID')";
+    $stmtPayment = $conn->prepare($sqlPayment);
+    $stmtPayment->bind_param("ii", $orderID, $paymentMethodID);
+
+    // Execute the query and check for success
+    if ($stmtPayment->execute()) {
+        $stmtPayment->close();
+        return array('success' => true, 'message' => "Payment record created successfully.");
+    } else {
+        $error = $stmtPayment->error;
+        $stmtPayment->close();
+        return array('success' => false, 'message' => "Error creating payment record: " . $error);
+    }
+}

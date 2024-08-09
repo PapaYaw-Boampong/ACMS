@@ -73,9 +73,10 @@ document.addEventListener("DOMContentLoaded", function() {
 function handleAddMeal(userID, mealID, cafID) {
   // Retrieve the current order ID from localStorage
   const currentOrderID = localStorage.getItem('currentOrderID') ?? -1;
-
+  console.log(currentOrderID);
   // If no current order exists, create a new one
-  if (currentOrderID === -1) {
+  if (currentOrderID == -1) {
+    console.log("reached");
       createOrder(userID, mealID, 1, cafID);
   } else {
       updateOrder(currentOrderID, mealID, 1, cafID);
@@ -278,7 +279,7 @@ function renderOrderDetails(order) {
             <h6 class="fw-bold mb-0">TO PAY <span class="float-end">GHS ${order.orderTotal}</span></h6>
         </div>
         <div class="p-3">
-            <a class="btn btn-success w-100 btn-lg" href="successful.html">PAY <i class="feather-arrow-right"></i></a>
+            <a class="btn btn-success w-100 btn-lg" href="checkout.php?orderID=${order.orderID}">Proceed to Checkout <i class="feather-arrow-right"></i></a>
         </div>
     `;
 
