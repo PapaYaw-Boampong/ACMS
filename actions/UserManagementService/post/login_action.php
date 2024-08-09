@@ -116,8 +116,18 @@ if (isset($_POST['login'])) {
         // Create session for user id
         $_SESSION['userID'] = $row['userID'];
 
-        // Redirect to home/dashboard page
-        header("Location: ../home.html");
+        // Check the role ID
+        $roleID = $row['roleID'];
+
+        if ($roleID == 2 || $roleID == 3) {
+            // Redirect to home/dashboard page
+            header("Location: ../views/home.php");
+        } elseif ($roleID == 4) {
+            // Fetch cafeteriaID
+            $cafeteriaID = $row['cafeteriaID'];
+            // Redirect to cafeteria page with cafeteriaID as a GET parameter
+            header("Location: ../views/cafeteria.php?cafID=" . $cafeteriaID);
+        }
         exit();
     } else {
         // Passwords don't match, provide appropriate response

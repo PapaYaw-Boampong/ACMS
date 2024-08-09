@@ -1,3 +1,16 @@
+<?php
+include_once '../settings/connection.php';
+include_once '../settings/core.php';
+
+include_once "../actions/UserManagementService/put/select_role.php";
+
+// session_start();
+
+$role = getRoles($conn);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -71,9 +84,7 @@
             <div class="form-group">
               <label class="text-dark pb-1">Role</label>
               </select>
-              <?php include_once "../actions/UserManagementService/put/select_plan.php";?>
-              <?php include_once "../settings/connection.php";?>
-              <?php $role = getRoles($conn);?>
+
                 <select class="form-control py-1" name="role"  style=" border-color: #ced4da; padding: 5%;">
                     <?php foreach ($role as $roles): ?>
                         <option value="<?php echo $roles['roleID']; ?>"><?php echo $roles['name']; ?></option>
@@ -84,7 +95,6 @@
             <div class="form-group">
               <label class="text-dark pb-1">Meal Plan Status</label>
               <?php include_once "../actions/UserManagementService/put/select_meal.php";?>
-              <?php include_once "../settings/connection.php";?>
               <?php $status = getMealstatus($conn);?>
                 <select class="form-control py-1" name="mealPlan"  style=" border-color: #ced4da; padding: 5%;">
                     <?php foreach ($status as $Status): ?>

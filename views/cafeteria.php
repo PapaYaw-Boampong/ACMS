@@ -144,7 +144,7 @@ $menusD = getCafeteriaMenus($conn, 'DINNER');
           <div class="d-flex border-bottom osahan-cart-item-profile bg-white p-3">
             <img alt="osahan" src="../img/starter1.jpg" class="me-3 rounded-circle img-fluid" />
             <div class="d-flex flex-column">
-              <h6 class="mb-1 fw-bold">Munchies Extra</h6>
+              <h6 class="mb-1 fw-bold"><?php echo $resultsDetails['cafeteriaName'] ?></h6>
               <p class="mb-0 small text-muted">
                 <i class="feather-map-pin"></i> Inside Ashesi University
               </p>

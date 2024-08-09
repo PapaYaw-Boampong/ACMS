@@ -2,8 +2,7 @@
 // Include the connection file
 include_once "settings/connection.php";
 
-function getMealstatus() {
-    global $conn;
+function getMealstatus($conn) {
 
     // Write a select query on the "family" table
     $querys = "SELECT * FROM mealplanstatus";

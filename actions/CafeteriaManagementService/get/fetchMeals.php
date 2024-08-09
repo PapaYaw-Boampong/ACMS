@@ -3,7 +3,7 @@ include('../../../settings/connection.php');
 
 // Fetch current meals
 $currentMeals = [];
-$currentMealsQuery = "SELECT * FROM meals WHERE mealStatus = 'AVAILABLE'";
+$currentMealsQuery = "SELECT * FROM meals WHERE cafeteriaID = 1 AND mealStatus = 'AVAILABLE'";
 $result = mysqli_query($conn, $currentMealsQuery);
 
 while ($row = mysqli_fetch_assoc($result)) {
@@ -12,7 +12,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 
 // Fetch archived meals
 $archivedMeals = [];
-$archivedMealsQuery = "SELECT * FROM meals WHERE mealStatus = 'UNAVAILABLE'";
+$archivedMealsQuery = "SELECT * FROM meals WHERE cafeteriaID = 1 AND mealStatus = 'UNAVAILABLE'";
 $archivedResult = mysqli_query($conn, $archivedMealsQuery);
 
 while ($row = mysqli_fetch_assoc($archivedResult)) {

@@ -1,9 +1,8 @@
 <?php
 // Include the connection file
-include_once "settings/connection.php";
+include('../../../settings/connection.php');
 
-function getRoles() {
-    global $conn;
+function getRoles($conn) {
 
     // Write a select query on the "family" table
     $querys = "SELECT * FROM roles";
