@@ -23,13 +23,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 } else {
                     updateOrder(currentOrderID, mealID, quantity, cafID);
                 }
-
-                // Clear the mealID and cafID parameters from the URL after processing
-                params.delete('mealID');
-                params.delete('cafID');
-                const newUrl = `${window.location.pathname}?${params.toString()}`;
-                history.replaceState(null, '', newUrl);
             }
+            // Clear the mealID and cafID parameters from the URL after processing
+            params.delete('mealID');
+            const newUrl = `${window.location.pathname}?${params.toString()}`;
+            history.replaceState(null, '', newUrl);
         });
     }
 });
